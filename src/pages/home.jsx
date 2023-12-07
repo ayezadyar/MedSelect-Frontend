@@ -31,7 +31,7 @@ export default function Home() {
         {/* Cards */}
         <div className="flex flex-wrap justify-around w-full max-w-6xl mb-8">
           {/* Card 1 */}
-          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden">
+          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden rounded-lg">
             <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
               {/* Centered Image and Text */}
               <div className="flex flex-col items-center">
@@ -50,7 +50,7 @@ export default function Home() {
           </div>
 
           {/* Card 2 */}
-          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden">
+          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden rounded-lg">
             <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
               {/* Increased Card Height */}
               <h2 className="text-lg font-semibold mb-2">Card 2</h2>
@@ -63,7 +63,7 @@ export default function Home() {
           </div>
 
           {/* Card 3 */}
-          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden">
+          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden rounded-lg">
             <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
               {/* Increased Card Height */}
               <h2 className="text-lg font-semibold mb-2">Card 3</h2>
@@ -77,5 +77,6 @@ export default function Home() {
         </div>
       </div>
     </div>
+
   )
 }
