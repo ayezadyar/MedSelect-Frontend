@@ -32,10 +32,16 @@ export default function Home() {
         <div className="flex flex-wrap justify-around w-full max-w-6xl mb-8">
           {/* Card 1 */}
           <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden">
-            <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer">
-              {/* Increased Card Height */}
-              <h2 className="text-lg font-semibold mb-2">Card 1</h2>
-              <p>Card content goes here.</p>
+            <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
+              {/* Centered Image and Text */}
+              <div className="flex flex-col items-center">
+                <img
+                  src="/doseAlarm.png"  // Add the path to your image file
+                  alt="Dose Alarm"
+                  className="w-28 h-28 mx-auto my-10 mb-2 object-cover rounded"
+                />
+                <h2 className="text-lg font-semibold mb-2">DOSE ALARM</h2>
+              </div>
             </div>
             <div className="hidden absolute top-full left-0 w-full bg-white p-4 rounded shadow-md opacity-0 transition-opacity duration-300">
               {/* Popup Content */}
@@ -45,7 +51,7 @@ export default function Home() {
 
           {/* Card 2 */}
           <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden">
-            <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer">
+            <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
               {/* Increased Card Height */}
               <h2 className="text-lg font-semibold mb-2">Card 2</h2>
               <p>Card content goes here.</p>
@@ -58,7 +64,7 @@ export default function Home() {
 
           {/* Card 3 */}
           <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden">
-            <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer">
+            <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
               {/* Increased Card Height */}
               <h2 className="text-lg font-semibold mb-2">Card 3</h2>
               <p>Card content goes here.</p>
@@ -70,12 +76,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <style jsx>{`
-        .cursor-pointer:hover + .absolute {
-          opacity: 1;
-          top: 100%;
-        }
-      `}</style>
     </div>
   )
 }
