@@ -1,17 +1,17 @@
-import React from 'react'
-import Header from "../components/header"
+import React from 'react';
 
 export default function Home() {
   return (
     <div>
       <div className="flex flex-col justify-center items-center min-h-screen">
+
         {/* Logo or Picture */}
         <div className="mb-4 mt-2">
-          <img src="/logo.png" alt="Logo" className="w-48 mx-auto mb-2 sm:w-64" />
+          <img src="/logo.png" alt="Logo" className="w-32 mx-auto mb-2 sm:w-48 lg:w-64" />
         </div>
 
         {/* Search Form */}
-        <form className="w-full max-w-md mb-8">
+        <form className="w-full max-w-md mb-8 mx-auto">
           <div className="flex items-center border-b border-teal-500 py-2">
             <input
               className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
@@ -29,60 +29,55 @@ export default function Home() {
         </form>
 
         {/* Cards */}
-        <div className="flex flex-wrap justify-around w-full max-w-6xl mb-8">
+        <div className="flex flex-col sm:flex-row flex-wrap justify-around w-full max-w-6xl mb-8">
+
           {/* Card 1 */}
-          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden rounded-lg">
+          <div className="w-full mb-4 relative overflow-hidden rounded-lg sm:w-1/2 lg:w-1/3 xl:w-1/4">
             <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
-              {/* Centered Image and Text */}
               <div className="flex flex-col items-center">
                 <img
-                  src="/doseAlarm.png"  // Add the path to your image file
+                  src="/doseAlarm.png"
                   alt="Dose Alarm"
                   className="w-28 h-28 mx-auto my-10 mb-2 object-cover rounded"
                 />
-                <h2 className="text-lg font-semibold mb-2">DOSE ALARM</h2>
+                <h2 className="text-base sm:text-lg font-semibold mb-2">DOSE ALARM</h2>
               </div>
             </div>
             <div className="hidden absolute top-full left-0 w-full bg-white p-4 rounded shadow-md opacity-0 transition-opacity duration-300">
-              {/* Popup Content */}
               Popup Content 1
             </div>
           </div>
 
           {/* Card 2 */}
-          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden rounded-lg">
+          <div className="w-full mb-4 relative overflow-hidden rounded-lg sm:w-1/2 lg:w-1/3 xl:w-1/4">
             <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
-              {/* Centered Image and Text */}
               <div className="flex flex-col items-center">
                 <img
-                  src="/doctorConsultation.png"  // Add the path to your image file
+                  src="/doctorConsultation.png"
                   alt="Doctor Consultation"
                   className="w-28 h-28 mx-auto my-10 mb-2 object-cover rounded"
                 />
-                <h2 className="text-lg font-semibold mb-2">Doctor Consultation</h2>
+                <h2 className="text-base sm:text-lg font-semibold mb-2">Doctor Consultation</h2>
               </div>
             </div>
             <div className="hidden absolute top-full left-0 w-full bg-white p-4 rounded shadow-md opacity-0 transition-opacity duration-300">
-              {/* Popup Content */}
               Popup Content 2
             </div>
           </div>
 
           {/* Card 3 */}
-          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden rounded-lg">
+          <div className="w-full mb-4 relative overflow-hidden rounded-lg sm:w-1/2 lg:w-1/3 xl:w-1/4">
             <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
-              {/* Centered Image and Text */}
               <div className="flex flex-col items-center">
                 <img
-                  src="/community.png"  // Add the path to your image file
+                  src="/community.png"
                   alt="Community"
                   className="w-28 h-28 mx-auto my-10 mb-2 object-cover rounded"
                 />
-                <h2 className="text-lg font-semibold mb-2">Community</h2>
+                <h2 className="text-base sm:text-lg font-semibold mb-2">Community</h2>
               </div>
             </div>
             <div className="hidden absolute top-full left-0 w-full bg-white p-4 rounded shadow-md opacity-0 transition-opacity duration-300">
-              {/* Popup Content */}
               Popup Content 3
             </div>
           </div>
@@ -90,6 +85,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-
-  )
+  );
 }
