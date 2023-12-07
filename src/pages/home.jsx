@@ -52,9 +52,15 @@ export default function Home() {
           {/* Card 2 */}
           <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden rounded-lg">
             <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
-              {/* Increased Card Height */}
-              <h2 className="text-lg font-semibold mb-2">Card 2</h2>
-              <p>Card content goes here.</p>
+              {/* Centered Image and Text */}
+              <div className="flex flex-col items-center">
+                <img
+                  src="/doctorConsultation.png"  // Add the path to your image file
+                  alt="Doctor Consultation"
+                  className="w-28 h-28 mx-auto my-10 mb-2 object-cover rounded"
+                />
+                <h2 className="text-lg font-semibold mb-2">Doctor Consultation</h2>
+              </div>
             </div>
             <div className="hidden absolute top-full left-0 w-full bg-white p-4 rounded shadow-md opacity-0 transition-opacity duration-300">
               {/* Popup Content */}
@@ -65,15 +71,22 @@ export default function Home() {
           {/* Card 3 */}
           <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-4 relative overflow-hidden rounded-lg">
             <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
-              {/* Increased Card Height */}
-              <h2 className="text-lg font-semibold mb-2">Card 3</h2>
-              <p>Card content goes here.</p>
+              {/* Centered Image and Text */}
+              <div className="flex flex-col items-center">
+                <img
+                  src="/community.png"  // Add the path to your image file
+                  alt="Community"
+                  className="w-28 h-28 mx-auto my-10 mb-2 object-cover rounded"
+                />
+                <h2 className="text-lg font-semibold mb-2">Community</h2>
+              </div>
             </div>
             <div className="hidden absolute top-full left-0 w-full bg-white p-4 rounded shadow-md opacity-0 transition-opacity duration-300">
               {/* Popup Content */}
               Popup Content 3
             </div>
           </div>
+
         </div>
       </div>
     </div>
