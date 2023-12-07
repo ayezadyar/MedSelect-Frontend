@@ -4,7 +4,6 @@ import Header from "../components/header"
 export default function Home() {
   return (
     <div>
-      <Header/>
       <div className="flex flex-col justify-center items-center min-h-screen">
         {/* Logo or Picture */}
         <div className="mb-4 mt-2">
