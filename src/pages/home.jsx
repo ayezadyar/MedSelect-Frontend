@@ -33,7 +33,7 @@ export default function Home() {
 
           {/* Card 1 */}
           <div className="w-full mb-4 relative overflow-hidden rounded-lg sm:w-1/2 lg:w-1/3 xl:w-1/4">
-            <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
+            <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300 hover:scale-110">
               <div className="flex flex-col items-center">
                 <img
                   src="/doseAlarm.png"
@@ -50,7 +50,7 @@ export default function Home() {
 
           {/* Card 2 */}
           <div className="w-full mb-4 relative overflow-hidden rounded-lg sm:w-1/2 lg:w-1/3 xl:w-1/4">
-            <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
+            <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300 hover:scale-110">
               <div className="flex flex-col items-center">
                 <img
                   src="/doctorConsultation.png"
@@ -67,7 +67,7 @@ export default function Home() {
 
           {/* Card 3 */}
           <div className="w-full mb-4 relative overflow-hidden rounded-lg sm:w-1/2 lg:w-1/3 xl:w-1/4">
-            <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300">
+            <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300 hover:scale-110">
               <div className="flex flex-col items-center">
                 <img
                   src="/community.png"
