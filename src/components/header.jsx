@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <div>
         <Link to="/">
-            <button>
+            <button className='bg-slate-400 mr-3'>
                 Home
             </button>
         </Link>
