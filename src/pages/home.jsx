@@ -1,8 +1,12 @@
 import React from 'react';
+import Login from './login';
+import Header from '../components/header';
+import { Link } from "react-router-dom"
 
 export default function Home() {
   return (
     <div>
+      {/* <Header/> */}
       <div className="flex flex-col justify-center items-center min-h-screen">
 
         {/* Logo or Picture */}
@@ -44,7 +48,10 @@ export default function Home() {
               </div>
             </div>
             <div className="hidden absolute top-full left-0 w-full bg-white p-4 rounded shadow-md opacity-0 transition-opacity duration-300">
-              Popup Content 1
+              {/* <Login /> */}
+              {/* <Link to="/login">
+
+              </Link> */}
             </div>
           </div>
 
@@ -61,13 +68,18 @@ export default function Home() {
               </div>
             </div>
             <div className="hidden absolute top-full left-0 w-full bg-white p-4 rounded shadow-md opacity-0 transition-opacity duration-300">
-              Popup Content 2
+              {/* <Login /> */}
+              {/* <Link to="/login">
+               
+              </Link> */}
             </div>
           </div>
 
           {/* Card 3 */}
           <div className="w-full mb-4 relative overflow-hidden rounded-lg sm:w-1/2 lg:w-1/3 xl:w-1/4">
             <div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300 hover:scale-110">
+              <Link to="/login">
+
               <div className="flex flex-col items-center">
                 <img
                   src="/community.png"
@@ -76,9 +88,12 @@ export default function Home() {
                 />
                 <h2 className="text-base sm:text-lg font-semibold mb-2">Community</h2>
               </div>
+              </Link>
+
             </div>
             <div className="hidden absolute top-full left-0 w-full bg-white p-4 rounded shadow-md opacity-0 transition-opacity duration-300">
-              Popup Content 3
+              {/* <Login /> */}
+            
             </div>
           </div>
 

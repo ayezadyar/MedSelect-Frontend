@@ -9,11 +9,9 @@ export default function Login() {
     <div>
       <Header />
       <button onClick={signInWithGoogle}> Sign In With Google</button>
-      {/* <h1>{localStorage.getItem("name")}</h1>
-      <h1>{localStorage.getItem("email")}</h1> */}
-      <div class="text-green-500 text-2xl">
-        Hello World
-      </div>
+      <h1>{localStorage.getItem("name")}</h1>
+      <h1>{localStorage.getItem("email")}</h1>
+     
 
     </div>
   )
