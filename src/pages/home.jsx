@@ -20,6 +20,7 @@ export default function Home() {
 						to="/"
 						className="block py-2 hover:bg-teal-700 transition-all duration-300"
 						onClick={toggleNav}
+						style={{ marginTop: isNavOpen ? '22px' : '0' }}
 					>
 						HOME
 					</Link>
@@ -82,7 +83,6 @@ export default function Home() {
 						</button>
 					</div>
 				</form>
-
 				{/* Cards */}
 				<div className="flex flex-col sm:flex-row flex-wrap justify-around w-full max-w-6xl mb-8">
 
