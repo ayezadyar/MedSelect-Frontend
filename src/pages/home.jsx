@@ -12,48 +12,49 @@ export default function Home() {
 		<div className="flex">
 			{/* Side Navigation */}
 			<div
-				className={`fixed top-0 left-0 h-full bg-[#517028] w-64 text-white transform ${isNavOpen ? 'translate-x-0' : '-translate-x-full'
+				className={`fixed top-0 left-0 h-full bg-[#517028] w-64 text-white transform ${isNavOpen ? "translate-x-0" : "-translate-x-full"
 					} transition-transform duration-300 ease-in-out overflow-y-auto`}
 			>
 				<div className="p-4">
 					<Link
 						to="/"
-						className="block py-2 hover:bg-[#294a26] transition-all duration-300"
+						className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
 						onClick={toggleNav}
-						style={{ marginTop: isNavOpen ? '22px' : '0' }}
+						style={{ marginTop: isNavOpen ? "22px" : "0" }}
 					>
 						HOME
 					</Link>
 					<Link
 						to="/about"
-						className="block py-2 hover:bg-[#294a26] transition-all duration-300"
+						className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
 						onClick={toggleNav}
 					>
 						ABOUT US
 					</Link>
 					<Link
 						to="/community"
-						className="block py-2 hover:bg-[#294a26] transition-all duration-300"
+						className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
 						onClick={toggleNav}
 					>
 						JOIN COMMUNITY
 					</Link>
 					<Link
 						to="/contact"
-						className="block py-2 hover:bg-[#294a26] transition-all duration-300"
+						className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
 						onClick={toggleNav}
 					>
 						CONTACT US
 					</Link>
 					<Link
 						to="/how-it-works"
-						className="block py-2 hover:bg-[#294a26] transition-all duration-300"
+						className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
 						onClick={toggleNav}
 					>
 						HOW IT WORKS
 					</Link>
 				</div>
 			</div>
+
 
 			{/* Main Content */}
 			<div className="flex flex-col flex-1 justify-center items-center min-h-screen">
@@ -104,7 +105,7 @@ export default function Home() {
 										alt="Dose Alarm"
 										className="w-28 h-28 mx-auto my-10 mb-2 object-cover rounded"
 									/>
-									<h2 className="text-base sm:text-lg font-semibold mb-2">DOSE ALARM</h2>
+									<h2 className="text-base sm:text-lg font-semibold mb-2">Dose Alarm</h2>
 								</div>
 							</Link >
 						</div>
