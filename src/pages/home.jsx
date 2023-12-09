@@ -14,7 +14,7 @@ export default function Home() {
 		<div className="flex">
 			{/* Side Navigation */}
 			<div
-				className={`fixed top-0 left-0 h-full bg-[#517028] w-64 text-white transform ${isNavOpen ? "translate-x-0" : "-translate-x-full"
+				className={`fixed top-0 left-0 h-full bg-[#517028] w-64 text-white transform ${isNavOpen ? 'translate-x-0' : '-translate-x-full'
 					} transition-transform duration-300 ease-in-out overflow-y-auto`}
 			>
 				<div className="p-4">
@@ -57,9 +57,11 @@ export default function Home() {
 				</div>
 			</div>
 
-
 			{/* Main Content */}
-			<div className="flex flex-col flex-1 justify-center items-center min-h-screen">
+			<div
+				className={`flex flex-col flex-1 justify-center items-center min-h-screen transition-margin duration-300 ${isNavOpen ? 'ml-64' : ''
+					}`}
+			>
 				{/* Burger Icon */}
 				<div
 					className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen
@@ -68,7 +70,7 @@ export default function Home() {
 						}`}
 					onClick={toggleNav}
 				>
-					<FontAwesomeIcon size='xl' icon={faBars} />
+					<FontAwesomeIcon icon={faBars} size="lg" />
 				</div>
 				{/* Logo or Picture */}
 				<div className="mb-4 mt-2">
