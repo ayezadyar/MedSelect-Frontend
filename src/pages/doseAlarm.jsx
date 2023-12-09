@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SideNav from '../components/sideNav'; // Import your SideNav component
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBell } from "@fortawesome/free-solid-svg-icons";
 
 const AlarmClock = () => {
 	const [currentTime, setCurrentTime] = useState('');
@@ -62,31 +62,33 @@ const AlarmClock = () => {
 				<div className="absolute top-4 left-4 cursor-pointer font-bold" onClick={toggleNav}>
 					<FontAwesomeIcon icon={faBars} size="lg" />
 				</div>
-				<h1 className="text-4xl mb-4">Alarm Clock</h1>
+				<h1 className="text-4xl mb-4 font-bold text-[#294a26]">Alarm Clock	<FontAwesomeIcon icon={faBell} /></h1>
+			
 				<div className="mb-8 w-96 text-center">
 					<div className="bg-[#517028] text-white p-4 rounded-lg shadow-md">
 						<h2 className="text-2xl mb-2">Current Time: {currentTime}</h2>
 						<input
 							type="time"
 							onChange={handleAlarmChange}
-							className="border border-[#294a26]  text-[#294a26] font-bold p-3 rounded focus:outline-none"
+							className="border border-[#294a26] text-[#294a26] font-bold text-2xl p-4 rounded focus:outline-none"
 						/>
-						<p className="mt-2">
+						<p className="mt-2 text-lg">
 							Set Alarm for:{' '}
-							<span className="text-white">
+							<span className="text-white text-lg font-semibold">
 								{alarmTime ? new Date('1970-01-01T' + alarmTime).toLocaleTimeString('en-US', { hour12: true }) : ''}
 							</span>
 						</p>
 						{isAlarmActive && (
 							<button
 								onClick={handleAlarmOff}
-								className="mt-4 bg-[#294a26] text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
+								className="mt-4 bg-[#294a26] text-lg  text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
 							>
 								Turn Alarm Off
 							</button>
 						)}
 					</div>
 				</div>
+
 
 			</div>
 		</div>
