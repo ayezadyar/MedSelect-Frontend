@@ -74,7 +74,7 @@ const AlarmClock = () => {
 						/>
 						<p className="mt-2 text-lg">
 							Set Alarm for:{' '}
-							<span className="text-white text-lg font-semibold">
+							<span className="text-white text-lg font-medium">
 								{alarmTime ? new Date('1970-01-01T' + alarmTime).toLocaleTimeString('en-US', { hour12: true }) : ''}
 							</span>
 						</p>
