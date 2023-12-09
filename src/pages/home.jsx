@@ -153,8 +153,6 @@ export default function Home() {
 
 						</div>
 						<div className="hidden absolute top-full left-0 w-full bg-white p-4 rounded shadow-md opacity-0 transition-opacity duration-300">
-							{/* <Login /> */}
-
 						</div>
 					</div>
 
