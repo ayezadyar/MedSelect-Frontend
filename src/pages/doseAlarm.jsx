@@ -62,7 +62,7 @@ const AlarmClock = () => {
 		setNavOpen(!isNavOpen);
 	};
 
-	
+
 
 	return (
 		<div className="flex flex-col h-screen">
@@ -71,9 +71,12 @@ const AlarmClock = () => {
 
 			{/* Main Content */}
 			<div className={`flex-1 flex flex-col items-center justify-center transition-margin duration-300 ${isNavOpen ? 'ml-64' : ''}`}>
-				<div className="absolute top-4 left-4 cursor-pointer font-bold" onClick={toggleNav}>
+				<button
+					className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? 'text-white' : 'text-black'}`}
+					onClick={toggleNav}
+				>
 					<FontAwesomeIcon icon={faBars} size="lg" />
-				</div>
+				</button>
 				<h1 className="text-2xl md:text-4xl mb-2 md:mb-4 font-bold text-[#294a26]">
 					Alarm Clock <FontAwesomeIcon icon={faBell} />
 				</h1>
