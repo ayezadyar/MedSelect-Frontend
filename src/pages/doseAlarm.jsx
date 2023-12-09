@@ -53,7 +53,7 @@ const AlarmClock = () => {
 	};
 
 	return (
-		<div className="flex h-screen">
+		<div className="flex flex-col h-screen">
 			{/* Side Navigation */}
 			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
 
@@ -62,34 +62,34 @@ const AlarmClock = () => {
 				<div className="absolute top-4 left-4 cursor-pointer font-bold" onClick={toggleNav}>
 					<FontAwesomeIcon icon={faBars} size="lg" />
 				</div>
-				<h1 className="text-4xl mb-4 font-bold text-[#294a26]">Alarm Clock	<FontAwesomeIcon icon={faBell} /></h1>
-			
-				<div className="mb-8 w-96 text-center">
+				<h1 className="text-2xl md:text-4xl mb-2 md:mb-4 font-bold text-[#294a26]">
+					Alarm Clock <FontAwesomeIcon icon={faBell} />
+				</h1>
+
+				<div className="mb-4 w-80 md:w-96 text-center">
 					<div className="bg-[#517028] text-white p-4 rounded-lg shadow-md">
-						<h2 className="text-2xl mb-2">Current Time: {currentTime}</h2>
+						<h2 className="text-lg md:text-2xl mb-2 md:mb-4">Current Time: {currentTime}</h2>
 						<input
 							type="time"
 							onChange={handleAlarmChange}
-							className="border border-[#294a26] text-[#294a26] font-bold text-2xl p-4 rounded focus:outline-none"
+							className="border border-[#294a26] text-[#294a26] font-bold text-lg md:text-2xl p-3 md:p-4 rounded focus:outline-none"
 						/>
-						<p className="mt-2 text-lg">
+						<p className="mt-2 text-md md:text-lg">
 							Set Alarm for:{' '}
-							<span className="text-white text-lg font-medium">
+							<span className="text-white text-md md:text-lg font-medium">
 								{alarmTime ? new Date('1970-01-01T' + alarmTime).toLocaleTimeString('en-US', { hour12: true }) : ''}
 							</span>
 						</p>
 						{isAlarmActive && (
 							<button
 								onClick={handleAlarmOff}
-								className="mt-4 bg-[#294a26] text-lg font-medium  text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
+								className="mt-4 bg-[#294a26] text-md md:text-lg font-medium text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
 							>
 								Turn Alarm Off
 							</button>
 						)}
 					</div>
 				</div>
-
-
 			</div>
 		</div>
 	);
