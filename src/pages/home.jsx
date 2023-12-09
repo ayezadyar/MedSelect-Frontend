@@ -62,7 +62,7 @@ export default function Home() {
 						imageSrc="/doseAlarm.png"
 						altText="Dose Alarm"
 						title="Dose Alarm"
-						to="/login"
+						to="/doseAlarm"
 					/>
 
 					{/* HomeCard 2 */}

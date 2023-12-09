@@ -5,6 +5,7 @@ import About from "./pages/about"
 import Contact from './pages/contact'
 import Login from './pages/login'
 import Community from './pages/community'
+import DoseAlarm from './pages/doseAlarm'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/contact" element= { <Contact/> } />
       <Route path="/community" element= { <Community/> } />
       <Route path="/login" element= { <Login/> } />
+      <Route path="/doseAlarm" element= { <DoseAlarm/> } />
     </Routes>
     </>
   )
