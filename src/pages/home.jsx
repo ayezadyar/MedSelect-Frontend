@@ -1,12 +1,71 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faHippo } from "@fortawesome/free-solid-svg-icons";
 import HomeCard from '../components/homeCard';
 import SideNav from '../components/sideNav';
+import Papa from 'papaparse';
 
 export default function Home() {
 	const [isNavOpen, setNavOpen] = useState(false);
+	const [medicines, setMedicines] = useState([]);
+	const [searchTerm, setSearchTerm] = useState('');
+	const [searchResults, setSearchResults] = useState([]);
+
+	useEffect(() => {
+		// Load CSV data
+		const fetchData = async () => {
+			try {
+				const response = await fetch('data.csv');
+				const data = await response.text();
+				const parsedData = Papa.parse(data, { header: true }).data;
+				setMedicines(parsedData);
+			} catch (error) {
+				console.error("Error loading CSV data:", error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
+	const findMedicinesWithCommonSalt = (query) => {
+		const lowerCaseQuery = query.toLowerCase();
+		const resultNames = new Set(); // Set to track unique product names
+
+		const searchedMedicine = medicines.find(medicine =>
+			typeof medicine.product_name === 'string' &&
+			medicine.product_name.toLowerCase().includes(lowerCaseQuery)
+		);
+
+		if (!searchedMedicine || typeof searchedMedicine.salt_composition !== 'string') {
+			return [];
+		}
+
+		return medicines.filter(medicine => {
+			const isUnique = !resultNames.has(medicine.product_name);
+			const isSameSalt = typeof medicine.salt_composition === 'string' &&
+				medicine.salt_composition.toLowerCase() === searchedMedicine.salt_composition.toLowerCase();
+
+			if (isUnique && isSameSalt) {
+				resultNames.add(medicine.product_name);
+				return true;
+			}
+			return false;
+		});
+	};
+
+	useEffect(() => {
+		if (searchTerm.trim()) {
+			const results = findMedicinesWithCommonSalt(searchTerm);
+			setSearchResults(results);
+		} else {
+			setSearchResults([]);
+		}
+	}, [searchTerm, medicines]);
+
+	const handleSearch = (e) => {
+		setSearchTerm(e.target.value);
+	};
 
 	const toggleNav = () => {
 		setNavOpen(!isNavOpen);
@@ -42,15 +101,32 @@ export default function Home() {
 							type="text"
 							placeholder="Search for medicine..."
 							aria-label="Medicine search"
+							onChange={handleSearch}
+							value={searchTerm}
 						/>
-						<button
+						
+						{/* <button
 							className="flex-shrink-0 bg-[#517028] transition-all duration-300 hover:bg-[#294a26] text-white font-bold py-2 px-4 rounded"
 							type="submit"
 						>
 							Search
-						</button>
+						</button> */}
 
 					</div>
+					<ul className="list-none p-0 m-0">
+						{searchResults.map((medicine, index) => (
+							<li key={index} className="mb-2 overflow-hidden">
+								<div
+									className={`border-b ${index % 2 === 0 ? 'border-[#517028]' : 'border-[#294a26]'} rounded-full p-4`}
+								>
+									<p className="text-black">Name: {medicine.product_name}</p>
+									<p className="text-black">Salts: {medicine.salt_composition}</p>
+									{/* Add more details as needed */}
+								</div>
+							</li>
+						))}
+					</ul>
+
 				</form>
 				{/* HomeCards */}
 				<div className="flex flex-col sm:flex-row flex-wrap justify-around w-full max-w-6xl mb-8">
