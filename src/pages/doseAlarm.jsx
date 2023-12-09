@@ -81,7 +81,7 @@ const AlarmClock = () => {
 						{isAlarmActive && (
 							<button
 								onClick={handleAlarmOff}
-								className="mt-4 bg-[#294a26] text-lg  text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
+								className="mt-4 bg-[#294a26] text-lg font-medium  text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
 							>
 								Turn Alarm Off
 							</button>
