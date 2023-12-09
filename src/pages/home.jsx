@@ -12,7 +12,7 @@ export default function Home() {
 		<div className="flex">
 			{/* Side Navigation */}
 			<div
-				className={`fixed top-0 left-0 h-full bg-teal-500 w-64 text-white transform ${isNavOpen ? 'translate-x-0' : '-translate-x-full'
+				className={`fixed top-0 left-0 h-full bg-[#517028] w-64 text-white transform ${isNavOpen ? 'translate-x-0' : '-translate-x-full'
 					} transition-transform duration-300 ease-in-out overflow-y-auto`}
 			>
 				<div className="p-4">
@@ -83,7 +83,7 @@ export default function Home() {
 							aria-label="Medicine search"
 						/>
 						<button
-							className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
+							className="flex-shrink-0 bg-[#517028] hover:bg-teal-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
 							type="submit"
 						>
 							Search
@@ -95,7 +95,7 @@ export default function Home() {
 
 					{/* Card 1 */}
 					<div className="w-full mb-4 relative overflow-hidden rounded-lg sm:w-1/2 lg:w-1/3 xl:w-1/4">
-						<div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300 hover:scale-110">
+						<div className="bg-[#517028] shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300 hover:scale-110">
 							<Link to="/login">
 								<div className="flex flex-col items-center">
 									<img
@@ -114,7 +114,7 @@ export default function Home() {
 
 					{/* Card 2 */}
 					<div className="w-full mb-4 relative overflow-hidden rounded-lg sm:w-1/2 lg:w-1/3 xl:w-1/4">
-						<div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300 hover:scale-110">
+						<div className="bg-[#517028] shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300 hover:scale-110">
 							<Link to="/login">
 								<div className="flex flex-col items-center">
 									<img
@@ -133,7 +133,7 @@ export default function Home() {
 
 					{/* Card 3 */}
 					<div className="w-full mb-4 relative overflow-hidden rounded-lg sm:w-1/2 lg:w-1/3 xl:w-1/4">
-						<div className="bg-teal-500 shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300 hover:scale-110">
+						<div className="bg-[#517028] shadow-md rounded p-4 h-64 text-white cursor-pointer hover:bg-teal-700 transition-all duration-300 hover:scale-110">
 							<Link to="/login">
 
 								<div className="flex flex-col items-center">
