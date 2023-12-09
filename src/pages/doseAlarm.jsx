@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SideNav from '../components/sideNav'; // Import your SideNav component
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faBell } from "@fortawesome/free-solid-svg-icons";
+import { Howl } from 'howler';
 
 const AlarmClock = () => {
 	const [currentTime, setCurrentTime] = useState('');
@@ -9,12 +10,21 @@ const AlarmClock = () => {
 	const [isAlarmActive, setIsAlarmActive] = useState(false);
 	const [isNavOpen, setNavOpen] = useState(false); // State for side nav
 
+	const sound = new Howl({
+		src: ['C:/Users/General/Documents/GitHub/MedSelect-Frontend/public/alarm.mp3'],
+	});
+
+	const playSound = () => {
+		sound.play();
+	};
+
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const newTime = new Date().toLocaleTimeString('en-US', { hour12: true });
 			setCurrentTime(newTime);
 
 			if (formatTime(newTime) === alarmTime && isAlarmActive) {
+				playSound()
 				alert('Alarm ringing!');
 				// You can replace this alert with any sound or other notification
 				handleAlarmOff();
@@ -51,6 +61,8 @@ const AlarmClock = () => {
 	const toggleNav = () => {
 		setNavOpen(!isNavOpen);
 	};
+
+	
 
 	return (
 		<div className="flex flex-col h-screen">
