@@ -69,7 +69,7 @@ const AlarmClock = () => {
 						<input
 							type="time"
 							onChange={handleAlarmChange}
-							className="border border-gray-300 p-2 rounded focus:outline-none text-black"
+							className="border border-[#294a26]  text-[#294a26] font-bold p-3 rounded focus:outline-none"
 						/>
 						<p className="mt-2">
 							Set Alarm for:{' '}
@@ -87,6 +87,7 @@ const AlarmClock = () => {
 						)}
 					</div>
 				</div>
+
 			</div>
 		</div>
 	);
