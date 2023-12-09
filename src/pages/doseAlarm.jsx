@@ -11,7 +11,7 @@ const AlarmClock = () => {
 	const [isNavOpen, setNavOpen] = useState(false); // State for side nav
 
 	const sound = new Howl({
-		src: ['C:/Users/General/Documents/GitHub/MedSelect-Frontend/public/alarm.mp3'],
+		src: ['/alarm.mp3'],
 	});
 
 	const playSound = () => {
