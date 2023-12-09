@@ -22,7 +22,7 @@ export default function Home() {
 						to="/"
 						className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
 						onClick={toggleNav}
-						style={{ marginTop: isNavOpen ? "22px" : "0" }}
+						style={{ marginTop: isNavOpen ? "32px" : "0" }}
 					>
 						HOME
 					</Link>
