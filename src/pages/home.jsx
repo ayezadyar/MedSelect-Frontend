@@ -119,13 +119,19 @@ export default function Home() {
 								<div
 									className={`border-b ${index % 2 === 0 ? 'border-[#517028]' : 'border-[#294a26]'} rounded-full p-4`}
 								>
-									<p className="text-black">Name: {medicine.product_name}</p>
-									<p className="text-black">Salts: {medicine.salt_composition}</p>
+									<p className="text-[#294a26]">
+										<span className="font-bold">Name:</span> <i className='font-semibold'>{medicine.product_name}</i>
+									</p>
+									<p className="text-[#294a26]">
+										<span className="font-bold">Salts:</span> <i className='font-semibold'>{medicine.salt_composition}</i>
+									</p>
 									{/* Add more details as needed */}
 								</div>
 							</li>
 						))}
 					</ul>
+
+
 
 				</form>
 				{/* HomeCards */}
