@@ -75,7 +75,7 @@ export default function Home() {
 
 				{/* Search Form */}
 				<form className="w-full max-w-md mb-8 mx-auto">
-					<div className="flex items-center border-b border-teal-500 py-2">
+					<div className="flex items-center border-b border-[#517028] py-2">
 						<input
 							className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
 							type="text"
