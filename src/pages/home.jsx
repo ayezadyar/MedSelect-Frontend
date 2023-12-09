@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faHippo } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faHippo, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import HomeCard from '../components/homeCard';
 import SideNav from '../components/sideNav';
 import Papa from 'papaparse';
@@ -104,7 +104,7 @@ export default function Home() {
 							onChange={handleSearch}
 							value={searchTerm}
 						/>
-						
+						<FontAwesomeIcon className='text-[#294a26]' size='lg' icon={faMagnifyingGlass} />
 						{/* <button
 							className="flex-shrink-0 bg-[#517028] transition-all duration-300 hover:bg-[#294a26] text-white font-bold py-2 px-4 rounded"
 							type="submit"
