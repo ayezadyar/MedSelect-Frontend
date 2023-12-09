@@ -1,0 +1,123 @@
+body{
+	margin: 0;
+	padding: 0;
+	background: url('../images/2019Creative_Wallpaper_Black_alarm_clock_on_yellow_background_133441_.jpg');
+	background-size: cover;
+	width: 100vw;
+	height: 100vh;
+}
+
+
+main{
+	position: relative;
+	width: 50%;
+	height: 82%;
+	top: 13%;
+	left: 45%;
+	background: rgb(0, 0, 0,0.5);
+}
+
+#title{
+	color: white;
+	text-align: center;
+	font-size: 4rem;
+	font-weight: 700;
+	font-family: cursive;
+	padding-top: 1rem;
+	letter-spacing: 2px;
+}
+
+#current-time{
+	color: white;
+	text-align: center;
+	font-size: 3rem;
+	font-weight: 500;
+	font-family: cursive;
+}
+
+#form-header{
+	padding-top: 1rem;
+	color: black;
+	text-align: center;
+	font-size: 2rem;
+	font-family: unset;
+	margin-top: 0.2rem;
+}
+
+form{
+	text-align: center;
+	width: 100%;
+	margin-top: 1rem;
+}
+
+form label{
+	text-transform: capitalize;
+	color: whitesmoke;
+	font-size: 1.2rem;
+}
+
+form input{
+	width: 20%;
+	background-color: white;
+	border: none;
+	font-size: 1.3rem;
+}
+
+form button{
+	background: #fa311b;
+	font-size: 1.3rem;
+	border: none;
+	color: white;
+}
+
+
+#alarms-container{
+	width: 60%;
+	height: 40%;
+	margin: auto;
+	margin-top: 1rem;
+	background: rgb(0, 0, 0, 0.6);
+	overflow: auto;
+}
+
+.alarm{
+	width: 80%;
+	height: 20%;
+	background: black;
+	margin: auto;
+	margin-top: 0.8rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.alarm p{
+	color: white;
+	font-size: 1.4rem;
+	margin: 0.6rem 1rem 0rem 1rem;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+/*media Queries for responsiveness*/
+@media screen and (max-width: 600px){
+	html{
+		font-size: 10px;
+	}
+	main{
+		width: 90%;
+		left: 5%;
+		top: 7%;
+	}
+	#alarms-container{
+		width: 80%;
+		height: 60%;
+	}
+	.alarm{
+		width: 90%;
+		height: 12%;
+	}
+}
+

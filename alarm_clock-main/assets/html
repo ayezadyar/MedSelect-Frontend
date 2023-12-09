@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Web Page</title>
+  <link rel="stylesheet" href="alarm.css">
+</head>
+
+<body>
+  <!-- Your HTML content -->
+
+  <!-- Audio element for the alarm sound -->
+  <audio id="alarmSound" src="twirling-intime-lenovo-k8-note-alarm-tone-41440.mp3"></audio>
+
+  <script src="alarm.js"></script> <!-- Link to your JavaScript file -->
+
+  <script>
+    // Request permission for notifications when the page loads
+    document.addEventListener('DOMContentLoaded', function () {
+      if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+        Notification.requestPermission();
+      }
+    });
+  </script>
+</body>
+
+</html>
+
