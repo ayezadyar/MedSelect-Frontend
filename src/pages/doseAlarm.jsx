@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SideNav from '../components/sideNav'; // Import your SideNav component
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faHippo } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const AlarmClock = () => {
 	const [currentTime, setCurrentTime] = useState('');
@@ -69,13 +69,18 @@ const AlarmClock = () => {
 						<input
 							type="time"
 							onChange={handleAlarmChange}
-							className="border border-gray-300 p-2 rounded focus:outline-none"
+							className="border border-gray-300 p-2 rounded focus:outline-none text-black"
 						/>
-						<p className="mt-2">Set Alarm for: {alarmTime ? new Date('1970-01-01T' + alarmTime).toLocaleTimeString('en-US', { hour12: true }) : ''}</p>
+						<p className="mt-2">
+							Set Alarm for:{' '}
+							<span className="text-white">
+								{alarmTime ? new Date('1970-01-01T' + alarmTime).toLocaleTimeString('en-US', { hour12: true }) : ''}
+							</span>
+						</p>
 						{isAlarmActive && (
 							<button
 								onClick={handleAlarmOff}
-								className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
+								className="mt-4 bg-[#294a26] text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
 							>
 								Turn Alarm Off
 							</button>
