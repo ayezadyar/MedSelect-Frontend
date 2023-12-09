@@ -23,15 +23,12 @@ export default function Home() {
 					}`}
 			>
 				{/* Burger Icon */}
-				<div
-					className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen
-						? 'text-white'
-						: 'text-black'
-						}`}
+				<button
+					className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? 'text-white' : 'text-black' }`}
 					onClick={toggleNav}
 				>
 					<FontAwesomeIcon icon={faBars} size="lg" />
-				</div>
+				</button>
 				{/* Logo or Picture */}
 				<div className="mb-4 mt-2">
 					<img src="/logo.png" alt="Logo" className="w-32 mx-auto mb-2 sm:w-48 lg:w-64" />
