@@ -83,7 +83,7 @@ export default function Home() {
 							aria-label="Medicine search"
 						/>
 						<button
-							className="flex-shrink-0 bg-[#517028] transition-all duration-300 hover:bg-[#294a26] text-white font-bold py-2 px-4 rounded hover:scale-110"
+							className="flex-shrink-0 bg-[#517028] transition-all duration-300 hover:bg-[#294a26] text-white font-bold py-2 px-4 rounded"
 							type="submit"
 						>
 							Search
