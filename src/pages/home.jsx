@@ -11,6 +11,7 @@ export default function Home() {
 	const [medicines, setMedicines] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
+	const [showCards, setShowCards] = useState(true);
 
 	useEffect(() => {
 		// Load CSV data
@@ -28,9 +29,20 @@ export default function Home() {
 		fetchData();
 	}, []);
 
+	useEffect(() => {
+		if (searchTerm.trim() && searchTerm.length > 1) {
+			const results = findMedicinesWithCommonSalt(searchTerm);
+			setSearchResults(results);
+			setShowCards(false);
+		} else {
+			setSearchResults([]);
+			setShowCards(true);
+		}
+	}, [searchTerm, medicines]);
+
 	const findMedicinesWithCommonSalt = (query) => {
 		const lowerCaseQuery = query.toLowerCase();
-		const resultNames = new Set(); // Set to track unique product names
+		const resultNames = new Set();
 
 		const searchedMedicine = medicines.find(medicine =>
 			typeof medicine.product_name === 'string' &&
@@ -54,15 +66,6 @@ export default function Home() {
 		});
 	};
 
-	useEffect(() => {
-		if (searchTerm.trim()) {
-			const results = findMedicinesWithCommonSalt(searchTerm);
-			setSearchResults(results);
-		} else {
-			setSearchResults([]);
-		}
-	}, [searchTerm, medicines]);
-
 	const handleSearch = (e) => {
 		setSearchTerm(e.target.value);
 	};
@@ -78,12 +81,11 @@ export default function Home() {
 
 			{/* Main Content */}
 			<div
-				className={`flex flex-col flex-1 justify-center items-center min-h-screen transition-margin duration-300 ${isNavOpen ? 'ml-64' : ''
-					}`}
+				className={`flex flex-col flex-1 justify-center items-center min-h-screen transition-margin duration-300 ${isNavOpen ? 'ml-64' : ''}`}
 			>
 				{/* Burger Icon */}
 				<button
-					className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? 'text-white' : 'text-black' }`}
+					className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? 'text-white' : 'text-black'}`}
 					onClick={toggleNav}
 				>
 					<FontAwesomeIcon icon={faBars} size="lg" />
@@ -97,6 +99,7 @@ export default function Home() {
 				<form className="w-full max-w-md mb-8 mx-auto">
 					<div className="flex items-center border-b border-[#517028] py-2">
 						<input
+							autoFocus
 							className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
 							type="text"
 							placeholder="Search for medicine..."
@@ -105,61 +108,54 @@ export default function Home() {
 							value={searchTerm}
 						/>
 						<FontAwesomeIcon className='text-[#294a26]' size='lg' icon={faMagnifyingGlass} />
-						{/* <button
-							className="flex-shrink-0 bg-[#517028] transition-all duration-300 hover:bg-[#294a26] text-white font-bold py-2 px-4 rounded"
-							type="submit"
-						>
-							Search
-						</button> */}
-
 					</div>
-					<ul className="list-none p-0 m-0">
-						{searchResults.map((medicine, index) => (
-							<li key={index} className="mb-2 overflow-hidden">
-								<div
-									className={`border-b ${index % 2 === 0 ? 'border-[#517028]' : 'border-[#294a26]'} rounded-full p-4`}
-								>
-									<p className="text-[#294a26]">
-										<span className="font-bold">Name:</span> <i className='font-semibold'>{medicine.product_name}</i>
-									</p>
-									<p className="text-[#294a26]">
-										<span className="font-bold">Salts:</span> <i className='font-semibold'>{medicine.salt_composition}</i>
-									</p>
-									{/* Add more details as needed */}
-								</div>
-							</li>
-						))}
-					</ul>
-
-
-
+					{searchTerm.length > 1 && (
+						<ul className={`list-none p-0 m-0 fade-out ${showCards ? 'fade-in' : ''}`}>
+							{searchResults.map((medicine, index) => (
+								<li key={index} className="mb-2 overflow-hidden">
+									<div
+										className={`border-b ${index % 2 === 0 ? 'border-[#517028]' : 'border-[#294a26]'} rounded-full p-4`}
+									>
+										<p className="text-[#294a26]">
+											<span className="font-semibold">Name:</span> <i className='font-semibold'>{medicine.product_name}</i>
+										</p>
+										<p className="text-[#294a26]">
+											<span className="font-semibold">Salts:</span> <i className='font-semibold'>{medicine.salt_composition}</i>
+										</p>
+									</div>
+								</li>
+							))}
+						</ul>
+					)}
 				</form>
 				{/* HomeCards */}
-				<div className="flex flex-col sm:flex-row flex-wrap justify-around w-full max-w-6xl mb-8">
-					{/* HomeCard 1 */}
-					<HomeCard
-						imageSrc="/doseAlarm.png"
-						altText="Dose Alarm"
-						title="Dose Alarm"
-						to="/doseAlarm"
-					/>
+				{showCards && (
+					<div className={`flex flex-col sm:flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out ${showCards ? 'fade-in' : ''}`}>
+						{/* HomeCard 1 */}
+						<HomeCard
+							imageSrc="/doseAlarm.png"
+							altText="Dose Alarm"
+							title="Dose Alarm"
+							to="/doseAlarm"
+						/>
 
-					{/* HomeCard 2 */}
-					<HomeCard
-						imageSrc="/doctorConsultation.png"
-						altText="Doctor Consultation"
-						title="Doctor Consultation"
-						to="/login"
-					/>
+						{/* HomeCard 2 */}
+						<HomeCard
+							imageSrc="/doctorConsultation.png"
+							altText="Doctor Consultation"
+							title="Doctor Consultation"
+							to="/login"
+						/>
 
-					{/* HomeCard 3 */}
-					<HomeCard
-						imageSrc="/community.png"
-						altText="Community"
-						title="Community"
-						to="/login"
-					/>
-				</div>
+						{/* HomeCard 3 */}
+						<HomeCard
+							imageSrc="/community.png"
+							altText="Community"
+							title="Community"
+							to="/login"
+						/>
+					</div>
+				)}
 			</div>
 		</div>
 	);
