@@ -32,6 +32,13 @@ export default function Home() {
 						ABOUT US
 					</Link>
 					<Link
+						to="/community"
+						className="block py-2 hover:bg-teal-700 transition-all duration-300"
+						onClick={toggleNav}
+					>
+						JOIN COMMUNITY
+					</Link>
+					<Link
 						to="/contact"
 						className="block py-2 hover:bg-teal-700 transition-all duration-300"
 						onClick={toggleNav}

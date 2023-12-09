@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Contact() {
+export default function Community() {
 	const [isNavOpen, setNavOpen] = useState(false);
 
 	const toggleNav = () => {
