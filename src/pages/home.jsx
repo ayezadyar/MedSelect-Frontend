@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faHippo } from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
 	const [isNavOpen, setNavOpen] = useState(false);
@@ -60,15 +62,14 @@ export default function Home() {
 			<div className="flex flex-col flex-1 justify-center items-center min-h-screen">
 				{/* Burger Icon */}
 				<div
-					className={`absolute top-4 left-4 cursor-pointer ${isNavOpen ? 'text-white' : 'text-black'
-						} font-bold`}
+					className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen
+						? 'text-white'
+						: 'text-black'
+						}`}
 					onClick={toggleNav}
 				>
-					<div className="w-6 h-px bg-current mb-1"></div>
-					<div className="w-6 h-px bg-current mb-1"></div>
-					<div className="w-6 h-px bg-current"></div>
+					<FontAwesomeIcon size='xl' icon={faBars} />
 				</div>
-
 				{/* Logo or Picture */}
 				<div className="mb-4 mt-2">
 					<img src="/logo.png" alt="Logo" className="w-32 mx-auto mb-2 sm:w-48 lg:w-64" />
