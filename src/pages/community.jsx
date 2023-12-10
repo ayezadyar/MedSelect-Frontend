@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-const DiscussionForm = () => {
+const community = () => {
   const [feedback, setFeedback] = useState('');
   const [image, setImage] = useState(null);
   const [allFeedback, setAllFeedback] = useState([]);
@@ -140,4 +140,4 @@ const DiscussionForm = () => {
   );
 };
 
-export default DiscussionForm;
+export default community;
