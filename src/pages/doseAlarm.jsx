@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SideNav from '../components/sideNav'; // Adjust this import to your project's file structure
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faPlus, faEdit, faTrash, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 import { Howl } from 'howler';
 
 const AlarmClock = () => {
@@ -130,54 +130,66 @@ const AlarmClock = () => {
 					/>
 					{editAlarmIndex !== null ? (
 						<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-blue-600 text-white ml-4">
-							Update
+							<FontAwesomeIcon icon={faEdit} /> Update
 						</button>
 					) : (
-						<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-green-600 text-white ml-4">
+						<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-[#517028] text-white ml-4 hover:bg-[#294a26]">
 							<FontAwesomeIcon icon={faPlus} /> Add Alarm
 						</button>
 					)}
 				</div>
 
 				{/* Existing Alarms Table */}
-				<table className="w-full mb-4 text-center">
-					<thead>
-						<tr>
-							<th className="py-2">Alarm Name</th>
-							<th className="py-2">Alarm Time</th>
-							<th className="py-2">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{alarms.map((alarm, index) => (
-							<tr key={index}>
-								<td className="p-2">{alarm.name}</td>
-								<td className="p-2">
-									{alarm.time ? new Date('1970-01-01T' + alarm.time).toLocaleTimeString('en-US', { hour12: true }) : ''}
-								</td>
-								<td className="p-2">
-									<button onClick={() => editAlarm(index)} className="px-4 py-2 rounded bg-blue-600 text-white mr-2">
-										Edit
-									</button>
-									<button onClick={() => deleteAlarm(index)} className="px-4 py-2 rounded bg-red-600 text-white mr-2">
-										Delete
-									</button>
-									{alarm.isActive && (
-										<button
-											onClick={() => handleAlarmOff(index)}
-											className="px-4 py-2 rounded bg-yellow-500 text-white"
-										>
-											Turn Off
-										</button>
-									)}
-								</td>
+				<div className="w-full max-w-md mb-4 text-center">
+					<table className="w-full rounded-3xl">
+						<thead>
+							<tr>
+								<th className="py-2 text-white bg-[#517028] rounded-tl-lg ">Alarm Name</th>
+								<th className="py-2 text-white bg-[#517028] ">Alarm Time</th>
+								<th className="py-2 text-white bg-[#517028]  rounded-tr-lg">Actions</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{alarms.map((alarm, index) => (
+								<React.Fragment key={index}>
+									<tr className="text-black">
+										<td className="p-2">
+											{alarm.name}
+										</td>
+										<td className="p-2">
+											{alarm.time ? new Date('1970-01-01T' + alarm.time).toLocaleTimeString('en-US', { hour12: true }) : ''}
+										</td>
+										<td className="p-2">
+											<button onClick={() => editAlarm(index)} className="px-4 py-2 rounded text-[#294a26] mr-2">
+												<FontAwesomeIcon icon={faEdit} style={{ color: '#294a26' }} />
+											</button>
+											<button onClick={() => deleteAlarm(index)} className="px-4 py-2 rounded text-[#294a26] mr-2">
+												<FontAwesomeIcon icon={faTrash} style={{ color: '#294a26' }} />
+											</button>
+											{alarm.isActive && (
+												<button
+													onClick={() => handleAlarmOff(index)}
+													className="px-4 py-2 rounded text-[#294a26]"
+												>
+													<FontAwesomeIcon icon={faToggleOn} style={{ color: '#294a26' }} />
+												</button>
+											)}
+										</td>
+									</tr>
+									<tr>
+										<td colSpan="3" className="border-b border-[#517028]"></td>
+									</tr>
+								</React.Fragment>
+							))}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
+
 	);
+
+
 };
 
 export default AlarmClock;
