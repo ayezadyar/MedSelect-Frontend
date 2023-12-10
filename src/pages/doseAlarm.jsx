@@ -56,7 +56,7 @@ const AlarmClock = () => {
   const handleAlarmChange = (event) => {
     const timeValue = formatTime(event.target.value + ' AM');
     setAlarmTime(timeValue);
-    setIsAlarmActive(true);
+    setIsAlarmActive(false); // Reset alarm state when changing the time
   };
 
   const handleAlarmOff = () => {
@@ -92,6 +92,14 @@ const AlarmClock = () => {
     }
   };
 
+  const confirmSetAlarm = () => {
+    if (alarmTime) {
+      setIsAlarmActive(true);
+    } else {
+      alert('Please select a valid alarm time before confirming.');
+    }
+  };
+
   return (
     <div className="flex flex-col h-screen">
       <SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
@@ -116,12 +124,19 @@ const AlarmClock = () => {
                 {alarmTime ? new Date('1970-01-01T' + alarmTime).toLocaleTimeString('en-US', { hour12: true }) : ''}
               </span>
             </p>
-            {isAlarmActive && (
+            {isAlarmActive ? (
               <button
                 onClick={handleAlarmOff}
                 className="mt-4 bg-[#294a26] text-md md:text-lg font-medium text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
               >
                 Turn Alarm Off
+              </button>
+            ) : (
+              <button
+                onClick={confirmSetAlarm}
+                className="mt-4 bg-[#294a26] text-md md:text-lg font-medium text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none"
+              >
+                Confirm Set Alarm
               </button>
             )}
           </div>
@@ -148,7 +163,7 @@ const AlarmClock = () => {
           <div className="mt-4">
             <h2 className="text-lg mb-2 font-bold text-[#294a26]">Delete Old Alarms</h2>
             <ul className="list-disc pl-8 text-md md:text-lg">
-              {oldAlarms.map((alarm, index) => (
+			{oldAlarms.map((alarm, index) => (
                 <li key={index} className="flex items-center justify-between">
                   <span>{new Date('1970-01-01T' + alarm).toLocaleTimeString('en-US', { hour12: true })}</span>
                   <button
@@ -168,4 +183,6 @@ const AlarmClock = () => {
 };
 
 export default AlarmClock;
+
+
 
