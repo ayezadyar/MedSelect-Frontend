@@ -1,31 +1,37 @@
-
-
-
-
-
-
-
-
-
-
 import React, { useState } from 'react';
 
-const community = () => {
+const DiscussionForm = () => {
   const [feedback, setFeedback] = useState('');
+  const [image, setImage] = useState(null);
   const [allFeedback, setAllFeedback] = useState([]);
+  const [includeImage, setIncludeImage] = useState(false);
 
   const handleInputChange = (e) => {
     setFeedback(e.target.value);
   };
 
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    setImage(selectedImage);
+  };
+
+  const handleToggleImage = () => {
+    setIncludeImage(!includeImage);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Update the feedback list with the new feedback
-    setAllFeedback((prevFeedback) => [...prevFeedback, feedback]);
+    const newFeedback = {
+      text: feedback,
+      image: includeImage ? URL.createObjectURL(image) : null,
+    };
 
-    // Clear the input field
+    setAllFeedback((prevFeedback) => [...prevFeedback, newFeedback]);
+
     setFeedback('');
+    setImage(null);
+    setIncludeImage(false);
   };
 
   return (
@@ -43,9 +49,33 @@ const community = () => {
           placeholder="Share your feedback..."
         ></textarea>
 
+        <div className="mt-4 mb-4">
+          <button
+            type="button"
+            onClick={handleToggleImage}
+            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+              includeImage ? 'bg-opacity-50' : ''
+            }`}
+          >
+            {includeImage ? 'Remove Image' : 'Add Image'}
+          </button>
+        </div>
+
+        {includeImage && (
+          <div>
+            <label className="block mt-2 mb-2">Upload Image:</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="mb-4"
+            />
+          </div>
+        )}
+
         <button
           type="submit"
-          className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Submit Feedback
         </button>
@@ -58,8 +88,16 @@ const community = () => {
         ) : (
           <ul>
             {allFeedback.map((item, index) => (
-              <li key={index} className="mb-2">
-                {item}
+              <li key={index} className="mb-4">
+                <p>{item.text}</p>
+                {item.image && (
+                  <img
+                    src={item.image}
+                    alt={`User Feedback ${index}`}
+                    className="mt-2 rounded"
+                    style={{ maxWidth: '100%', maxHeight: '200px' }}
+                  />
+                )}
               </li>
             ))}
           </ul>
@@ -69,7 +107,10 @@ const community = () => {
   );
 };
 
-export default community;
+export default DiscussionForm;
+
+
+
 
 
 
