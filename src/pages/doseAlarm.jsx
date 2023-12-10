@@ -91,6 +91,27 @@ const AlarmClock = () => {
 					Current Time: {currentTime}
 				</p>
 
+				{/* Input Fields for New Alarm Name and Time */}
+				<div className="mb-4 flex items-center">
+					<input
+						type="text"
+						placeholder="Alarm Name"
+						value={newAlarmName}
+						onChange={(e) => setNewAlarmName(e.target.value)}
+						className="border p-3 rounded focus:outline-none mr-4"
+					/>
+					<input
+						type="time"
+						value={newAlarmTime}
+						onChange={(e) => setNewAlarmTime(e.target.value)}
+						className="border p-3 rounded focus:outline-none"
+					/>
+					{/* Button to Add New Alarm */}
+					<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-green-600 text-white ml-4">
+						<FontAwesomeIcon icon={faPlus} /> Add Alarm
+					</button>
+				</div>
+
 				{/* Existing Alarms */}
 				{alarms.map((alarm, index) => (
 					<div key={index} className="mb-4 w-full text-center">
@@ -119,28 +140,6 @@ const AlarmClock = () => {
 						<hr className="my-4 bg-gray-300" />
 					</div>
 				))}
-
-				{/* Input Fields for New Alarm Name and Time */}
-				<div className="mb-4 flex items-center">
-					<input
-						type="text"
-						placeholder="Alarm Name"
-						value={newAlarmName}
-						onChange={(e) => setNewAlarmName(e.target.value)}
-						className="border p-3 rounded focus:outline-none mr-4"
-					/>
-					<input
-						type="time"
-						value={newAlarmTime}
-						onChange={(e) => setNewAlarmTime(e.target.value)}
-						className="border p-3 rounded focus:outline-none"
-					/>
-				</div>
-
-				{/* Button to Add New Alarm */}
-				<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-green-600 text-white">
-					<FontAwesomeIcon icon={faPlus} /> Add Alarm
-				</button>
 			</div>
 		</div>
 	);
