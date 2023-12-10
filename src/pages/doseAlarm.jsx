@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import SideNav from '../components/sideNav'; // Import your SideNav component
+import SideNav from '../components/sideNav'; // Adjust this import to your project's file structure
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faBell, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Howl } from 'howler';
 
 const AlarmClock = () => {
-	const [alarms, setAlarms] = useState([{ name: '', time: '', isActive: false }]);
+	const [alarms, setAlarms] = useState([]);
+	const [newAlarmTime, setNewAlarmTime] = useState('');
 	const [currentTime, setCurrentTime] = useState('');
-	const [isNavOpen, setNavOpen] = useState(false); // State for side nav
+	const [isNavOpen, setNavOpen] = useState(false);
 
 	const sound = new Howl({
-		src: ['/alarm.mp3'],
+		src: ['/alarm.mp3'], // Make sure this path is correct for your project
 	});
 
 	useEffect(() => {
@@ -21,7 +22,7 @@ const AlarmClock = () => {
 			alarms.forEach((alarm, index) => {
 				if (formatTime(newTime) === alarm.time && alarm.isActive) {
 					sound.play();
-					alert(`Alarm for ${alarm.name} ringing!`);
+					alert(`Time for ${alarm.name}`);
 					handleAlarmOff(index);
 				}
 			});
@@ -42,28 +43,21 @@ const AlarmClock = () => {
 		return `${hours}:${minutes}:00`;
 	};
 
-	const handleAlarmChange = (index, event) => {
-		const updatedAlarms = [...alarms];
-		updatedAlarms[index].time = formatTime(event.target.value + ' AM'); // Adjust as needed
-		updatedAlarms[index].isActive = true;
-		setAlarms(updatedAlarms);
-	};
-
-	const handleNameChange = (index, event) => {
-		const updatedAlarms = [...alarms];
-		updatedAlarms[index].name = event.target.value;
-		setAlarms(updatedAlarms);
-	};
-
 	const handleAlarmOff = (index) => {
-		const updatedAlarms = [...alarms];
-		updatedAlarms[index].isActive = false;
-		updatedAlarms[index].time = '';
+		const updatedAlarms = alarms.map((alarm, i) => (
+			i === index ? { ...alarm, isActive: false } : alarm
+		));
 		setAlarms(updatedAlarms);
 	};
 
-	const addAlarm = () => {
-		setAlarms([...alarms, { name: '', time: '', isActive: false }]);
+	const addNewAlarm = () => {
+		if (!newAlarmTime) {
+			alert("Please set a time for the alarm.");
+			return;
+		}
+		const formattedTime = formatTime(newAlarmTime + ' AM'); // Adjust as needed
+		setAlarms([...alarms, { name: `Alarm ${alarms.length + 1}`, time: formattedTime, isActive: true }]);
+		setNewAlarmTime('');
 	};
 
 	const toggleNav = () => {
@@ -76,54 +70,67 @@ const AlarmClock = () => {
 			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
 
 			{/* Main Content */}
-			<div className={`flex-1 flex flex-col items-center justify-center transition-margin duration-300 ${isNavOpen ? 'ml-64' : ''}`}>
+			<div className={`flex-1 flex flex-col items-center justify-center ${isNavOpen ? 'ml-64' : ''}`}>
+				{/* Navigation Toggle Button */}
 				<button
-					className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? 'text-white' : 'text-black'}`}
+					className={`absolute top-4 left-4 ${isNavOpen ? 'text-white' : 'text-black'}`}
 					onClick={toggleNav}
 				>
 					<FontAwesomeIcon icon={faBars} size="lg" />
 				</button>
-				<h1 className="text-2xl md:text-4xl mb-2 md:mb-4 font-bold text-[#294a26]">
-					Alarm Clock <FontAwesomeIcon icon={faBell} />
+
+				{/* Header */}
+				<h1 className="text-2xl mb-2 font-bold">
+					Your Alarms
 				</h1>
-				<p className="text-lg md:text-xl mb-4 font-bold text-[#294a26]">
+
+				{/* Display Current Time */}
+				<p className="text-lg mb-4 font-bold">
 					Current Time: {currentTime}
 				</p>
+
+				{/* Existing Alarms */}
 				{alarms.map((alarm, index) => (
-					<div key={index} className="mb-4 w-80 md:w-96 text-center">
-						<div className="bg-[#517028] text-white p-4 rounded-lg shadow-md">
-							<input
-								type="text"
-								placeholder="Enter Dose Name"
-								value={alarm.name}
-								onChange={(e) => handleNameChange(index, e)}
-								className="border border-[#294a26] text-[#294a26] font-bold text-lg md:text-2xl p-3 md:p-4 rounded focus:outline-none mb-2"
-							/>
-							<input
-								type="time"
-								value={alarm.time.slice(0, -3)}
-								onChange={(e) => handleAlarmChange(index, e)}
-								className="border border-[#294a26] text-[#294a26] font-bold text-lg md:text-2xl p-3 md:p-4 rounded focus:outline-none"
-							/>
-							<p className="mt-2 text-md md:text-lg">
-								Set Alarm for: <span className="text-white text-md md:text-lg font-medium">
-									{alarm.time ? new Date('1970-01-01T' + alarm.time).toLocaleTimeString('en-US', { hour12: true }) : ''}
-								</span>
-							</p>
+					<div key={index} className="mb-4 w-full text-center">
+						<div className="p-4 flex flex-col items-center justify-center">
+							{/* Alarm Time */}
+							<span className="text-md md:text-lg font-medium">
+								{alarm.time ? new Date('1970-01-01T' + alarm.time).toLocaleTimeString('en-US', { hour12: true }) : ''}
+							</span>
+
+							{/* Alarm Name */}
+							<div className="mt-2 font-medium">
+								{alarm.name}
+							</div>
+
+							{/* Turn Off Alarm Button */}
 							{alarm.isActive && (
 								<button
 									onClick={() => handleAlarmOff(index)}
-									className="mt-4 bg-[#294a26] text-md md:text-lg font-medium text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
+									className="mt-2 px-4 py-2 rounded bg-red-600 text-white"
 								>
 									Turn Alarm Off
 								</button>
 							)}
 						</div>
+
+						<hr className="my-4 bg-gray-300" />
 					</div>
 				))}
 
-				<button onClick={addAlarm} className="mt-4 bg-[#294a26] text-md md:text-lg font-medium text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none">
-					<FontAwesomeIcon icon={faPlus} /> Add Another Alarm
+				{/* Input Field for New Alarm Time */}
+				<div className="mb-4">
+					<input
+						type="time"
+						value={newAlarmTime}
+						onChange={(e) => setNewAlarmTime(e.target.value)}
+						className="border p-3 rounded focus:outline-none"
+					/>
+				</div>
+
+				{/* Button to Add New Alarm */}
+				<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-green-600 text-white">
+					<FontAwesomeIcon icon={faPlus} /> Add Alarm
 				</button>
 			</div>
 		</div>
