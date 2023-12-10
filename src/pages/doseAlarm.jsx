@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SideNav from '../components/sideNav';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faBell, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBell, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Howl } from 'howler';
 
 const AlarmClock = () => {
@@ -11,6 +11,8 @@ const AlarmClock = () => {
   const [isNavOpen, setNavOpen] = useState(false);
   const [oldAlarms, setOldAlarms] = useState([]);
   const [selectedOldAlarm, setSelectedOldAlarm] = useState('');
+  const [doseTimetable, setDoseTimetable] = useState([]);
+  const [newDoseTime, setNewDoseTime] = useState('');
 
   const sound = new Howl({
     src: ['/alarm.mp3'],
@@ -25,16 +27,15 @@ const AlarmClock = () => {
       const newTime = new Date().toLocaleTimeString('en-US', { hour12: true });
       setCurrentTime(newTime);
 
-      if (formatTime(newTime) === alarmTime && isAlarmActive) {
+      if (isAlarmActive && doseTimetable.includes(formatTime(newTime))) {
         playSound();
-        alert('Alarm ringing!');
+        alert('Time for your dose!');
         handleAlarmOff();
-        saveAlarm(alarmTime);
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [alarmTime, isAlarmActive]);
+  }, [isAlarmActive, doseTimetable]);
 
   useEffect(() => {
     const savedAlarms = JSON.parse(localStorage.getItem('oldAlarms')) || [];
@@ -95,9 +96,29 @@ const AlarmClock = () => {
   const confirmSetAlarm = () => {
     if (alarmTime) {
       setIsAlarmActive(true);
+      saveAlarm(alarmTime);
     } else {
       alert('Please select a valid alarm time before confirming.');
     }
+  };
+
+  const handleNewDoseTimeChange = (event) => {
+    setNewDoseTime(event.target.value);
+  };
+
+  const addDoseTime = () => {
+    if (newDoseTime && !doseTimetable.includes(formatTime(newDoseTime))) {
+      setDoseTimetable([...doseTimetable, formatTime(newDoseTime)]);
+      setNewDoseTime('');
+    } else {
+      alert('Please enter a valid and unique dose time.');
+    }
+  };
+
+  const removeDoseTime = (index) => {
+    const updatedTimetable = [...doseTimetable];
+    updatedTimetable.splice(index, 1);
+    setDoseTimetable(updatedTimetable);
   };
 
   return (
@@ -143,7 +164,7 @@ const AlarmClock = () => {
         </div>
         <div>
           <h2 className="text-xl mb-2 font-bold text-[#294a26]">Old Alarms</h2>
-          <select
+		  <select
             onChange={handleOldAlarmChange}
             className="border border-[#294a26] text-[#294a26] font-bold text-md md:text-lg p-3 md:p-4 rounded focus:outline-none"
           >
@@ -160,22 +181,37 @@ const AlarmClock = () => {
           >
             Set Old Alarm
           </button>
-          <div className="mt-4">
-            <h2 className="text-lg mb-2 font-bold text-[#294a26]">Delete Old Alarms</h2>
-            <ul className="list-disc pl-8 text-md md:text-lg">
-			{oldAlarms.map((alarm, index) => (
-                <li key={index} className="flex items-center justify-between">
-                  <span>{new Date('1970-01-01T' + alarm).toLocaleTimeString('en-US', { hour12: true })}</span>
-                  <button
-                    onClick={() => deleteAlarm(index)}
-                    className="text-red-600 hover:text-red-800"
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
-                </li>
-              ))}
-            </ul>
+        </div>
+        <div className="mt-8">
+          <h2 className="text-2xl mb-2 font-bold text-[#294a26]">Dose Timetable</h2>
+          <div className="flex items-center space-x-4">
+            <input
+              type="time"
+              value={newDoseTime}
+              onChange={handleNewDoseTimeChange}
+              className="border border-[#294a26] text-[#294a26] font-bold text-md md:text-lg p-3 md:p-4 rounded focus:outline-none"
+            />
+            <button
+              onClick={addDoseTime}
+              className="bg-[#294a26] text-md md:text-lg font-medium text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none"
+            >
+              <FontAwesomeIcon icon={faPlus} className="mr-2" />
+              Add Dose Time
+            </button>
           </div>
+          <ul className="list-disc pl-8 text-md md:text-lg mt-4">
+            {doseTimetable.map((doseTime, index) => (
+              <li key={index} className="flex items-center justify-between">
+                <span>{new Date('1970-01-01T' + doseTime).toLocaleTimeString('en-US', { hour12: true })}</span>
+                <button
+                  onClick={() => removeDoseTime(index)}
+                  className="text-red-600 hover:text-red-800"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
@@ -183,6 +219,8 @@ const AlarmClock = () => {
 };
 
 export default AlarmClock;
+
+
 
 
 
