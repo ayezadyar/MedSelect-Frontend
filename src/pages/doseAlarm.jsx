@@ -86,7 +86,9 @@ const AlarmClock = () => {
 				<h1 className="text-2xl md:text-4xl mb-2 md:mb-4 font-bold text-[#294a26]">
 					Alarm Clock <FontAwesomeIcon icon={faBell} />
 				</h1>
-
+				<p className="text-lg md:text-xl mb-4 font-bold text-[#294a26]">
+					Current Time: {currentTime}
+				</p>
 				{alarms.map((alarm, index) => (
 					<div key={index} className="mb-4 w-80 md:w-96 text-center">
 						<div className="bg-[#517028] text-white p-4 rounded-lg shadow-md">
