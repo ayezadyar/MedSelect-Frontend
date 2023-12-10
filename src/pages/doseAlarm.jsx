@@ -3,6 +3,8 @@ import SideNav from '../components/sideNav'; // Adjust this import to your proje
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faPlus, faEdit, faTrash, faToggleOn, faBell } from "@fortawesome/free-solid-svg-icons";
 import { Howl } from 'howler';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AlarmClock = () => {
 	const [alarms, setAlarms] = useState([]);
@@ -24,7 +26,16 @@ const AlarmClock = () => {
 			alarms.forEach((alarm, index) => {
 				if (formatTime(newTime) === alarm.time && alarm.isActive) {
 					sound.play();
-					alert(`Time for ${alarm.name}`);
+					toast.info((`Time for ${alarm.name}`), {
+						position: "top-right",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "light",
+					});
 					handleAlarmOff(index);
 				}
 			});
@@ -54,7 +65,16 @@ const AlarmClock = () => {
 
 	const addNewAlarm = () => {
 		if (!newAlarmTime || !newAlarmName) {
-			alert("Please set a time and name for the alarm.");
+			toast.error(("Please set a time and name for the alarm."), {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
 			return;
 		}
 		const formattedTime = formatTime(newAlarmTime + ' AM');
@@ -186,6 +206,7 @@ const AlarmClock = () => {
 					</table>
 				</div>
 			</div>
+			<ToastContainer />
 		</div>
 
 	);
