@@ -105,7 +105,7 @@ const AlarmClock = () => {
 
 				{/* Header */}
 				<h1 className="text-2xl mb-2 font-bold text-[#294a26]">
-					Dose Alarms <FontAwesomeIcon icon={faBell}/>
+					Dose Alarms <FontAwesomeIcon icon={faBell} />
 				</h1>
 
 				{/* Display Current Time */}
@@ -130,11 +130,11 @@ const AlarmClock = () => {
 					/>
 					{editAlarmIndex !== null ? (
 						<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-blue-600 text-white ml-4">
-							<FontAwesomeIcon icon={faEdit} /> Update
+							<FontAwesomeIcon icon={faEdit} title="Edit" />
 						</button>
 					) : (
 						<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-[#517028] text-white ml-4 hover:bg-[#294a26]">
-							<FontAwesomeIcon icon={faPlus} /> Add Alarm
+							<FontAwesomeIcon icon={faPlus} title="Add Alarm" />
 						</button>
 					)}
 				</div>
@@ -144,9 +144,9 @@ const AlarmClock = () => {
 					<table className="w-full rounded-3xl">
 						<thead>
 							<tr>
-								<th className="py-2 text-white bg-[#517028] rounded-tl-lg ">Alarm Name</th>
-								<th className="py-2 text-white bg-[#517028] ">Alarm Time</th>
-								<th className="py-2 text-white bg-[#517028]  rounded-tr-lg">Actions</th>
+								<th className="py-2 text-white bg-[#517028] rounded-tl-lg">Alarm Name</th>
+								<th className="py-2 text-white bg-[#517028]">Alarm Time</th>
+								<th className="py-2 text-white bg-[#517028] rounded-tr-lg">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -160,16 +160,17 @@ const AlarmClock = () => {
 											{alarm.time ? new Date('1970-01-01T' + alarm.time).toLocaleTimeString('en-US', { hour12: true }) : ''}
 										</td>
 										<td className="p-2">
-											<button onClick={() => editAlarm(index)} className="px-4 py-2 rounded text-[#294a26] mr-2">
+											<button onClick={() => editAlarm(index)} className="px-4 py-2 rounded text-[#294a26] mr-2" title="Edit">
 												<FontAwesomeIcon icon={faEdit} style={{ color: '#294a26' }} />
 											</button>
-											<button onClick={() => deleteAlarm(index)} className="px-4 py-2 rounded text-[#294a26] mr-2">
+											<button onClick={() => deleteAlarm(index)} className="px-4 py-2 rounded text-[#294a26] mr-2" title="Delete">
 												<FontAwesomeIcon icon={faTrash} style={{ color: '#294a26' }} />
 											</button>
 											{alarm.isActive && (
 												<button
 													onClick={() => handleAlarmOff(index)}
 													className="px-4 py-2 rounded text-[#294a26]"
+													title="Turn Off"
 												>
 													<FontAwesomeIcon icon={faToggleOn} style={{ color: '#294a26' }} />
 												</button>
