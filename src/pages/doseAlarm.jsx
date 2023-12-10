@@ -7,6 +7,7 @@ import { Howl } from 'howler';
 const AlarmClock = () => {
 	const [alarms, setAlarms] = useState([]);
 	const [newAlarmTime, setNewAlarmTime] = useState('');
+	const [newAlarmName, setNewAlarmName] = useState(''); // Add new state for alarm name
 	const [currentTime, setCurrentTime] = useState('');
 	const [isNavOpen, setNavOpen] = useState(false);
 
@@ -51,13 +52,14 @@ const AlarmClock = () => {
 	};
 
 	const addNewAlarm = () => {
-		if (!newAlarmTime) {
-			alert("Please set a time for the alarm.");
+		if (!newAlarmTime || !newAlarmName) {
+			alert("Please set a time and name for the alarm.");
 			return;
 		}
-		const formattedTime = formatTime(newAlarmTime + ' AM'); // Adjust as needed
-		setAlarms([...alarms, { name: `Alarm ${alarms.length + 1}`, time: formattedTime, isActive: true }]);
+		const formattedTime = formatTime(newAlarmTime + ' AM');
+		setAlarms([...alarms, { name: newAlarmName, time: formattedTime, isActive: true }]);
 		setNewAlarmTime('');
+		setNewAlarmName('');
 	};
 
 	const toggleNav = () => {
@@ -92,22 +94,22 @@ const AlarmClock = () => {
 				{/* Existing Alarms */}
 				{alarms.map((alarm, index) => (
 					<div key={index} className="mb-4 w-full text-center">
-						<div className="p-4 flex flex-col items-center justify-center">
+						<div className="p-4 flex items-center justify-center">
+							{/* Alarm Name */}
+							<div className="mr-4 font-medium">
+								{alarm.name}
+							</div>
+
 							{/* Alarm Time */}
 							<span className="text-md md:text-lg font-medium">
 								{alarm.time ? new Date('1970-01-01T' + alarm.time).toLocaleTimeString('en-US', { hour12: true }) : ''}
 							</span>
 
-							{/* Alarm Name */}
-							<div className="mt-2 font-medium">
-								{alarm.name}
-							</div>
-
 							{/* Turn Off Alarm Button */}
 							{alarm.isActive && (
 								<button
 									onClick={() => handleAlarmOff(index)}
-									className="mt-2 px-4 py-2 rounded bg-red-600 text-white"
+									className="ml-4 px-4 py-2 rounded bg-red-600 text-white"
 								>
 									Turn Alarm Off
 								</button>
@@ -118,8 +120,15 @@ const AlarmClock = () => {
 					</div>
 				))}
 
-				{/* Input Field for New Alarm Time */}
-				<div className="mb-4">
+				{/* Input Fields for New Alarm Name and Time */}
+				<div className="mb-4 flex items-center">
+					<input
+						type="text"
+						placeholder="Alarm Name"
+						value={newAlarmName}
+						onChange={(e) => setNewAlarmName(e.target.value)}
+						className="border p-3 rounded focus:outline-none mr-4"
+					/>
 					<input
 						type="time"
 						value={newAlarmTime}
@@ -135,6 +144,7 @@ const AlarmClock = () => {
 			</div>
 		</div>
 	);
+
 };
 
 export default AlarmClock;
