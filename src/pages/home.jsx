@@ -152,7 +152,7 @@ export default function Home() {
 							imageSrc="/community.png"
 							altText="Community"
 							title="Community"
-							to="/login"
+							to="/community"
 						/>
 					</div>
 				)}
