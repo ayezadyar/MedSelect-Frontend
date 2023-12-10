@@ -1,113 +1,226 @@
 import React, { useState, useEffect } from 'react';
-import SideNav from '../components/sideNav'; // Import your SideNav component
+import SideNav from '../components/sideNav';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faBell } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBell, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Howl } from 'howler';
 
 const AlarmClock = () => {
-	const [currentTime, setCurrentTime] = useState('');
-	const [alarmTime, setAlarmTime] = useState('');
-	const [isAlarmActive, setIsAlarmActive] = useState(false);
-	const [isNavOpen, setNavOpen] = useState(false); // State for side nav
+  const [currentTime, setCurrentTime] = useState('');
+  const [alarmTime, setAlarmTime] = useState('');
+  const [isAlarmActive, setIsAlarmActive] = useState(false);
+  const [isNavOpen, setNavOpen] = useState(false);
+  const [oldAlarms, setOldAlarms] = useState([]);
+  const [selectedOldAlarm, setSelectedOldAlarm] = useState('');
+  const [doseTimetable, setDoseTimetable] = useState([]);
+  const [newDoseTime, setNewDoseTime] = useState('');
 
-	const sound = new Howl({
-		src: ['/alarm.mp3'],
-	});
+  const sound = new Howl({
+    src: ['/alarm.mp3'],
+  });
 
-	const playSound = () => {
-		sound.play();
-	};
+  const playSound = () => {
+    sound.play();
+  };
 
-	useEffect(() => {
-		const interval = setInterval(() => {
-			const newTime = new Date().toLocaleTimeString('en-US', { hour12: true });
-			setCurrentTime(newTime);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newTime = new Date().toLocaleTimeString('en-US', { hour12: true });
+      setCurrentTime(newTime);
 
-			if (formatTime(newTime) === alarmTime && isAlarmActive) {
-				playSound()
-				alert('Alarm ringing!');
-				// You can replace this alert with any sound or other notification
-				handleAlarmOff();
-			}
-		}, 1000);
+      if (isAlarmActive && doseTimetable.includes(formatTime(newTime))) {
+        playSound();
+        alert('Time for your dose!');
+        handleAlarmOff();
+      }
+    }, 1000);
 
-		return () => clearInterval(interval);
-	}, [alarmTime, isAlarmActive]);
+    return () => clearInterval(interval);
+  }, [isAlarmActive, doseTimetable]);
 
-	// Helper function to convert 12-hour format to 24-hour format for comparison
-	const formatTime = (time12h) => {
-		const [time, modifier] = time12h.split(' ');
-		let [hours, minutes] = time.split(':');
-		if (hours === '12') {
-			hours = '00';
-		}
-		if (modifier === 'PM') {
-			hours = parseInt(hours, 10) + 12;
-		}
-		return `${hours}:${minutes}:00`;
-	};
+  useEffect(() => {
+    const savedAlarms = JSON.parse(localStorage.getItem('oldAlarms')) || [];
+    setOldAlarms(savedAlarms);
+  }, []);
 
-	const handleAlarmChange = (event) => {
-		const timeValue = formatTime(event.target.value + ' AM'); // Default to AM for input; adjust as needed
-		setAlarmTime(timeValue);
-		setIsAlarmActive(true);
-	};
+  const formatTime = (time12h) => {
+    const [time, modifier] = time12h.split(' ');
+    let [hours, minutes] = time.split(':');
+    if (hours === '12') {
+      hours = '00';
+    }
+    if (modifier === 'PM') {
+      hours = parseInt(hours, 10) + 12;
+    }
+    return `${hours}:${minutes}:00`;
+  };
 
-	const handleAlarmOff = () => {
-		setIsAlarmActive(false);
-		setAlarmTime('');
-	};
+  const handleAlarmChange = (event) => {
+    const timeValue = formatTime(event.target.value + ' AM');
+    setAlarmTime(timeValue);
+    setIsAlarmActive(false); // Reset alarm state when changing the time
+  };
 
-	const toggleNav = () => {
-		setNavOpen(!isNavOpen);
-	};
+  const handleAlarmOff = () => {
+    setIsAlarmActive(false);
+    setAlarmTime('');
+  };
 
+  const saveAlarm = (alarm) => {
+    const updatedAlarms = [...oldAlarms, alarm];
+    setOldAlarms(updatedAlarms);
+    localStorage.setItem('oldAlarms', JSON.stringify(updatedAlarms));
+  };
 
+  const deleteAlarm = (index) => {
+    const updatedAlarms = [...oldAlarms];
+    updatedAlarms.splice(index, 1);
+    setOldAlarms(updatedAlarms);
+    localStorage.setItem('oldAlarms', JSON.stringify(updatedAlarms));
+  };
 
-	return (
-		<div className="flex flex-col h-screen">
-			{/* Side Navigation */}
-			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
+  const toggleNav = () => {
+    setNavOpen(!isNavOpen);
+  };
 
-			{/* Main Content */}
-			<div className={`flex-1 flex flex-col items-center justify-center transition-margin duration-300 ${isNavOpen ? 'ml-64' : ''}`}>
-				<button
-					className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? 'text-white' : 'text-black'}`}
-					onClick={toggleNav}
-				>
-					<FontAwesomeIcon icon={faBars} size="lg" />
-				</button>
-				<h1 className="text-2xl md:text-4xl mb-2 md:mb-4 font-bold text-[#294a26]">
-					Alarm Clock <FontAwesomeIcon icon={faBell} />
-				</h1>
+  const handleOldAlarmChange = (event) => {
+    setSelectedOldAlarm(event.target.value);
+  };
 
-				<div className="mb-4 w-80 md:w-96 text-center">
-					<div className="bg-[#517028] text-white p-4 rounded-lg shadow-md">
-						<h2 className="text-lg md:text-2xl mb-2 md:mb-4">Current Time: {currentTime}</h2>
-						<input
-							type="time"
-							onChange={handleAlarmChange}
-							className="border border-[#294a26] text-[#294a26] font-bold text-lg md:text-2xl p-3 md:p-4 rounded focus:outline-none"
-						/>
-						<p className="mt-2 text-md md:text-lg">
-							Set Alarm for:{' '}
-							<span className="text-white text-md md:text-lg font-medium">
-								{alarmTime ? new Date('1970-01-01T' + alarmTime).toLocaleTimeString('en-US', { hour12: true }) : ''}
-							</span>
-						</p>
-						{isAlarmActive && (
-							<button
-								onClick={handleAlarmOff}
-								className="mt-4 bg-[#294a26] text-md md:text-lg font-medium text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
-							>
-								Turn Alarm Off
-							</button>
-						)}
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+  const setOldAlarm = () => {
+    if (selectedOldAlarm) {
+      setAlarmTime(formatTime(selectedOldAlarm));
+      setIsAlarmActive(true);
+    }
+  };
+
+  const confirmSetAlarm = () => {
+    if (alarmTime) {
+      setIsAlarmActive(true);
+      saveAlarm(alarmTime);
+    } else {
+      alert('Please select a valid alarm time before confirming.');
+    }
+  };
+
+  const handleNewDoseTimeChange = (event) => {
+    setNewDoseTime(event.target.value);
+  };
+
+  const addDoseTime = () => {
+    if (newDoseTime && !doseTimetable.includes(formatTime(newDoseTime))) {
+      setDoseTimetable([...doseTimetable, formatTime(newDoseTime)]);
+      setNewDoseTime('');
+    } else {
+      alert('Please enter a valid and unique dose time.');
+    }
+  };
+
+  const removeDoseTime = (index) => {
+    const updatedTimetable = [...doseTimetable];
+    updatedTimetable.splice(index, 1);
+    setDoseTimetable(updatedTimetable);
+  };
+
+  return (
+    <div className="flex flex-col h-screen">
+      <SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
+      <div className={`flex-1 flex flex-col items-center justify-center transition-margin duration-300 ${isNavOpen ? 'ml-64' : ''}`}>
+        <button className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? 'text-white' : 'text-black'}`} onClick={toggleNav}>
+          <FontAwesomeIcon icon={faBars} size="lg" />
+        </button>
+        <h1 className="text-2xl md:text-4xl mb-2 md:mb-4 font-bold text-[#294a26]">
+          Alarm Clock <FontAwesomeIcon icon={faBell} />
+        </h1>
+        <div className="mb-4 w-80 md:w-96 text-center">
+          <div className="bg-[#517028] text-white p-4 rounded-lg shadow-md">
+            <h2 className="text-lg md:text-2xl mb-2 md:mb-4">Current Time: {currentTime}</h2>
+            <input
+              type="time"
+              onChange={handleAlarmChange}
+              className="border border-[#294a26] text-[#294a26] font-bold text-lg md:text-2xl p-3 md:p-4 rounded focus:outline-none"
+            />
+            <p className="mt-2 text-md md:text-lg">
+              Set Alarm for:{' '}
+              <span className="text-white text-md md:text-lg font-medium">
+                {alarmTime ? new Date('1970-01-01T' + alarmTime).toLocaleTimeString('en-US', { hour12: true }) : ''}
+              </span>
+            </p>
+            {isAlarmActive ? (
+              <button
+                onClick={handleAlarmOff}
+                className="mt-4 bg-[#294a26] text-md md:text-lg font-medium text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
+              >
+                Turn Alarm Off
+              </button>
+            ) : (
+              <button
+                onClick={confirmSetAlarm}
+                className="mt-4 bg-[#294a26] text-md md:text-lg font-medium text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none"
+              >
+                Confirm Set Alarm
+              </button>
+            )}
+          </div>
+        </div>
+        <div>
+          <h2 className="text-xl mb-2 font-bold text-[#294a26]">Old Alarms</h2>
+		  <select
+            onChange={handleOldAlarmChange}
+            className="border border-[#294a26] text-[#294a26] font-bold text-md md:text-lg p-3 md:p-4 rounded focus:outline-none"
+          >
+            <option value="">Select Old Alarm</option>
+            {oldAlarms.map((alarm, index) => (
+              <option key={index} value={alarm}>
+                {new Date('1970-01-01T' + alarm).toLocaleTimeString('en-US', { hour12: true })}
+              </option>
+            ))}
+          </select>
+          <button
+            onClick={setOldAlarm}
+            className="mt-4 bg-[#294a26] text-md md:text-lg font-medium text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
+          >
+            Set Old Alarm
+          </button>
+        </div>
+        <div className="mt-8">
+          <h2 className="text-2xl mb-2 font-bold text-[#294a26]">Dose Timetable</h2>
+          <div className="flex items-center space-x-4">
+            <input
+              type="time"
+              value={newDoseTime}
+              onChange={handleNewDoseTimeChange}
+              className="border border-[#294a26] text-[#294a26] font-bold text-md md:text-lg p-3 md:p-4 rounded focus:outline-none"
+            />
+            <button
+              onClick={addDoseTime}
+              className="bg-[#294a26] text-md md:text-lg font-medium text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none"
+            >
+              <FontAwesomeIcon icon={faPlus} className="mr-2" />
+              Add Dose Time
+            </button>
+          </div>
+          <ul className="list-disc pl-8 text-md md:text-lg mt-4">
+            {doseTimetable.map((doseTime, index) => (
+              <li key={index} className="flex items-center justify-between">
+                <span>{new Date('1970-01-01T' + doseTime).toLocaleTimeString('en-US', { hour12: true })}</span>
+                <button
+                  onClick={() => removeDoseTime(index)}
+                  className="text-red-600 hover:text-red-800"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default AlarmClock;
+
+
+
+
+
