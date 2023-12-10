@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SideNav from '../components/sideNav'; // Adjust this import to your project's file structure
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faPlus, faEdit, faTrash, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faPlus, faEdit, faTrash, faToggleOn, faBell } from "@fortawesome/free-solid-svg-icons";
 import { Howl } from 'howler';
 
 const AlarmClock = () => {
@@ -104,12 +104,12 @@ const AlarmClock = () => {
 				</button>
 
 				{/* Header */}
-				<h1 className="text-2xl mb-2 font-bold">
-					Your Alarms
+				<h1 className="text-2xl mb-2 font-bold text-[#294a26]">
+					Dose Alarms <FontAwesomeIcon icon={faBell}/>
 				</h1>
 
 				{/* Display Current Time */}
-				<p className="text-lg mb-4 font-bold">
+				<p className="text-lg mb-4 font-bold text-[#294a26]">
 					Current Time: {currentTime}
 				</p>
 
