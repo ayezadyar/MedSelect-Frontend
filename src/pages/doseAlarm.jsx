@@ -7,9 +7,10 @@ import { Howl } from 'howler';
 const AlarmClock = () => {
 	const [alarms, setAlarms] = useState([]);
 	const [newAlarmTime, setNewAlarmTime] = useState('');
-	const [newAlarmName, setNewAlarmName] = useState(''); // Add new state for alarm name
+	const [newAlarmName, setNewAlarmName] = useState('');
 	const [currentTime, setCurrentTime] = useState('');
 	const [isNavOpen, setNavOpen] = useState(false);
+	const [editAlarmIndex, setEditAlarmIndex] = useState(null);
 
 	const sound = new Howl({
 		src: ['/alarm.mp3'], // Make sure this path is correct for your project
@@ -57,13 +58,34 @@ const AlarmClock = () => {
 			return;
 		}
 		const formattedTime = formatTime(newAlarmTime + ' AM');
-		setAlarms([...alarms, { name: newAlarmName, time: formattedTime, isActive: true }]);
+		if (editAlarmIndex !== null) {
+			// If editing, update the existing alarm
+			const updatedAlarms = [...alarms];
+			updatedAlarms[editAlarmIndex] = { name: newAlarmName, time: formattedTime, isActive: true };
+			setAlarms(updatedAlarms);
+			setEditAlarmIndex(null);
+		} else {
+			// If not editing, add a new alarm
+			setAlarms([...alarms, { name: newAlarmName, time: formattedTime, isActive: true }]);
+		}
 		setNewAlarmTime('');
 		setNewAlarmName('');
 	};
 
 	const toggleNav = () => {
 		setNavOpen(!isNavOpen);
+	};
+
+	const editAlarm = (index) => {
+		setEditAlarmIndex(index);
+		setNewAlarmName(alarms[index].name);
+		setNewAlarmTime(alarms[index].time);
+	};
+
+	const deleteAlarm = (index) => {
+		const updatedAlarms = [...alarms];
+		updatedAlarms.splice(index, 1);
+		setAlarms(updatedAlarms);
 	};
 
 	return (
@@ -106,10 +128,15 @@ const AlarmClock = () => {
 						onChange={(e) => setNewAlarmTime(e.target.value)}
 						className="border p-3 rounded focus:outline-none"
 					/>
-					{/* Button to Add New Alarm */}
-					<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-green-600 text-white ml-4">
-						<FontAwesomeIcon icon={faPlus} /> Add Alarm
-					</button>
+					{editAlarmIndex !== null ? (
+						<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-blue-600 text-white ml-4">
+							Update
+						</button>
+					) : (
+						<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-green-600 text-white ml-4">
+							<FontAwesomeIcon icon={faPlus} /> Add Alarm
+						</button>
+					)}
 				</div>
 
 				{/* Existing Alarms Table */}
@@ -129,10 +156,10 @@ const AlarmClock = () => {
 									{alarm.time ? new Date('1970-01-01T' + alarm.time).toLocaleTimeString('en-US', { hour12: true }) : ''}
 								</td>
 								<td className="p-2">
-									<button className="px-4 py-2 rounded bg-blue-600 text-white mr-2">
+									<button onClick={() => editAlarm(index)} className="px-4 py-2 rounded bg-blue-600 text-white mr-2">
 										Edit
 									</button>
-									<button className="px-4 py-2 rounded bg-red-600 text-white mr-2">
+									<button onClick={() => deleteAlarm(index)} className="px-4 py-2 rounded bg-red-600 text-white mr-2">
 										Delete
 									</button>
 									{alarm.isActive && (
@@ -148,12 +175,9 @@ const AlarmClock = () => {
 						))}
 					</tbody>
 				</table>
-
 			</div>
 		</div>
 	);
-
-
 };
 
 export default AlarmClock;
