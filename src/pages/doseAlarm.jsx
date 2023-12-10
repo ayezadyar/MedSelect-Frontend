@@ -112,37 +112,47 @@ const AlarmClock = () => {
 					</button>
 				</div>
 
-				{/* Existing Alarms */}
-				{alarms.map((alarm, index) => (
-					<div key={index} className="mb-4 w-full text-center">
-						<div className="p-4 flex items-center justify-center">
-							{/* Alarm Name */}
-							<div className="mr-4 font-medium">
-								{alarm.name}
-							</div>
+				{/* Existing Alarms Table */}
+				<table className="w-full mb-4 text-center">
+					<thead>
+						<tr>
+							<th className="py-2">Alarm Name</th>
+							<th className="py-2">Alarm Time</th>
+							<th className="py-2">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{alarms.map((alarm, index) => (
+							<tr key={index}>
+								<td className="p-2">{alarm.name}</td>
+								<td className="p-2">
+									{alarm.time ? new Date('1970-01-01T' + alarm.time).toLocaleTimeString('en-US', { hour12: true }) : ''}
+								</td>
+								<td className="p-2">
+									<button className="px-4 py-2 rounded bg-blue-600 text-white mr-2">
+										Edit
+									</button>
+									<button className="px-4 py-2 rounded bg-red-600 text-white mr-2">
+										Delete
+									</button>
+									{alarm.isActive && (
+										<button
+											onClick={() => handleAlarmOff(index)}
+											className="px-4 py-2 rounded bg-yellow-500 text-white"
+										>
+											Turn Off
+										</button>
+									)}
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
 
-							{/* Alarm Time */}
-							<span className="text-md md:text-lg font-medium">
-								{alarm.time ? new Date('1970-01-01T' + alarm.time).toLocaleTimeString('en-US', { hour12: true }) : ''}
-							</span>
-
-							{/* Turn Off Alarm Button */}
-							{alarm.isActive && (
-								<button
-									onClick={() => handleAlarmOff(index)}
-									className="ml-4 px-4 py-2 rounded bg-red-600 text-white"
-								>
-									Turn Alarm Off
-								</button>
-							)}
-						</div>
-
-						<hr className="my-4 bg-gray-300" />
-					</div>
-				))}
 			</div>
 		</div>
 	);
+
 
 };
 
