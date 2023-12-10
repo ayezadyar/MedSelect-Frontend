@@ -1,36 +1,76 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faHippo, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import HomeCard from '../components/homeCard';
-import SideNav from '../components/sideNav';
-import Papa from 'papaparse';
 
-export default function Community() {
-	const [isNavOpen, setNavOpen] = useState(false);
 
-	const toggleNav = () => {
-		setNavOpen(!isNavOpen);
-	};
 
-	return (
-		<div className="flex">
-			{/* Side Navigation */}
-			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
 
-			{/* Main Content */}
-			<div
-				className={`flex flex-col flex-1 justify-center items-center min-h-screen transition-margin duration-300 ${isNavOpen ? 'ml-64' : ''}`}
-			>
-				{/* Burger Icon */}
-				<button
-					className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? 'text-white' : 'text-black'}`}
-					onClick={toggleNav}
-				>
-					<FontAwesomeIcon icon={faBars} size="lg" />
-				</button>
-				
-			</div>
-		</div>
-	);
-}
+
+
+
+
+
+
+import React, { useState } from 'react';
+
+const community = () => {
+  const [feedback, setFeedback] = useState('');
+  const [allFeedback, setAllFeedback] = useState([]);
+
+  const handleInputChange = (e) => {
+    setFeedback(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Update the feedback list with the new feedback
+    setAllFeedback((prevFeedback) => [...prevFeedback, feedback]);
+
+    // Clear the input field
+    setFeedback('');
+  };
+
+  return (
+    <div className="container mx-auto my-8">
+      <h1 className="text-2xl font-bold mb-4">Discussion Form</h1>
+
+      <form onSubmit={handleSubmit} className="mb-8">
+        <label className="block mb-2">Your Feedback:</label>
+        <textarea
+          rows="4"
+          cols="50"
+          value={feedback}
+          onChange={handleInputChange}
+          className="border rounded p-2 w-full"
+          placeholder="Share your feedback..."
+        ></textarea>
+
+        <button
+          type="submit"
+          className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Submit Feedback
+        </button>
+      </form>
+
+      <div>
+        <h2 className="text-xl font-bold mb-4">All Feedback:</h2>
+        {allFeedback.length === 0 ? (
+          <p>No feedback yet. Be the first to share!</p>
+        ) : (
+          <ul>
+            {allFeedback.map((item, index) => (
+              <li key={index} className="mb-2">
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default community;
+
+
+
+
