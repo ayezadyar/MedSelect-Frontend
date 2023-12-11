@@ -38,13 +38,13 @@ const SideNav = ({ isNavOpen, toggleNav }) => (
 			>
 				CONTACT US
 			</Link>
-			<Link
+			{/* <Link
 				to="/how-it-works"
 				className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
 				onClick={toggleNav}
 			>
 				HOW IT WORKS
-			</Link>
+			</Link> */}
 		</div>
 	</div>
 );
