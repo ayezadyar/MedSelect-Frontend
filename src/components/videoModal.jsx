@@ -1,6 +1,7 @@
 // Popup.js
 import React from 'react';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faCross, faHippo, faMagnifyingGlass, faQuestionCircle, faX } from "@fortawesome/free-solid-svg-icons";
 const Popup = ({ handleClose, children }) => {
 	return (
 		<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
@@ -8,13 +9,13 @@ const Popup = ({ handleClose, children }) => {
 			<div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-md"></div>
 
 			{/* Popup container */}
-			<div className="bg-[#294a26] p-2 rounded shadow-md max-w-screen-lg w-full h-120 overflow-y-auto relative">
+			<div className="p-7 rounded shadow-md max-w-screen-lg w-full h-120 overflow-y-auto relative">
 				{/* Close button */}
 				<button
-					className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+					className="absolute top-4 right-4 text-white hover:text-white"
 					onClick={handleClose}
 				>
-					&times;
+					<FontAwesomeIcon icon={faX}  />
 				</button>
 				{/* Popup content */}
 				<div className="flex items-center justify-center">
