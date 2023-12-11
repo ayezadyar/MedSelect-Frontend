@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faHippo, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faHippo, faMagnifyingGlass, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import HomeCard from '../components/homeCard';
 import SideNav from '../components/sideNav';
 import Papa from 'papaparse';
@@ -90,6 +90,15 @@ export default function Home() {
 				>
 					<FontAwesomeIcon icon={faBars} size="lg" />
 				</button>
+				<div className="absolute top-4 right-4">
+					<FontAwesomeIcon
+						icon={faQuestionCircle}
+						size="lg"
+						title="How it works"
+						className="cursor-pointer"
+					/>
+				</div>
+
 				{/* Logo or Picture */}
 				<div className="mb-4 mt-2">
 					<img src="/logo.png" alt="Logo" className="w-32 mx-auto mb-2 sm:w-48 lg:w-64" />
