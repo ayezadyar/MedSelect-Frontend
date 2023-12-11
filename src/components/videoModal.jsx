@@ -1,27 +1,26 @@
-import React from 'react'
+// Popup.js
+import React from 'react';
 
-const VideoModal = () => {
+const Popup = ({ handleClose, children }) => {
 	return (
-		<div className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex items-center justify-center`}>
-			{/* You can customize the video embed code here */}
-			<iframe
-				width="560"
-				height="315"
-				src="https://www.youtube.com/embed/your-video-id"
-				title="Embedded Video"
-				frameBorder="0"
-				allowFullScreen
-			></iframe>
-
+		<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-100 p-8 rounded shadow-md max-w-md w-full h-120 overflow-y-auto z-50">
 			{/* Close button */}
 			<button
-				className="absolute top-4 right-4 text-white cursor-pointer"
-				onClick={closeVideoModal}
+				className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+				onClick={handleClose}
 			>
-				<FontAwesomeIcon icon={faTimesCircle} size="lg" />
+				&times;
 			</button>
+			{/* Popup content */}
+			<div className="flex items-center justify-center">
+				<video className="w-full h-full" controls>
+					{/* Replace 'video.mp4' with the actual path to your video file */}
+					<source src="video.mp4" type="video/mp4" />
+					Your browser does not support the video tag.
+				</video>
+			</div>
 		</div>
 	);
-}
+};
 
-export default VideoModal
+export default Popup;

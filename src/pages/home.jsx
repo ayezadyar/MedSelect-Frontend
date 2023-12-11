@@ -5,6 +5,7 @@ import { faBars, faHippo, faMagnifyingGlass, faQuestionCircle } from "@fortaweso
 import HomeCard from '../components/homeCard';
 import SideNav from '../components/sideNav';
 import Papa from 'papaparse';
+import Popup from '../components/videoModal';
 
 export default function Home() {
 	const [isNavOpen, setNavOpen] = useState(false);
@@ -12,7 +13,10 @@ export default function Home() {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 	const [showCards, setShowCards] = useState(true);
-
+	const [isPopupOpen, setPopupOpen] = useState(false); // New state for popup visibility
+	const handlePopupToggle = () => {
+		setPopupOpen(!isPopupOpen);
+	};
 	useEffect(() => {
 		// Load CSV data
 		const fetchData = async () => {
@@ -90,15 +94,21 @@ export default function Home() {
 				>
 					<FontAwesomeIcon icon={faBars} size="lg" />
 				</button>
-				<div className="absolute top-4 right-4">
+				<button className="absolute top-4 right-4">
 					<FontAwesomeIcon
 						icon={faQuestionCircle}
 						size="lg"
 						title="How it works"
 						className="cursor-pointer"
+						onClick={handlePopupToggle}
 					/>
-				</div>
-
+				</button>
+				{isPopupOpen && (
+					<Popup handleClose={handlePopupToggle}>
+						{/* Popup content goes here */}
+						<p>This is the popup content.</p>
+					</Popup>
+				)}
 				{/* Logo or Picture */}
 				<div className="mb-4 mt-2">
 					<img src="/logo.png" alt="Logo" className="w-32 mx-auto mb-2 sm:w-48 lg:w-64" />
