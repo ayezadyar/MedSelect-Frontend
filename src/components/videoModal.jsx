@@ -1,7 +1,7 @@
 // Popup.js
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faCross, faHippo, faMagnifyingGlass, faQuestionCircle, faX } from "@fortawesome/free-solid-svg-icons";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 const Popup = ({ handleClose, children }) => {
 	return (
 		<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 ">
