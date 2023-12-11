@@ -6,6 +6,7 @@ const DiscussionForm = () => {
   const [allFeedback, setAllFeedback] = useState([]);
   const [includeImage, setIncludeImage] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [filteredFeedback, setFilteredFeedback] = useState([]);
   const scrollTargetRef = useRef(null);
 
   const handleInputChange = (e) => {
@@ -23,6 +24,14 @@ const DiscussionForm = () => {
 
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);
+    filterFeedback(e.target.value);
+  };
+
+  const filterFeedback = (keyword) => {
+    const filtered = allFeedback.filter((item) =>
+      item.text.toLowerCase().includes(keyword.toLowerCase())
+    );
+    setFilteredFeedback(filtered);
   };
 
   const handleSubmit = (e) => {
@@ -34,6 +43,7 @@ const DiscussionForm = () => {
     };
 
     setAllFeedback((prevFeedback) => [...prevFeedback, newFeedback]);
+    filterFeedback(searchKeyword); // Update filtered feedback
 
     setFeedback('');
     setImage(null);
@@ -116,11 +126,11 @@ const DiscussionForm = () => {
 
       <div ref={scrollTargetRef}>
         <h2 className="text-xl font-bold mb-4">All Feedback:</h2>
-        {allFeedback.length === 0 ? (
+        {filteredFeedback.length === 0 ? (
           <p>No feedback yet. Be the first to share!</p>
         ) : (
           <ul>
-            {allFeedback.map((item, index) => (
+            {filteredFeedback.map((item, index) => (
               <li key={index} className="mb-4">
                 <p>{highlightText(item.text)}</p>
                 {item.image && (
@@ -141,3 +151,4 @@ const DiscussionForm = () => {
 };
 
 export default DiscussionForm;
+
