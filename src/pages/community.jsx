@@ -1,164 +1,148 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { FaPaperclip } from 'react-icons/fa';
+import './CommunitySection.css'; // Import the CSS file for styling
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import SideNav from "../components/sideNav";
+import { faBars, faHippo, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import HomeCard from '../components/homeCard';
+import SideNav from '../components/sideNav';
+import Papa from 'papaparse';
 
-const Community = () => {
+const community = () => {
   const [isNavOpen, setNavOpen] = useState(false);
-  const [feedback, setFeedback] = useState('');
-  const [image, setImage] = useState(null);
-  const [allFeedback, setAllFeedback] = useState([]);
-  const [includeImage, setIncludeImage] = useState(false);
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const scrollTargetRef = useRef(null);
 
   const toggleNav = () => {
     setNavOpen(!isNavOpen);
   };
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
+  const [replyText, setReplyText] = useState('');
+  const [image, setImage] = useState(null);
 
-  const handleInputChange = (e) => {
-    setFeedback(e.target.value);
+  const handleCommentChange = (event) => {
+    setNewComment(event.target.value);
   };
 
-  const handleImageChange = (e) => {
-    const selectedImage = e.target.files[0];
-    setImage(selectedImage);
+  const handleReplyChange = (event) => {
+    setReplyText(event.target.value);
   };
 
-  const handleToggleImage = () => {
-    setIncludeImage(!includeImage);
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setImage(file);
   };
 
-  const handleSearchChange = (e) => {
-    setSearchKeyword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const newFeedback = {
-      text: feedback,
-      image: includeImage ? URL.createObjectURL(image) : null,
-    };
-
-    setAllFeedback((prevFeedback) => [...prevFeedback, newFeedback]);
-
-    setFeedback('');
-    setImage(null);
-    setIncludeImage(false);
-
-    // Scroll to the newly added feedback
-    if (scrollTargetRef.current) {
-      scrollTargetRef.current.scrollIntoView({ behavior: 'smooth' });
+  const handleCommentSubmit = (event) => {
+    event.preventDefault();
+    if (newComment.trim() !== '') {
+      const newComments = [...comments, { text: newComment, replies: [], image }];
+      setComments(newComments);
+      setNewComment('');
+      setImage(null);
     }
   };
 
-  const highlightText = (text) => {
-    if (searchKeyword.trim() === '') {
-      return text;
+  const handleReplySubmit = (commentIndex) => (event) => {
+    event.preventDefault();
+    if (replyText.trim() !== '') {
+      const newComments = [...comments];
+      newComments[commentIndex].replies.push({ text: replyText, image });
+      setComments(newComments);
+      setReplyText('');
+      setImage(null);
     }
-
-    const regex = new RegExp(`(${searchKeyword})`, 'gi');
-    return text.split(regex).map((part, index) =>
-      regex.test(part) ? <mark key={index}>{part}</mark> : part
-    );
   };
 
   return (
     <div className="flex">
       {/* Side Navigation */}
       <SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
-
-      {/* Main Content */}
-      <div className={`flex flex-col flex-1 justify-center items-center min-h-screen transition-margin duration-300 ${isNavOpen ? "ml-64" : ""}`}>
+      <div
+        className={`flex flex-col flex-1 justify-center items-center min-h-screen transition-margin duration-300 ${
+          isNavOpen ? "ml-64" : ""
+        }`}
+      >
         {/* Burger Icon */}
-        <button className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? "text-white" : "text-black"}`} onClick={toggleNav}>
+        <button
+          className={`absolute top-4 left-4 cursor-pointer font-bold ${
+            isNavOpen ? "text-white" : "text-black"
+          }`}
+          onClick={toggleNav}
+        >
           <FontAwesomeIcon icon={faBars} size="lg" />
         </button>
-
-        {/* Your Feedback Form */}
-        <div className="container mx-auto my-8">
-          <h1 className="text-2xl font-bold mb-4">Discussion Form</h1>
-
-          <div className="relative mb-8">
-            <label className="block mb-2">Search Keyword:</label>
-            <input
-              type="text"
-              value={searchKeyword}
-              onChange={handleSearchChange}
-              placeholder="Enter keyword to highlight"
-              className="border rounded p-2 w-48 sm:w-64 absolute top-0 right-0 mt-2 mr-2"
-            />
-          </div>
-
-          <form onSubmit={handleSubmit} className="mb-8">
-            <label className="block mb-2">Your Feedback:</label>
-            <textarea
-              rows="4"
-              cols="50"
-              value={feedback}
-              onChange={handleInputChange}
-              className="border rounded p-2 w-full"
-              placeholder="Share your feedback..."
-            ></textarea>
-
-            <div className="mt-4 mb-4">
-              <button
-                type="button"
-                onClick={handleToggleImage}
-                className={`bg-[#517028] hover:bg-[#294a26] text-white font-bold py-2 px-4 rounded ${includeImage ? 'bg-opacity-50' : ''
-                  }`}
-              >
-                {includeImage ? 'Remove Image' : 'Add Image'}
-              </button>
-            </div>
-
-            {includeImage && (
-              <div>
-                <label className="block mt-2 mb-2">Upload Image:</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="mb-4"
-                />
-              </div>
-            )}
-
-            <button
-              type="submit"
-              className="bg-[#517028] hover:bg-[#294a26] text-white font-bold py-2 px-4 rounded"
-            >
-              Submit Feedback
-            </button>
-          </form>
-
-          <div ref={scrollTargetRef}>
-            <h2 className="text-xl font-bold mb-4">All Feedback:</h2>
-            {allFeedback.length === 0 ? (
-              <p>No feedback yet. Be the first to share!</p>
-            ) : (
-              <ul>
-                {allFeedback.map((item, index) => (
-                  <li key={index} className="mb-4">
-                    <p>{highlightText(item.text)}</p>
-                    {item.image && (
-                      <img
-                        src={item.image}
-                        alt={`User Feedback ${index}`}
-                        className="mt-2 rounded"
-                        style={{ maxWidth: '100%', maxHeight: '200px' }}
-                      />
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
       </div>
+    <div className="comment-section">
+      <h2>Comment Section</h2>
+      <form onSubmit={handleCommentSubmit} className="comment-form">
+        <input
+          type="text"
+          value={newComment}
+          onChange={handleCommentChange}
+          placeholder="Add a comment"
+          className="comment-input"
+        />
+        <label htmlFor="comment-image" className="attachment-icon">
+          <FaPaperclip />
+          <input
+            type="file"
+            id="comment-image"
+            accept="image/*"
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+          />
+        </label>
+        <button type="submit" className="comment-btn">
+          Submit Comment
+        </button>
+      </form>
+      <ul className="comment-list">
+        {comments.map((comment, index) => (
+          <li key={index} className="comment-item">
+            <p>{comment.text}</p>
+            {comment.image && (
+              <img src={URL.createObjectURL(comment.image)} alt="Comment Attachment" className="comment-image" />
+            )}
+            <ul className="reply-list">
+              {comment.replies.map((reply, replyIndex) => (
+                <li key={replyIndex} className="reply-item">
+                  <p>{reply.text}</p>
+                  {reply.image && (
+                    <img src={URL.createObjectURL(reply.image)} alt="Reply Attachment" className="reply-image" />
+                  )}
+                </li>
+              ))}
+              <li>
+                <form onSubmit={handleReplySubmit(index)} className="reply-form">
+                  <input
+                    type="text"
+                    value={replyText}
+                    onChange={handleReplyChange}
+                    placeholder="Reply to this comment"
+                    className="reply-input"
+                  />
+                  <label htmlFor={`reply-image-${index}`} className="attachment-icon">
+                    <FaPaperclip />
+                    <input
+                      type="file"
+                      id={`reply-image-${index}`}
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  <button type="submit" className="reply-btn">
+                    Submit Reply
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </div>
     </div>
   );
 };
 
-export default Community;
+export default community;
