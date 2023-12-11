@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import HomeCard from "../components/homeCard";
 import SideNav from "../components/sideNav";
-import Papa from "papaparse";
 
 const Community = () => {
   const [isNavOpen, setNavOpen] = useState(false);
