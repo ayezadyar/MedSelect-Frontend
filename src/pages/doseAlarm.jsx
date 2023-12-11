@@ -149,7 +149,7 @@ const AlarmClock = () => {
 						className="border p-3 rounded focus:outline-none"
 					/>
 					{editAlarmIndex !== null ? (
-						<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-blue-600 text-white ml-4">
+						<button onClick={addNewAlarm} className="px-4 py-2 rounded bg-[#517028] hover:bg-[#294a26] text-white ml-4">
 							<FontAwesomeIcon icon={faEdit} title="Edit" />
 						</button>
 					) : (
