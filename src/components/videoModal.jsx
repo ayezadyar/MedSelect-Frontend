@@ -3,7 +3,7 @@ import React from 'react';
 
 const Popup = ({ handleClose, children }) => {
 	return (
-		<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-100 p-8 rounded shadow-md max-w-md w-full h-120 overflow-y-auto z-50">
+		<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#294a26] p-2 rounded shadow-md max-w-screen-lg w-full h-120 overflow-y-auto z-50">
 			{/* Close button */}
 			<button
 				className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
