@@ -94,6 +94,7 @@ export default function Home() {
 				>
 					<FontAwesomeIcon icon={faBars} size="lg" />
 				</button>
+				
 				<button className="absolute top-4 right-4">
 					<FontAwesomeIcon
 						icon={faQuestionCircle}
