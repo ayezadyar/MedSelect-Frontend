@@ -98,7 +98,7 @@ export default function Home() {
 			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
 
 			{/* Main Content and Popup Overlay */}
-			<div className="flex-1 relative">
+			<div className="flex-1 ">
 				{/* Top Bar with Login and Sign Up Buttons */}
 				<div className="absolute top-0 right-0 mt-4 mr-4 flex space-x-4">
 					{/* Login Button */}
