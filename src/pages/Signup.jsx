@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-
-// import input from "./input";
 import { auth } from "../Firebase";
+import Login from "./login";
+import './index.css'
+import { Link, useNavigate } from "react-router-dom";
+
 
 function Signup() {
   const navigate = useNavigate();
@@ -14,6 +15,16 @@ function Signup() {
   });
   const [errorMsg, setErrorMsg] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+  const [isLoginOpen, setLoginOpen] = useState(false);
+  const [isSignupOpen, setSignupOpen] = useState(false);
+
+  const handleLoginToggle = () => {
+    setLoginOpen(!isLoginOpen);
+  };
+
+  const handleSignupToggle = () => {
+    setSignupOpen(!isSignupOpen);
+  };
 
   const handleSubmission = () => {
     if (!values.name || !values.email || !values.pass) {
@@ -30,7 +41,9 @@ function Signup() {
         await updateProfile(user, {
           displayName: values.name,
         });
-        navigate("/");
+        navigate("/about")
+
+        // handleSignupToggle(); // Close signup popup
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);
@@ -41,7 +54,7 @@ function Signup() {
   return (
     <>
       <div className="min-h-screen flex items-center justify-center">
-        <div className="bg-white p-8 rounded shadow-md w-96">
+        <div className="bg-white p-8 rounded shadow-lg h-96 w-96">
           <h1 className="text-3xl font-bold mb-6 text-[#294a26]">Signup</h1>
           <div className="mb-4">
             <input
@@ -51,7 +64,6 @@ function Signup() {
               onChange={(event) =>
                 setValues((prev) => ({ ...prev, name: event.target.value }))
               }
-
             />
           </div>
           <div className="mb-4">
@@ -87,12 +99,21 @@ function Signup() {
           <p>
             Already have an account?{" "}
             <span className="text-[#294a26]">
-              <Link to="/login">Login</Link>
+              <button className="text-[#294a26] font-semibold" onClick={handleLoginToggle}>
+                Login
+              </button>
             </span>
           </p>
         </div>
+        {/* Login Popup */}
+        {isLoginOpen && (
+          <div className="fixed top-0 left-0 w-full h-full z-30 flex justify-center items-center">
+            <Login handleClose={handleLoginToggle} />
+          </div>
+        )}
       </div>
     </>
   );
 }
+
 export default Signup;

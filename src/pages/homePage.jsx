@@ -9,7 +9,7 @@ import Popup from '../components/videoModal';
 import Signup from './Signup';
 import Login from './login';
 
-export default function Home() {
+export default function HomePage() {
 	const [isNavOpen, setNavOpen] = useState(false);
 	const [medicines, setMedicines] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('');

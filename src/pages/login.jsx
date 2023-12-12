@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-
-// import input from "./input";
 import { auth } from "../Firebase";
+import Signup from "./Signup";
 import './index.css'
 
 function Login() {
@@ -14,6 +13,16 @@ function Login() {
   });
   const [errorMsg, setErrorMsg] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+  const [isLoginOpen, setLoginOpen] = useState(false);
+  const [isSignupOpen, setSignupOpen] = useState(false);
+
+  const handleLoginToggle = () => {
+    setLoginOpen(!isLoginOpen);
+  };
+
+  const handleSignupToggle = () => {
+    setSignupOpen(!isSignupOpen);
+  };
 
   const handleSubmission = () => {
     if (!values.email || !values.pass) {
@@ -26,7 +35,8 @@ function Login() {
     signInWithEmailAndPassword(auth, values.email, values.pass)
       .then(async (res) => {
         setSubmitButtonDisabled(false);
-        navigate("/");
+        navigate("/about")
+        // handleLoginToggle(); // Hide login popup
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);
@@ -35,11 +45,12 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded shadow-md w-96">
+    <div className=" flex items-center justify-center">
+      <div className="bg-white p-8 rounded shadow-lg h-96 w-96">
         <h1 className="text-2xl font-bold mb-4 text-[#294a26]">Login</h1>
         <div className="mb-4">
-          <input className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none"
+          <input
+            className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none"
             label="Email"
             onChange={(event) =>
               setValues((prev) => ({ ...prev, email: event.target.value }))
@@ -48,7 +59,8 @@ function Login() {
           />
         </div>
         <div className="mb-4">
-          <input className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none"
+          <input
+            className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none"
             label="Password"
             type="password"
             onChange={(event) =>
@@ -67,13 +79,23 @@ function Login() {
             Login
           </button>
           <p className="mt-2">
-            Already have an account?{" "}
+            Don't have an account?{" "}
             <span className="text-[#294a26]">
-              <Link to="/signup">Sign up</Link>
+              <button
+                className="text-[#294a26] font-semibold"
+                onClick={handleSignupToggle}
+              >
+                Sign up
+              </button>
             </span>
           </p>
         </div>
       </div>
+      {isSignupOpen && (
+        <div className="fixed top-0 left-0 w-full h-full z-30 flex justify-center items-center">
+          <Signup handleClose={handleSignupToggle} />
+        </div>
+      )}
     </div>
   );
 }
