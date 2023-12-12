@@ -6,28 +6,14 @@ import HomeCard from '../components/homeCard';
 import SideNav from '../components/sideNav';
 import Papa from 'papaparse';
 import Popup from '../components/videoModal';
-import Signup from './Signup';
-import Login from './login';
 
-export default function HomePage() {
+export default function Home() {
 	const [isNavOpen, setNavOpen] = useState(false);
 	const [medicines, setMedicines] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 	const [showCards, setShowCards] = useState(true);
 	const [isPopupOpen, setPopupOpen] = useState(false); // New state for popup visibility
-	const [isLoginOpen, setLoginOpen] = useState(false);
-	const [isSignupOpen, setSignupOpen] = useState(false);
-
-	const handleLoginToggle = () => {
-		setLoginOpen(!isLoginOpen);
-		setSignupOpen(false); // Close signup popup when opening login popup
-	};
-
-	const handleSignupToggle = () => {
-		setSignupOpen(!isSignupOpen);
-		setLoginOpen(false); // Close login popup when opening signup popup
-	};
 	const handlePopupToggle = () => {
 		setPopupOpen(!isPopupOpen);
 	};
@@ -98,12 +84,10 @@ export default function HomePage() {
 			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
 
 			{/* Main Content and Popup Overlay */}
-			<div className="flex-1 relative">
-			
+			<div className="flex-1">
 				{/* Main Content with conditional blur */}
 				<div
-					className={`flex flex-col justify-center items-center min-h-screen transition-margin duration-300 ${isNavOpen ? 'ml-64' : ''
-						} ${isPopupOpen || isLoginOpen || isSignupOpen ? 'blur-sm' : ''}`}
+					className={`flex flex-col justify-center items-center min-h-screen transition-margin duration-300 ${isNavOpen ? 'ml-64' : ''} ${isPopupOpen ? 'blur-sm' : ''}`}
 				>
 					{/* Burger Icon */}
 					<button
@@ -114,7 +98,7 @@ export default function HomePage() {
 					</button>
 
 					{/* Question Mark Icon */}
-					<button className="absolute top-5 right-4 z-10">
+					<button className="absolute top-4 right-4 z-10">
 						<FontAwesomeIcon
 							icon={faQuestionCircle}
 							size="lg"
@@ -123,6 +107,7 @@ export default function HomePage() {
 							onClick={handlePopupToggle}
 						/>
 					</button>
+
 					{/* Logo or Picture */}
 					<div className="mb-4 mt-2">
 						<img src="/logo.png" alt="Logo" className="w-32 mx-auto mb-2 sm:w-48 lg:w-64" />
@@ -164,7 +149,7 @@ export default function HomePage() {
 
 					{/* HomeCards */}
 					{showCards && (
-						<div className={`flex flex-col sm:flex-row  flex-wrap justify-around w-full max-w-6xl mb-8 fade-out ${showCards ? 'fade-in' : ''}`}>
+						<div className={`flex flex-col sm:flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out ${showCards ? 'fade-in' : ''}`}>
 							{/* HomeCard 1 */}
 							<HomeCard
 								imageSrc="/doseAlarm.png"
@@ -201,21 +186,10 @@ export default function HomePage() {
 						</Popup>
 					</div>
 				)}
-				{/* Login Popup */}
-				{isLoginOpen && (
-					<div className="fixed top-0 left-0 w-full h-full z-30 flex justify-center items-center">
-						<Login handleClose={handleLoginToggle} />
-					</div>
-				)}
-
-				{/* Signup Popup */}
-				{isSignupOpen && (
-					<div className="fixed top-0 left-0 w-full h-full z-30 flex justify-center items-center">
-						<Signup handleClose={handleSignupToggle} />
-					</div>
-				)}
 			</div>
 		</div>
 	);
+
+
 
 }
