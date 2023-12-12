@@ -1,5 +1,4 @@
 import { FaPaperclip } from 'react-icons/fa';
-import './CommunitySection.css'; // Import the CSS file for styling
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SideNav from '../components/sideNav'; // Adjust this import to your project's file structure
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faPlus, faEdit, faTrash, faToggleOn, faBell, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faPlus, faEdit, faTrash, faToggleOn, faBell } from "@fortawesome/free-solid-svg-icons";
 import { Howl } from 'howler';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -108,15 +108,6 @@ const AlarmClock = () => {
     setAlarms(updatedAlarms);
   };
 
-  const handleGoBack = () => {
-    // You can replace this with your own logic to navigate back
-    // For example, using react-router-dom's useHistory hook
-    // import { useHistory } from 'react-router-dom';
-    // const history = useHistory();
-    // history.goBack();
-    window.history.back();
-  };
-
   return (
     <div className="flex flex-col h-screen">
       {/* Side Navigation */}
@@ -133,18 +124,9 @@ const AlarmClock = () => {
         </button>
 
         {/* Header */}
-        <div className="flex items-center mb-4">
-          <button
-            onClick={handleGoBack}
-            className="text-[#294a26] px-4 py-2 rounded hover:bg-[#517028] hover:text-white mr-2"
-            title="Go Back"
-          >
-            <FontAwesomeIcon icon={faArrowLeft} />
-          </button>
-          <h1 className="text-2xl font-bold text-[#294a26]">
-            Dose Alarms <FontAwesomeIcon icon={faBell} />
-          </h1>
-        </div>
+        <h1 className="text-2xl mb-2 font-bold text-[#294a26]">
+          Dose Alarms <FontAwesomeIcon icon={faBell} />
+        </h1>
 
         {/* Display Current Time */}
         <p className="text-lg mb-4 font-bold text-[#294a26]">
@@ -168,7 +150,7 @@ const AlarmClock = () => {
           />
           {editAlarmIndex !== null ? (
             <button onClick={addNewAlarm} className="px-4 py-2 rounded bg-[#517028] hover:bg-[#294a26] text-white ml-4">
-                            <FontAwesomeIcon icon={faEdit} title="Edit" />
+              <FontAwesomeIcon icon={faEdit} title="Edit" />
             </button>
           ) : (
             <button onClick={addNewAlarm} className="px-4 py-2 rounded bg-[#517028] text-white ml-4 hover:bg-[#294a26]">
@@ -191,7 +173,9 @@ const AlarmClock = () => {
               {alarms.map((alarm, index) => (
                 <React.Fragment key={index}>
                   <tr className="text-black">
-                    <td className="p-2">{alarm.name}</td>
+                    <td className="p-2">
+                      {alarm.name}
+                    </td>
                     <td className="p-2">
                       {alarm.time ? new Date('1970-01-01T' + alarm.time).toLocaleTimeString('en-US', { hour12: true }) : ''}
                     </td>
@@ -224,8 +208,10 @@ const AlarmClock = () => {
       </div>
       <ToastContainer />
     </div>
+
   );
+
+
 };
 
 export default AlarmClock;
-
