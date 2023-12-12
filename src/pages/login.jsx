@@ -5,7 +5,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import InputControl from "./InputControl";
 import { auth } from "../Firebase";
 
-import styles from "./Login.module.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -37,9 +36,9 @@ function Login() {
 
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles.innerBox}>
-          <h1 className={styles.heading}>Login</h1>
+      <div>
+        <div>
+          <h1>Login</h1>
 
           <InputControl
             label="Email"
@@ -56,8 +55,8 @@ function Login() {
             placeholder="Enter Password"
           />
 
-          <div className={styles.footer}>
-            <b className={styles.error}>{errorMsg}</b>
+          <div>
+            <b>{errorMsg}</b>
             <button disabled={submitButtonDisabled} onClick={handleSubmission}>
               Login
             </button>
