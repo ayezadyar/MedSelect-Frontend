@@ -42,7 +42,7 @@ function Signup() {
     <>
       <div className="min-h-screen flex items-center justify-center">
         <div className="bg-white p-8 rounded shadow-md w-96">
-          <h1 className="text-3xl font-bold mb-6">Signup</h1>
+          <h1 className="text-3xl font-bold mb-6 text-[#294a26]">Signup</h1>
           <div className="mb-4">
             <input
               label="Name"
@@ -77,7 +77,7 @@ function Signup() {
           <div className="flex items-center mb-4">
             <b className="text-red-500 mr-2">{errorMsg}</b>
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
+              className="bg-[#517028] hover:bg-[#294a26] text-white px-4 py-2 rounded disabled:opacity-50"
               onClick={handleSubmission}
               disabled={submitButtonDisabled}
             >
@@ -86,7 +86,7 @@ function Signup() {
           </div>
           <p>
             Already have an account?{" "}
-            <span className="text-blue-500">
+            <span className="text-[#294a26]">
               <Link to="/login">Login</Link>
             </span>
           </p>
