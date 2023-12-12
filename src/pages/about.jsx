@@ -55,13 +55,15 @@ export default function About() {
         </div>
       </div>
 
-      {/* Introduction Section */}
-      <div className="bg-[#294a26] text-white p-8 rounded-xl shadow-md">
-        <h2 className="text-3xl font-bold mb-4 text-center">Introduction</h2>
-        <p className="text-lg mb-8 leading-loose">
-          Medselect is a meticulously designed and comprehensive platform that serves as an invaluable resource for individuals seeking essential information about medications. It offers a range of essential services to empower users in their healthcare decision-making journey. Firstly, it provides Informative Insights, ensuring that users have access to valuable information about alternative or substitute medicines, helping them make well-informed choices regarding their treatment options. Secondly, Medselect offers Effortless Locating by swiftly identifying nearby pharmacies that stock the required medication, simplifying the often cumbersome procurement process. Additionally, Medselect stands out by providing opportunities for Expert Consultations, allowing users to engage with verified specialists and experienced pharmacists who offer personalized guidance on specific medicines. Furthermore, the platform fosters a Vibrant Community forum where users can engage in discussions, sharing their experiences, and discussing the advantages and disadvantages of particular medications. This sense of community support facilitates informed decisions and enhances the overall healthcare experience for users.
-        </p>
-      </div>
+     {/* Introduction Section */}
+<div className="bg-[#294a26] text-white p-8 rounded-xl shadow-md">
+  <h2 className="text-3xl font-bold mb-4 text-center text-white">Introduction</h2>
+  <p className="text-lg mb-8 leading-loose">
+    Medselect is a meticulously designed and comprehensive platform that serves as an invaluable resource for individuals seeking essential information about medications. It offers a range of essential services to empower users in their healthcare decision-making journey. Firstly, it provides Informative Insights, ensuring that users have access to valuable information about alternative or substitute medicines, helping them make well-informed choices regarding their treatment options. Secondly, Medselect offers Effortless Locating by swiftly identifying nearby pharmacies that stock the required medication, simplifying the often cumbersome procurement process. Additionally, Medselect stands out by providing opportunities for Expert Consultations, allowing users to engage with verified specialists and experienced pharmacists who offer personalized guidance on specific medicines. Furthermore, the platform fosters a Vibrant Community forum where users can engage in discussions, sharing their experiences, and discussing the advantages and disadvantages of particular medications. This sense of community support facilitates informed decisions and enhances the overall healthcare experience for users.
+  </p>
+</div>
+
+
 
       {/* Go Back Button */}
       <div className="flex justify-center mt-4">
