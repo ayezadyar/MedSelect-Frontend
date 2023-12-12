@@ -63,16 +63,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 10vh;
   padding: 10px;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(115deg, #738f41 10%, #375e36 90%); /* Olive Green Gradient */
 }
 
 .container {
-  max-width: 800px;
+  max-width: 600px;
   background: #fff;
-  width: 800px;
+  width: 600px;
   padding: 25px 40px 10px 40px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
