@@ -1,70 +1,181 @@
+/* General Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9; /* Light gray background color */
+}
+
+.flex {
+  display: flex;
+}
+
+/* Side Navigation Styles */
+.side-nav {
+  width: 64px;
+  background-color: #2c3e50; /* Dark blue background color */
+  color: #ecf0f1; /* White text color */
+  padding-top: 20px;
+}
+
+.side-nav a {
+  text-decoration: none;
+  color: #ecf0f1; /* White text color */
+  padding: 10px;
+  display: block;
+}
+
+/* Comment Section Styles */
 .comment-section {
-  max-width: 600px;
-  margin: 0 auto; /* Center horizontally */
-  font-family: Arial, sans-serif;
-  font-size: 16px; /* Improve readability */
-  text-align: center; /* Center all content */
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-.comment-form {
-  display: flex; /* Align input and button horizontally */
-  justify-content: center; /* Center horizontally */
-  margin: 15px 0; /* Reduce bottom margin */
-  gap: 20px; /* Space between input and button */
+h2 {
+  color: #34495e; /* Dark blue text color */
 }
 
-.comment-input,
-.reply-input {
-  width: 70%;
-  padding: 10px; /* Increase padding for better input experience */
-  border: 1px solid #ddd; /* Add border for better visual separation */
-  border-radius: 10px; /* Make buttons oval instead of rounded */
-}
-
-.comment-btn,
-.reply-btn {
-  padding: 8px 16px; /* Increase horizontal padding for button responsiveness */
-  border: none; /* No border for a cleaner look */
-  border-radius: 10px; /* Match input style */
-  background-color: #56a14d; /* Olive green color for buttons */
+.toggle-past-comments-btn {
+  background-color: #27ae60; /* Emerald green color */
+  color: #ecf0f1; /* White text color */
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px; /* Reduce font size for better button layout */
-  font-weight: bold; /* Emphasize button text */
-  color: #fff; /* White text for better contrast */
-  box-shadow: 0 2px 5px rgba(201, 191, 191, 0.15); /* Subtle shadow for depth */
+  margin-bottom: 15px;
+  transition: background-color 0.3s ease;
 }
 
+.toggle-past-comments-btn:hover {
+  background-color: #219653; /* Darker green on hover */
+}
+
+.past-comments-section {
+  margin-top: 25px;
+}
+
+.past-comments-list {
+  list-style: none;
+  padding: 0;
+}
+
+.past-comment-item {
+  background-color: #d2dae2; /* Lighter blue-gray background color for past comments */
+  margin-bottom: 15px;
+  padding: 18px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Comment Form Styles */
+.comment-form {
+  display: flex;
+  margin-bottom: 25px;
+}
+
+.comment-input {
+  flex: 1;
+  padding: 14px;
+  border: 1px solid #dcdde1;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.attachment-icon {
+  margin-top: 14px;
+  margin-left: 15px;
+  cursor: pointer;
+  color: #636e72; /* Gray icon color */
+  transition: color 0.3s ease;
+}
+
+.attachment-icon:hover {
+  color: #2d3436; /* Darker gray on hover */
+}
+
+.comment-btn {
+  background-color: #27ae60;
+  color: #ecf0f1;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.comment-btn:hover {
+  background-color: #219653; /* Darker green on hover */
+}
+
+/* Comment List Styles */
 .comment-list {
   list-style: none;
   padding: 0;
-  text-align: left; /* Align comment list content to the left */
-  margin-top: 15px; /* Add some space between form and list */
 }
 
 .comment-item {
-  border: 1px solid #ddd;
-  margin-bottom: 10px;
-  padding: 15px; /* Increase padding for readability */
-  background-color: #f8f8f8; /* Light background color for visual separation */
-  border-radius: 5px; /* Subtle rounded corners for the comment box */
+  background-color: #ecf0f1; /* Light blue-gray background color for comments */
+  margin-bottom: 25px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
+.comment-image {
+  max-width: 100%;
+  margin-top: 15px;
+  border-radius: 8px;
+}
+
+/* Reply Styles */
 .reply-list {
   list-style: none;
   padding: 0;
-  margin-left: 15px; /* Indent replies for hierarchy */
 }
 
 .reply-item {
-  border: 1px solid #eee;
-  margin-bottom: 5px;
-  padding: 10px; /* Increase padding for readability */
-  background-color: #fafafa; /* Slightly lighter background color for visual distinction */
-  border-radius: 5px; /* Match comment box style */
+  background-color: #f5f5f5; /* Slightly lighter background color for replies */
+  margin-bottom: 15px;
+  padding: 18px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.reply-image {
+  max-width: 100%;
+  margin-top: 15px;
+  border-radius: 8px;
 }
 
 .reply-form {
-  margin-top: 5px;
-  display: flex; /* Align input and button horizontally */
-  justify-content: center; /* Center horizontally */
+  display: flex;
+  margin-top: 15px;
+}
+
+.reply-input {
+  flex: 1;
+  padding: 14px;
+  border: 1px solid #dcdde1;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.reply-btn {
+  background-color: #27ae60;
+  color: #ecf0f1;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.reply-btn:hover {
+  background-color: #219653; /* Darker green on hover */
 }
