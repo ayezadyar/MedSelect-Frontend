@@ -37,7 +37,7 @@ function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded shadow-md w-96">
-        <h1 className="text-2xl font-bold mb-4">Login</h1>
+        <h1 className="text-2xl font-bold mb-4 text-[#294a26]">Login</h1>
         <div className="mb-4">
           <input className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none"
             label="Email"
@@ -62,13 +62,13 @@ function Login() {
           <button
             disabled={submitButtonDisabled}
             onClick={handleSubmission}
-            className="bg-blue-500 text-white py-2 px-4 rounded"
+            className="bg-[#517028] hover:bg-[#294a26] text-white py-2 px-4 rounded"
           >
             Login
           </button>
           <p className="mt-2">
             Already have an account?{" "}
-            <span className="text-blue-500">
+            <span className="text-[#294a26]">
               <Link to="/signup">Sign up</Link>
             </span>
           </p>
