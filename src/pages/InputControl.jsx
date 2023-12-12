@@ -1,10 +1,15 @@
 import React from "react";
-import './index.css'
+import './index.css';
+
 function InputControl(props) {
   return (
-    <div>
-      {props.label && <label>{props.label}</label>}
-      <input type="text" {...props} />
+    <div className="mb-4"> {/* Add margin-bottom for spacing between fields */}
+      {props.label && <label className="block text-gray-700 text-sm font-bold mb-2">{props.label}</label>}
+      <input
+        className=""
+        type="text"
+        {...props}
+      />
     </div>
   );
 }
