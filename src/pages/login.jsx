@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-import InputControl from "./inputControl";
+// import input from "./input";
 import { auth } from "../Firebase";
 import './index.css'
-
 
 function Login() {
   const navigate = useNavigate();
@@ -36,41 +35,46 @@ function Login() {
   };
 
   return (
-    <>
-      <div>
-        <div>
-          <h1>Login</h1>
-
-          <InputControl
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="bg-white p-8 rounded shadow-md w-96">
+        <h1 className="text-2xl font-bold mb-4">Login</h1>
+        <div className="mb-4">
+          <input className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none"
             label="Email"
             onChange={(event) =>
               setValues((prev) => ({ ...prev, email: event.target.value }))
             }
             placeholder="Enter email address"
           />
-          <InputControl
+        </div>
+        <div className="mb-4">
+          <input className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none"
             label="Password"
+            type="password"
             onChange={(event) =>
               setValues((prev) => ({ ...prev, pass: event.target.value }))
             }
             placeholder="Enter Password"
           />
-
-          <div>
-            <b>{errorMsg}</b>
-            <button disabled={submitButtonDisabled} onClick={handleSubmission}>
-              Login
-            </button>
-            <p>
-              Already have an account?{" "}
-              <span>
-                <Link to="/signup">Sign up</Link>
-              </span>
-            </p>
-          </div>
+        </div>
+        <div className="mt-4">
+          <b className="text-red-500">{errorMsg}</b>
+          <button
+            disabled={submitButtonDisabled}
+            onClick={handleSubmission}
+            className="bg-blue-500 text-white py-2 px-4 rounded"
+          >
+            Login
+          </button>
+          <p className="mt-2">
+            Already have an account?{" "}
+            <span className="text-blue-500">
+              <Link to="/signup">Sign up</Link>
+            </span>
+          </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
