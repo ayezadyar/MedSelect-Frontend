@@ -1,53 +1,4 @@
-/* Contact form styles
 
-.contactForm {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .contactForm h3 {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  
-  .contactForm input,
-  .contactForm textarea {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 0.5rem;
-    font-size: 16px;
-  }
-  
-  .contactForm input:focus,
-  .contactForm textarea:focus {
-    outline: none;
-    border-color: #007bff;
-  }
-  
-  .contactForm .submit-btn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 1rem;
-  }
-  
-  .contactForm .submit-btn:hover {
-    background-color: #0062cc;
-  }
-   */
-
-
-
-/* ContactForm.css */
 
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 
@@ -74,7 +25,7 @@
   background: #fff;
   width: 800px;
   padding: 25px 40px 10px 40px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
 }
 
 .container .text {
@@ -82,7 +33,7 @@
   font-size: 41px;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
-  background: -webkit-linear-gradient(right, #50642c, #669666, #50642c, #669666);
+  background: #294a26;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -197,7 +148,7 @@ form .form-row .textarea {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
-  cursor: pointer;
+  /* cursor: pointer; */
   position: relative;
   z-index: 2;
 }
