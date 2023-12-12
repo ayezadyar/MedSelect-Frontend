@@ -70,18 +70,16 @@ const Contact = () => {
               <label htmlFor="">Write your message</label>
             </div>
           </div>
-          <div className="form-row bg-[#517028] hover:bg-[#294a26] text-white rounded-md cursor-pointer">
+          <center>
+          <div className="form-row bg-[#517028] hover:bg-[#294a26] text-white w-52 rounded-md cursor-pointer">
             <div className="input-data">
               <div className="inner"></div>
               <input type="submit" value="Submit" />
             </div>
           </div>
+          </center>
         </form>
 
-        {/* Go Back Button */}
-        <button onClick={handleGoBack} className="go-back-btn">
-          Go Back
-        </button>
       </div>
     </div>
   );

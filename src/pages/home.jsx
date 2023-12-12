@@ -149,7 +149,7 @@ export default function Home() {
 
 					{/* HomeCards */}
 					{showCards && (
-						<div className={`flex flex-col sm:flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out ${showCards ? 'fade-in' : ''}`}>
+						<div className={`flex flex-col sm:flex-row  flex-wrap justify-around w-full max-w-6xl mb-8 fade-out ${showCards ? 'fade-in' : ''}`}>
 							{/* HomeCard 1 */}
 							<HomeCard
 								imageSrc="/doseAlarm.png"
