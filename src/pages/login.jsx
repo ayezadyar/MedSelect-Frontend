@@ -35,7 +35,7 @@ function Login() {
     signInWithEmailAndPassword(auth, values.email, values.pass)
       .then(async (res) => {
         setSubmitButtonDisabled(false);
-        navigate("/about")
+        navigate("/home")
         // handleLoginToggle(); // Hide login popup
       })
       .catch((err) => {

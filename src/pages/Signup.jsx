@@ -41,7 +41,7 @@ function Signup() {
         await updateProfile(user, {
           displayName: values.name,
         });
-        navigate("/about")
+        navigate("/home")
 
         // handleSignupToggle(); // Close signup popup
       })
@@ -78,6 +78,7 @@ function Signup() {
           </div>
           <div className="mb-4">
             <input
+            type="password"
               label="Password"
               placeholder="Enter password"
               onChange={(event) =>

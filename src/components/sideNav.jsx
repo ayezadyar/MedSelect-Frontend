@@ -10,7 +10,7 @@ const SideNav = ({ isNavOpen, toggleNav }) => (
 	>
 		<div className="p-4">
 			<Link
-				to="/"
+				to="/home"
 				className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
 				onClick={toggleNav}
 				style={{ marginTop: isNavOpen ? "32px" : "0" }}
@@ -24,13 +24,13 @@ const SideNav = ({ isNavOpen, toggleNav }) => (
 			>
 				ABOUT US
 			</Link>
-			<Link
+			{/* <Link
 				to="/community"
 				className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
 				onClick={toggleNav}
 			>
 				JOIN COMMUNITY
-			</Link>
+			</Link> */}
 			<Link
 				to="/contact"
 				className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"

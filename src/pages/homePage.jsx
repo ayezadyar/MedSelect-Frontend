@@ -99,18 +99,7 @@ export default function HomePage() {
 
 			{/* Main Content and Popup Overlay */}
 			<div className="flex-1 relative">
-				{/* Top Bar with Login and Sign Up Buttons */}
-				<div className="absolute top-0 right-0 mt-4 mr-4 flex space-x-4">
-					{/* Login Button */}
-					<button className="text-[#294a26] font-semibold" onClick={handleLoginToggle}>
-						Login
-					</button>
-
-					{/* Sign Up Button */}
-					<button className="text-[#294a26] font-semibold" onClick={handleSignupToggle}>
-						Sign Up
-					</button>
-				</div>
+			
 				{/* Main Content with conditional blur */}
 				<div
 					className={`flex flex-col justify-center items-center min-h-screen transition-margin duration-300 ${isNavOpen ? 'ml-64' : ''
@@ -125,7 +114,7 @@ export default function HomePage() {
 					</button>
 
 					{/* Question Mark Icon */}
-					<button className="absolute top-14 right-4 z-10">
+					<button className="absolute top-5 right-4 z-10">
 						<FontAwesomeIcon
 							icon={faQuestionCircle}
 							size="lg"

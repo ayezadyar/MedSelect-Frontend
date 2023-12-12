@@ -175,13 +175,13 @@ export default function Home() {
 
 					{/* HomeCards */}
 					{showCards && (
-						<div className={`flex flex-col sm:flex-row  flex-wrap justify-around w-full max-w-6xl mb-8 fade-out ${showCards ? 'fade-in' : ''}`}>
+						<button onClick={handleLoginToggle} className={`flex flex-col sm:flex-row  flex-wrap justify-around w-full max-w-6xl mb-8 fade-out ${showCards ? 'fade-in' : ''}`}>
 							{/* HomeCard 1 */}
 							<HomeCard
 								imageSrc="/doseAlarm.png"
 								altText="Dose Alarm"
 								title="Dose Alarm"
-								to="/doseAlarm"
+								to="/"
 							/>
 
 							{/* HomeCard 2 */}
@@ -189,7 +189,7 @@ export default function Home() {
 								imageSrc="/doctorConsultation.png"
 								altText="Doctor Consultation"
 								title="Doctor Consultation"
-								to="/login"
+								to="/"
 							/>
 
 							{/* HomeCard 3 */}
@@ -197,9 +197,10 @@ export default function Home() {
 								imageSrc="/community.png"
 								altText="Community"
 								title="Community"
-								to="/community"
+								to="/"
 							/>
-						</div>
+							
+						</button>
 					)}
 				</div>
 

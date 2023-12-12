@@ -7,7 +7,7 @@ import Login from './pages/login'
 import Signup from './pages/Signup'
 import Community from './pages/community'
 import DoseAlarm from './pages/doseAlarm'
-import 
+import HomePage from './pages/homePage'
 
 function App() {
  
@@ -15,6 +15,7 @@ function App() {
     <>
     <Routes>
       <Route path="/" element= { < Home /> } />
+      <Route path="/home" element= { < HomePage /> } />
       <Route path="/about" element= { <About /> } />
       <Route path="/contact" element= { <Contact/> } />
       <Route path="/community" element= { <Community/> } />
