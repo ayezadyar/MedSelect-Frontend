@@ -1,12 +1,9 @@
 import { FaPaperclip } from 'react-icons/fa';
 import './CommunitySection.css'; // Import the CSS file for styling
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faHippo, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import HomeCard from '../components/homeCard';
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import SideNav from '../components/sideNav';
-import Papa from 'papaparse';
 
 const community = () => {
   const [isNavOpen, setNavOpen] = useState(false);
@@ -70,17 +67,17 @@ const community = () => {
           <FontAwesomeIcon icon={faBars} size="lg" />
         </button>
       </div>
-      <div className="comment-section">
+      <div className="">
         <h2>Comment Section</h2>
-        <form onSubmit={handleCommentSubmit} className="comment-form">
+        <form onSubmit={handleCommentSubmit} className="">
           <input
             type="text"
             value={newComment}
             onChange={handleCommentChange}
             placeholder="Add a comment"
-            className="comment-input"
+            className=""
           />
-          <label htmlFor="comment-image" className="attachment-icon">
+          <label htmlFor="comment-image" className="">
             <FaPaperclip />
             <input
               type="file"
@@ -90,36 +87,36 @@ const community = () => {
               style={{ display: 'none' }}
             />
           </label>
-          <button type="submit" className="comment-btn">
+          <button type="submit" className="">
             Submit Comment
           </button>
         </form>
-        <ul className="comment-list">
+        <ul className="">
           {comments.slice().reverse().map((comment, index) => (
-            <li key={index} className="comment-item">
+            <li key={index} className="">
               <p>{comment.text}</p>
               {comment.image && (
-                <img src={URL.createObjectURL(comment.image)} alt="Comment Attachment" className="comment-image" />
+                <img src={URL.createObjectURL(comment.image)} alt="Comment Attachment" className="" />
               )}
-              <ul className="reply-list">
+              <ul className="">
                 {comment.replies.map((reply, replyIndex) => (
-                  <li key={replyIndex} className="reply-item">
+                  <li key={replyIndex} className="">
                     <p>{reply.text}</p>
                     {reply.image && (
-                      <img src={URL.createObjectURL(reply.image)} alt="Reply Attachment" className="reply-image" />
+                      <img src={URL.createObjectURL(reply.image)} alt="Reply Attachment" className="" />
                     )}
                   </li>
                 ))}
                 <li>
-                  <form onSubmit={handleReplySubmit(index)} className="reply-form">
+                  <form onSubmit={handleReplySubmit(index)} className="">
                     <input
                       type="text"
                       value={replyText}
                       onChange={handleReplyChange}
                       placeholder="Reply to this comment"
-                      className="reply-input"
+                      className=""
                     />
-                    <label htmlFor={`reply-image-${index}`} className="attachment-icon">
+                    <label htmlFor={`reply-image-${index}`} className="">
                       <FaPaperclip />
                       <input
                         type="file"
@@ -129,7 +126,7 @@ const community = () => {
                         style={{ display: 'none' }}
                       />
                     </label>
-                    <button type="submit" className="reply-btn">
+                    <button type="submit" className="">
                       Submit Reply
                     </button>
                   </form>
