@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
-import InputControl from "./inputControl";
+// import input from "./input";
 import { auth } from "../Firebase";
-import './index.css'
+
 function Signup() {
   const navigate = useNavigate();
   const [values, setValues] = useState({
@@ -39,47 +39,60 @@ function Signup() {
   };
 
   return (
-    <div>
-      <div>
-        <h1 >Signup</h1>
+    <>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="bg-white p-8 rounded shadow-md w-96">
+          <h1 className="text-3xl font-bold mb-6">Signup</h1>
+          <div className="mb-4">
+            <input
+              label="Name"
+              className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none"
+              placeholder="Enter your name"
+              onChange={(event) =>
+                setValues((prev) => ({ ...prev, name: event.target.value }))
+              }
 
-        <InputControl
-          label="Name"
-          placeholder="Enter your name"
-          onChange={(event) =>
-            setValues((prev) => ({ ...prev, name: event.target.value }))
-          }
-        />
-        <InputControl
-          label="Email"
-          placeholder="Enter email address"
-          onChange={(event) =>
-            setValues((prev) => ({ ...prev, email: event.target.value }))
-          }
-        />
-        <InputControl
-          label="Password"
-          placeholder="Enter password"
-          onChange={(event) =>
-            setValues((prev) => ({ ...prev, pass: event.target.value }))
-          }
-        />
-
-        <div>
-          <b >{errorMsg}</b>
-          <button onClick={handleSubmission} disabled={submitButtonDisabled}>
-            Signup
-          </button>
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              label="Email"
+              placeholder="Enter email address"
+              onChange={(event) =>
+                setValues((prev) => ({ ...prev, email: event.target.value }))
+              }
+              className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              label="Password"
+              placeholder="Enter password"
+              onChange={(event) =>
+                setValues((prev) => ({ ...prev, pass: event.target.value }))
+              }
+              className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none"
+            />
+          </div>
+          <div className="flex items-center mb-4">
+            <b className="text-red-500 mr-2">{errorMsg}</b>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
+              onClick={handleSubmission}
+              disabled={submitButtonDisabled}
+            >
+              Signup
+            </button>
+          </div>
           <p>
             Already have an account?{" "}
-            <span>
+            <span className="text-blue-500">
               <Link to="/login">Login</Link>
             </span>
           </p>
         </div>
       </div>
-    </div>
+    </>
   );
 }
-
 export default Signup;
