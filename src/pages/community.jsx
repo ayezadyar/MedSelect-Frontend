@@ -6,138 +6,152 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import SideNav from '../components/sideNav';
 
 const community = () => {
-  const [isNavOpen, setNavOpen] = useState(false);
+   const [isNavOpen, setNavOpen] = useState(false);
 
-  const toggleNav = () => {
-    setNavOpen(!isNavOpen);
-  };
-  const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
-  const [replyText, setReplyText] = useState('');
-  const [image, setImage] = useState(null);
+   const toggleNav = () => {
+      setNavOpen(!isNavOpen);
+   };
+   const [comments, setComments] = useState([]);
+   const [newComment, setNewComment] = useState('');
+   const [replyText, setReplyText] = useState('');
+   const [image, setImage] = useState(null);
 
-  const handleCommentChange = (event) => {
-    setNewComment(event.target.value);
-  };
+   const handleCommentChange = (event) => {
+      setNewComment(event.target.value);
+   };
 
-  const handleReplyChange = (event) => {
-    setReplyText(event.target.value);
-  };
+   const handleReplyChange = (event) => {
+      setReplyText(event.target.value);
+   };
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setImage(file);
-  };
+   const handleImageChange = (event) => {
+      const file = event.target.files[0];
+      setImage(file);
+   };
 
-  const handleCommentSubmit = (event) => {
-    event.preventDefault();
-    if (newComment.trim() !== '') {
-      const newComments = [...comments, { text: newComment, replies: [], image }];
-      setComments(newComments);
-      setNewComment('');
-      setImage(null);
-    }
-  };
+   const handleCommentSubmit = (event) => {
+      event.preventDefault();
+      if (newComment.trim() !== '') {
+         const newComments = [...comments, { text: newComment, replies: [], image }];
+         setComments(newComments);
+         setNewComment('');
+         setImage(null);
+      }
+   };
 
-  const handleReplySubmit = (commentIndex) => (event) => {
-    event.preventDefault();
-    if (replyText.trim() !== '') {
-      const newComments = [...comments];
-      newComments[commentIndex].replies.push({ text: replyText, image });
-      setComments(newComments);
-      setReplyText('');
-      setImage(null);
-    }
-  };
+   const handleReplySubmit = (commentIndex) => (event) => {
+      event.preventDefault();
+      if (replyText.trim() !== '') {
+         const newComments = [...comments];
+         newComments[commentIndex].replies.push({ text: replyText, image });
+         setComments(newComments);
+         setReplyText('');
+         setImage(null);
+      }
+   };
+   return (
+      <div className="flex flex-col h-screen">
+         {/* Side Navigation */}
+         <SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
 
-  return (
-    <div className="flex">
-      {/* Side Navigation */}
-      <SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
-      <div
-        className={`flex flex-col flex-1 justify-center items-center min-h-screen transition-margin duration-300 ${isNavOpen ? "ml-64" : ""
-          }`}
-      >
-        {/* Burger Icon */}
-        <button
-          className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? "text-white" : "text-black"
-            }`}
-          onClick={toggleNav}
-        >
-          <FontAwesomeIcon icon={faBars} size="lg" />
-        </button>
+         <div className={`flex flex-col transition-margin duration-300 ${isNavOpen ? "ml-64" : ""}`}>
+            {/* Burger Icon */}
+            <button
+               className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? "text-white" : "text-black"
+                  }`}
+               onClick={toggleNav}
+            >
+               <FontAwesomeIcon icon={faBars} size="lg" />
+            </button>
+
+            {/* Centered Comment Section */}
+            <div className="ml-[40%] mt-12">
+               <h2 className="text-2xl font-bold mb-4">Comment Section</h2>
+               <form onSubmit={handleCommentSubmit} className="mb-6">
+                  <div className="flex items-center gap-3">
+                     <input
+                        type="text"
+                        value={newComment}
+                        onChange={handleCommentChange}
+                        placeholder="Add a comment"
+                        className="px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent w-64"
+                     />
+                     <label htmlFor="comment-image" className="cursor-pointer">
+                        <FaPaperclip className="text-blue-500" />
+                        <input
+                           type="file"
+                           id="comment-image"
+                           accept="image/*"
+                           onChange={handleImageChange}
+                           className="hidden"
+                        />
+                     </label>
+                     <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition duration-300">
+                        Submit Comment
+                     </button>
+                  </div>
+               </form>
+               <ul className="space-y-6">
+                  {comments.slice().reverse().map((comment, index) => (
+                     <li key={index} className="border p-5 rounded-md bg-gray-50 w-[500px]">
+                        <p>{comment.text}</p>
+                        {comment.image && (
+                           <img
+                              src={URL.createObjectURL(comment.image)}
+                              alt="Comment Attachment"
+                              className="mt-3 rounded-md max-w-full max-h-36 object-cover"
+                           />
+                        )}
+                        <ul className="pl-6 space-y-3 mt-3">
+                           {comment.replies.map((reply, replyIndex) => (
+                              <li key={replyIndex} className="border p-3 rounded-md bg-white">
+                                 <p>{reply.text}</p>
+                                 {reply.image && (
+                                    <img
+                                       src={URL.createObjectURL(reply.image)}
+                                       alt="Reply Attachment"
+                                       className="mt-3 rounded-md max-w-full max-h-36 object-cover"
+                                    />
+                                 )}
+                              </li>
+                           ))}
+                           <li>
+                              <form onSubmit={handleReplySubmit(index)} className="flex items-center gap-2">
+                                 <input
+                                    type="text"
+                                    value={replyText}
+                                    onChange={handleReplyChange}
+                                    placeholder="Reply to this comment"
+                                    className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent w-48"
+                                 />
+                                 <label htmlFor={`reply-image-${index}`} className="cursor-pointer">
+                                    <FaPaperclip className="text-blue-500" />
+                                    <input
+                                       type="file"
+                                       id={`reply-image-${index}`}
+                                       accept="image/*"
+                                       onChange={handleImageChange}
+                                       className="hidden"
+                                    />
+                                 </label>
+                                 <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md transition duration-300">
+                                    Submit Reply
+                                 </button>
+                              </form>
+                           </li>
+                        </ul>
+                     </li>
+                  ))}
+               </ul>
+
+            </div>
+         </div>
+
+         {/* Other Content */}
+         {/* ... (your other content) */}
       </div>
-      <div className="">
-        <h2>Comment Section</h2>
-        <form onSubmit={handleCommentSubmit} className="">
-          <input
-            type="text"
-            value={newComment}
-            onChange={handleCommentChange}
-            placeholder="Add a comment"
-            className=""
-          />
-          <label htmlFor="comment-image" className="">
-            <FaPaperclip />
-            <input
-              type="file"
-              id="comment-image"
-              accept="image/*"
-              onChange={handleImageChange}
-              style={{ display: 'none' }}
-            />
-          </label>
-          <button type="submit" className="">
-            Submit Comment
-          </button>
-        </form>
-        <ul className="">
-          {comments.slice().reverse().map((comment, index) => (
-            <li key={index} className="">
-              <p>{comment.text}</p>
-              {comment.image && (
-                <img src={URL.createObjectURL(comment.image)} alt="Comment Attachment" className="" />
-              )}
-              <ul className="">
-                {comment.replies.map((reply, replyIndex) => (
-                  <li key={replyIndex} className="">
-                    <p>{reply.text}</p>
-                    {reply.image && (
-                      <img src={URL.createObjectURL(reply.image)} alt="Reply Attachment" className="" />
-                    )}
-                  </li>
-                ))}
-                <li>
-                  <form onSubmit={handleReplySubmit(index)} className="">
-                    <input
-                      type="text"
-                      value={replyText}
-                      onChange={handleReplyChange}
-                      placeholder="Reply to this comment"
-                      className=""
-                    />
-                    <label htmlFor={`reply-image-${index}`} className="">
-                      <FaPaperclip />
-                      <input
-                        type="file"
-                        id={`reply-image-${index}`}
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                    <button type="submit" className="">
-                      Submit Reply
-                    </button>
-                  </form>
-                </li>
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
+   );
+
 };
 
 export default community;
