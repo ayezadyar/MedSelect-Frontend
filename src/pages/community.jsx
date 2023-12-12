@@ -97,7 +97,7 @@ const community = () => {
         </button>
       </form>
       <ul className="comment-list">
-        {comments.map((comment, index) => (
+      {comments.slice().reverse().map((comment, index) => (
           <li key={index} className="comment-item">
             <p>{comment.text}</p>
             {comment.image && (

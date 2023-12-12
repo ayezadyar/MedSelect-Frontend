@@ -1,65 +1,70 @@
 .comment-section {
-    max-width: 600px;
-    margin: 0 auto; /* Center horizontally */
-    font-family: Arial, sans-serif;
-    font-size: 16px; /* Improve readability */
-  }
-  
-  .comment-form {
-    display: flex; /* Align input and button horizontally */
-    margin: 15px 0; /* Reduce bottom margin */
-    gap: 20px; /* Space between input and button */
-  }
-  
-  .comment-input,
-  .reply-input {
-    width: 70%;
-    padding: 10px; /* Increase padding for better input experience */
-    border: 1px solid #ddd; /* Add border for better visual separation */
-    border-radius: 10px; /* Make buttons oval instead of rounded */
-  }
-  
-  .comment-btn,
-  .reply-btn {
-    padding: 8px 16px; /* Increase horizontal padding for button responsiveness */
-    border: none; /* No border for a cleaner look */
-    border-radius: 10px; /* Match input style */
-    background-color: #808000; /* Olive green color for buttons */
-    cursor: pointer;
-    font-size: 14px; /* Reduce font size for better button layout */
-    font-weight: bold; /* Emphasize button text */
-    color: #fff; /* White text for better contrast */
-    box-shadow: 0 2px 5px rgba(201, 191, 191, 0.15); /* Subtle shadow for depth */
-  }
-  
-  .comment-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .comment-item {
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-    padding: 15px; /* Increase padding for readability */
-    background-color: #f8f8f8; /* Light background color for visual separation */
-    border-radius: 5px; /* Subtle rounded corners for the comment box */
-  }
-  
-  .reply-list {
-    list-style: none;
-    padding: 0;
-    margin-left: 15px; /* Indent replies for hierarchy */
-  }
-  
-  .reply-item {
-    border: 1px solid #eee;
-    margin-bottom: 5px;
-    padding: 10px; /* Increase padding for readability */
-    background-color: #fafafa; /* Slightly lighter background color for visual distinction */
-    border-radius: 5px; /* Match comment box style */
-  }
-  
-  .reply-form {
-    margin-top: 5px;
-    display: flex; /* Align input and button horizontally */
-  }
+  max-width: 600px;
+  margin: 0 auto; /* Center horizontally */
+  font-family: Arial, sans-serif;
+  font-size: 16px; /* Improve readability */
+  text-align: center; /* Center all content */
+}
+
+.comment-form {
+  display: flex; /* Align input and button horizontally */
+  justify-content: center; /* Center horizontally */
+  margin: 15px 0; /* Reduce bottom margin */
+  gap: 20px; /* Space between input and button */
+}
+
+.comment-input,
+.reply-input {
+  width: 70%;
+  padding: 10px; /* Increase padding for better input experience */
+  border: 1px solid #ddd; /* Add border for better visual separation */
+  border-radius: 10px; /* Make buttons oval instead of rounded */
+}
+
+.comment-btn,
+.reply-btn {
+  padding: 8px 16px; /* Increase horizontal padding for button responsiveness */
+  border: none; /* No border for a cleaner look */
+  border-radius: 10px; /* Match input style */
+  background-color: #56a14d; /* Olive green color for buttons */
+  cursor: pointer;
+  font-size: 14px; /* Reduce font size for better button layout */
+  font-weight: bold; /* Emphasize button text */
+  color: #fff; /* White text for better contrast */
+  box-shadow: 0 2px 5px rgba(201, 191, 191, 0.15); /* Subtle shadow for depth */
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+  text-align: left; /* Align comment list content to the left */
+  margin-top: 15px; /* Add some space between form and list */
+}
+
+.comment-item {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 15px; /* Increase padding for readability */
+  background-color: #f8f8f8; /* Light background color for visual separation */
+  border-radius: 5px; /* Subtle rounded corners for the comment box */
+}
+
+.reply-list {
+  list-style: none;
+  padding: 0;
+  margin-left: 15px; /* Indent replies for hierarchy */
+}
+
+.reply-item {
+  border: 1px solid #eee;
+  margin-bottom: 5px;
+  padding: 10px; /* Increase padding for readability */
+  background-color: #fafafa; /* Slightly lighter background color for visual distinction */
+  border-radius: 5px; /* Match comment box style */
+}
+
+.reply-form {
+  margin-top: 5px;
+  display: flex; /* Align input and button horizontally */
+  justify-content: center; /* Center horizontally */
+}
