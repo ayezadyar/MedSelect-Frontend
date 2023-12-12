@@ -54,7 +54,7 @@ const community = () => {
          {/* Side Navigation */}
          <SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
 
-         <div className={`flex flex-col transition-margin duration-300 ${isNavOpen ? "ml-64" : ""}`}>
+         <div className={`flex flex-col transition-margin duration-300 ${isNavOpen ? "" : ""}`}>
             {/* Burger Icon */}
             <button
                className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? "text-white" : "text-black"
@@ -65,8 +65,8 @@ const community = () => {
             </button>
 
             {/* Centered Comment Section */}
-            <div className="ml-[40%] mt-12">
-               <h2 className="text-2xl font-bold mb-4">Comment Section</h2>
+            <div className="ml-[40%] mt-1">
+               <pre>  <h1 className="text-2xl font-bold mb-4 text-[#294a26]">                 Comment Section</h1></pre>
                <form onSubmit={handleCommentSubmit} className="mb-6">
                   <div className="flex items-center gap-3">
                      <input
@@ -74,10 +74,10 @@ const community = () => {
                         value={newComment}
                         onChange={handleCommentChange}
                         placeholder="Add a comment"
-                        className="px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent w-64"
+                        className="px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#294a26] focus:border-transparent w-64"
                      />
                      <label htmlFor="comment-image" className="cursor-pointer">
-                        <FaPaperclip className="text-blue-500" />
+                        <FaPaperclip className=" text-[#294a26]" />
                         <input
                            type="file"
                            id="comment-image"
@@ -86,14 +86,14 @@ const community = () => {
                            className="hidden"
                         />
                      </label>
-                     <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition duration-300">
+                     <button type="submit" className="bg-[#517028] hover:bg-[#294a26] text-white px-4 py-2 rounded-md transition duration-300">
                         Submit Comment
                      </button>
                   </div>
                </form>
-               <ul className="space-y-6">
+               <ul className="space-y-2 mx-auto">
                   {comments.slice().reverse().map((comment, index) => (
-                     <li key={index} className="border p-5 rounded-md bg-gray-50 w-[500px]">
+                     <li key={index} className="border p-5 rounded-md bg-gray-200 w-[470px]">
                         <p>{comment.text}</p>
                         {comment.image && (
                            <img
@@ -125,7 +125,7 @@ const community = () => {
                                     className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent w-48"
                                  />
                                  <label htmlFor={`reply-image-${index}`} className="cursor-pointer">
-                                    <FaPaperclip className="text-blue-500" />
+                                    <FaPaperclip className="text-[#294a26]" />
                                     <input
                                        type="file"
                                        id={`reply-image-${index}`}
@@ -134,7 +134,7 @@ const community = () => {
                                        className="hidden"
                                     />
                                  </label>
-                                 <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md transition duration-300">
+                                 <button type="submit" className="bg-[#517028] hover:bg-[#294a26] text-white px-3 py-1 rounded-md transition duration-300">
                                     Submit Reply
                                  </button>
                               </form>
