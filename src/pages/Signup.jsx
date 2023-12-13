@@ -69,6 +69,8 @@ function Signup() {
           <div className="mb-4">
             <input
               label="Email"
+              type="email"
+              required
               placeholder="Enter email address"
               onChange={(event) =>
                 setValues((prev) => ({ ...prev, email: event.target.value }))
@@ -79,6 +81,7 @@ function Signup() {
           <div className="mb-4">
             <input
             type="password"
+            required
               label="Password"
               placeholder="Enter password"
               onChange={(event) =>
