@@ -47,7 +47,7 @@ const contact = () => {
           </div>
           <div className="form-row">
             <div className="input-data">
-              <input type="text" required />
+              <input type="email" required />
               <div className="underline"></div>
               <label htmlFor="">Email Address</label>
             </div>
