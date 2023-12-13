@@ -56,12 +56,15 @@ function Login() {
               setValues((prev) => ({ ...prev, email: event.target.value }))
             }
             placeholder="Enter email address"
+            type="email"
+            required
           />
         </div>
         <div className="mb-4">
           <input
             className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none"
             label="Password"
+            required
             type="password"
             onChange={(event) =>
               setValues((prev) => ({ ...prev, pass: event.target.value }))
