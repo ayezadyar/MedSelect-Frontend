@@ -65,14 +65,15 @@ const community = () => {
 
             {/* Centered Comment Section */}
             <div className="ml-[40%] mt-1">
-               <pre>  <h1 className="text-2xl font-bold mb-4 text-[#294a26]">                 Comment Section</h1></pre>
+               <pre>  <h1 className="text-2xl font-bold mb-4 text-[#294a26]">                 Community Section</h1></pre>
                <form onSubmit={handleCommentSubmit} className="mb-6">
                   <div className="flex items-center gap-3">
                      <input
                         type="text"
+                        required
                         value={newComment}
                         onChange={handleCommentChange}
-                        placeholder="Add a comment"
+                        placeholder="Share your thoughts"
                         className="px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#294a26] focus:border-transparent w-64"
                      />
                      <label htmlFor="comment-image" className="cursor-pointer">
@@ -80,13 +81,14 @@ const community = () => {
                         <input
                            type="file"
                            id="comment-image"
-                           accept="image/*"
+                           accept=".png, .jpg, .jpeg"
                            onChange={handleImageChange}
                            className="hidden"
                         />
+
                      </label>
                      <button type="submit" className="bg-[#517028] hover:bg-[#294a26] text-white px-4 py-2 rounded-md transition duration-300">
-                        Submit Comment
+                        Share
                      </button>
                   </div>
                </form>
@@ -118,23 +120,25 @@ const community = () => {
                               <form onSubmit={handleReplySubmit(index)} className="flex items-center gap-2">
                                  <input
                                     type="text"
+                                    required
                                     value={replyText}
                                     onChange={handleReplyChange}
-                                    placeholder="Reply to this comment"
+                                    placeholder="Reply "
                                     className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent w-48"
                                  />
                                  <label htmlFor={`reply-image-${index}`} className="cursor-pointer">
                                     <FaPaperclip className="text-[#294a26]" />
                                     <input
                                        type="file"
-                                       id={`reply-image-${index}`}
-                                       accept="image/*"
+                                       id="comment-image"
+                                       accept=".png, .jpg, .jpeg"
                                        onChange={handleImageChange}
                                        className="hidden"
                                     />
+
                                  </label>
                                  <button type="submit" className="bg-[#517028] hover:bg-[#294a26] text-white px-3 py-1 rounded-md transition duration-300">
-                                    Submit Reply
+                                    Reply
                                  </button>
                               </form>
                            </li>
