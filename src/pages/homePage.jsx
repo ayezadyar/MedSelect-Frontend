@@ -6,8 +6,13 @@ import HomeCard from '../components/homeCard';
 import SideNav from '../components/sideNav';
 import Papa from 'papaparse';
 import Popup from '../components/videoModal';
-
+import { getAuth } from "firebase/auth";
 export default function Home() {
+
+	const auth = getAuth();
+	const user = auth.currentUser;
+	console.log(user.email, "the user")
+
 	const [isNavOpen, setNavOpen] = useState(false);
 	const [medicines, setMedicines] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('');
