@@ -5,7 +5,7 @@ import { auth } from "../Firebase";
 import Signup from "./Signup";
 import './index.css'
 
-function Login() {
+function Login({ setLoginOpen }) {
   const navigate = useNavigate();
   const [values, setValues] = useState({
     email: "",
@@ -13,12 +13,10 @@ function Login() {
   });
   const [errorMsg, setErrorMsg] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
-  const [isLoginOpen, setLoginOpen] = useState(false);
+  // const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignupOpen, setSignupOpen] = useState(false);
 
-  const handleLoginToggle = () => {
-    setLoginOpen(!isLoginOpen);
-  };
+
 
   const handleSignupToggle = () => {
     setSignupOpen(!isSignupOpen);
@@ -34,8 +32,10 @@ function Login() {
     setSubmitButtonDisabled(true);
     signInWithEmailAndPassword(auth, values.email, values.pass)
       .then(async (res) => {
+        console.log('i am login')
         setSubmitButtonDisabled(false);
-        navigate("/home")
+        navigate("/")
+        setLoginOpen(false);
         // handleLoginToggle(); // Hide login popup
       })
       .catch((err) => {
