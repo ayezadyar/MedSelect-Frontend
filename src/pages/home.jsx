@@ -10,6 +10,8 @@ import Signup from './Signup';
 import Login from './login';
 
 import Skeleton from '@yisheng90/react-loading';
+
+import { getAuth } from "firebase/auth";
 export default function Home() {
 	const [isNavOpen, setNavOpen] = useState(false);
 	const [medicines, setMedicines] = useState([]);
@@ -20,6 +22,10 @@ export default function Home() {
 	const [isLoginOpen, setLoginOpen] = useState(false);
 	const [isSignupOpen, setSignupOpen] = useState(false);
 	const [isLoading, setisLoading] = useState(true);
+	const [currentUser, setCurrentUser] = useState(null);
+
+	const auth = getAuth();
+
 
 	const handleLoginToggle = () => {
 		setLoginOpen(!isLoginOpen);
@@ -33,6 +39,19 @@ export default function Home() {
 	const handlePopupToggle = () => {
 		setPopupOpen(!isPopupOpen);
 	};
+
+	const user = auth.currentUser;
+	useEffect(() => {
+		if (user) {
+			// If there's a current user, set it to state
+			setCurrentUser(user);
+		} else {
+			// If no current user, set state to null
+			setCurrentUser(null);
+		}
+		console.log(currentUser?.email, "\n", user?.email, "\n name and email")
+	}, [user]);
+
 	useEffect(() => {
 		// Load CSV data
 		const fetchData = async () => {
@@ -49,6 +68,7 @@ export default function Home() {
 		};
 
 		fetchData();
+
 	}, []);
 
 	useEffect(() => {
@@ -105,15 +125,25 @@ export default function Home() {
 			<div className="flex-1 ">
 				{/* Top Bar with Login and Sign Up Buttons */}
 				<div className="absolute top-0 right-0 mt-4 mr-4 flex space-x-4">
-					{/* Login Button */}
-					<button className="text-[#294a26] font-semibold" onClick={handleLoginToggle}>
-						Login
-					</button>
-
-					{/* Sign Up Button */}
-					<button className="text-[#294a26] font-semibold" onClick={handleSignupToggle}>
-						Sign Up
-					</button>
+					{currentUser ? (
+						// If there is a logged-in user, display their email and a logout button
+						<>
+							<p>{currentUser?.email}</p>
+							{/* <button className="text-[#294a26] font-semibold" onClick={handleLogout}>
+								Logout
+							</button> */}
+						</>
+					) : (
+						// If there is no logged-in user, display login and signup buttons
+						<>
+							<button className="text-[#294a26] font-semibold" onClick={handleLoginToggle}>
+								Login
+							</button>
+							<button className="text-[#294a26] font-semibold" onClick={handleSignupToggle}>
+								Sign Up
+							</button>
+						</>
+					)}
 				</div>
 				{/* Main Content with conditional blur */}
 				<div
@@ -148,17 +178,11 @@ export default function Home() {
 
 					<form className="w-full max-w-md mb-8 mx-auto">
 						{isLoading ? (
-							// <div className="flex flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out fade-in">
-							// 	{/* Loading Skeleton 1 */}
-							// 	<div className="w-full h-2 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
-							// 		<div className="h-full w-1/2 bg-gray-300"></div>
-							// 	</div>
 
-
-							// </div>
 							<div>
 								<Skeleton width='w-full' />
 							</div>
+
 						) : (
 							<div className="flex items-center border-b border-[#517028] py-2">
 								<input
@@ -256,7 +280,7 @@ export default function Home() {
 				{/* Login Popup */}
 				{isLoginOpen && (
 					<div className="fixed top-0 left-0 w-full h-full z-30 flex justify-center items-center">
-						<Login handleClose={handleLoginToggle} />
+						<Login setLoginOpen={setLoginOpen} />
 					</div>
 				)}
 
