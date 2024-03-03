@@ -9,6 +9,7 @@ import Popup from '../components/videoModal';
 import Signup from './Signup';
 import Login from './login';
 
+import Skeleton from '@yisheng90/react-loading';
 export default function Home() {
 	const [isNavOpen, setNavOpen] = useState(false);
 	const [medicines, setMedicines] = useState([]);
@@ -18,6 +19,7 @@ export default function Home() {
 	const [isPopupOpen, setPopupOpen] = useState(false); // New state for popup visibility
 	const [isLoginOpen, setLoginOpen] = useState(false);
 	const [isSignupOpen, setSignupOpen] = useState(false);
+	const [isLoading, setisLoading] = useState(true);
 
 	const handleLoginToggle = () => {
 		setLoginOpen(!isLoginOpen);
@@ -39,6 +41,8 @@ export default function Home() {
 				const data = await response.text();
 				const parsedData = Papa.parse(data, { header: true }).data;
 				setMedicines(parsedData);
+				setisLoading(false);
+
 			} catch (error) {
 				console.error("Error loading CSV data:", error);
 			}
@@ -140,19 +144,35 @@ export default function Home() {
 					</div>
 
 					{/* Search Form */}
+
+
 					<form className="w-full max-w-md mb-8 mx-auto">
-						<div className="flex items-center border-b border-[#517028] py-2">
-							<input
-								autoFocus
-								className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-								type="text"
-								placeholder="Search for medicine..."
-								aria-label="Medicine search"
-								onChange={handleSearch}
-								value={searchTerm}
-							/>
-							<FontAwesomeIcon className='text-[#294a26]' size='lg' icon={faMagnifyingGlass} />
-						</div>
+						{isLoading ? (
+							// <div className="flex flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out fade-in">
+							// 	{/* Loading Skeleton 1 */}
+							// 	<div className="w-full h-2 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
+							// 		<div className="h-full w-1/2 bg-gray-300"></div>
+							// 	</div>
+
+
+							// </div>
+							<div>
+								<Skeleton width='w-full' />
+							</div>
+						) : (
+							<div className="flex items-center border-b border-[#517028] py-2">
+								<input
+									autoFocus
+									className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+									type="text"
+									placeholder="Search for medicine..."
+									aria-label="Medicine search"
+									onChange={handleSearch}
+									value={searchTerm}
+								/>
+								<FontAwesomeIcon className="text-[#294a26]" size="lg" icon={faMagnifyingGlass} />
+							</div>
+						)}
 						{searchTerm.length > 1 && (
 							<ul className={`list-none p-0 m-0 fade-out ${showCards ? 'fade-in' : ''}`}>
 								{searchResults.map((medicine, index) => (
@@ -161,10 +181,10 @@ export default function Home() {
 											className={`border-b ${index % 2 === 0 ? 'border-[#517028]' : 'border-[#294a26]'} rounded-full p-4`}
 										>
 											<p className="text-[#294a26]">
-												<span className="font-semibold">Name:</span> <i className='font-semibold'>{medicine.product_name}</i>
+												<span className="font-semibold">Name:</span> <i className="font-semibold">{medicine.product_name}</i>
 											</p>
 											<p className="text-[#294a26]">
-												<span className="font-semibold">Salts:</span> <i className='font-semibold'>{medicine.salt_composition}</i>
+												<span className="font-semibold">Salts:</span> <i className="font-semibold">{medicine.salt_composition}</i>
 											</p>
 										</div>
 									</li>
@@ -172,36 +192,56 @@ export default function Home() {
 							</ul>
 						)}
 					</form>
-
 					{/* HomeCards */}
-					{showCards && (
-						<button onClick={handleLoginToggle} className={`flex flex-col sm:flex-row  flex-wrap justify-around w-full max-w-6xl mb-8 fade-out ${showCards ? 'fade-in' : ''}`}>
-							{/* HomeCard 1 */}
-							<HomeCard
-								imageSrc="/doseAlarm.png"
-								altText="Dose Alarm"
-								title="Dose Alarm"
-								to="/"
-							/>
+					{showCards ? (
+						isLoading ? (
+							<div className="flex flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out fade-in">
+								{/* Loading Skeleton 1 */}
+								<div className="w-64 h-64 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
+									<div className="h-full w-1/2 bg-gray-300"></div>
+								</div>
 
-							{/* HomeCard 2 */}
-							<HomeCard
-								imageSrc="/doctorConsultation.png"
-								altText="Doctor Consultation"
-								title="Doctor Consultation"
-								to="/"
-							/>
+								{/* Loading Skeleton 2 */}
+								<div className="w-64 h-64 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
+									<div className="h-full w-1/2 bg-gray-300"></div>
+								</div>
 
-							{/* HomeCard 3 */}
-							<HomeCard
-								imageSrc="/community.png"
-								altText="Community"
-								title="Community"
-								to="/"
-							/>
-							
-						</button>
-					)}
+								{/* Loading Skeleton 3 */}
+								<div className="w-64 h-64 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
+									<div className="h-full w-1/2 bg-gray-300"></div>
+								</div>
+
+
+							</div>
+						) : (
+							<button onClick={handleLoginToggle} className="flex flex-col sm:flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out fade-in">
+								{/* HomeCard 1 */}
+								<HomeCard
+									imageSrc="/doseAlarm.png"
+									altText="Dose Alarm"
+									title="Dose Alarm"
+									to="/"
+								/>
+
+								{/* HomeCard 2 */}
+								<HomeCard
+									imageSrc="/doctorConsultation.png"
+									altText="Doctor Consultation"
+									title="Doctor Consultation"
+									to="/"
+								/>
+
+								{/* HomeCard 3 */}
+								<HomeCard
+									imageSrc="/community.png"
+									altText="Community"
+									title="Community"
+									to="/"
+								/>
+							</button>
+						)
+					) : null}
+
 				</div>
 
 				{/* Popup Overlay and Content */}
