@@ -244,7 +244,7 @@ export default function Home() {
 									imageSrc="/doseAlarm.png"
 									altText="Dose Alarm"
 									title="Dose Alarm"
-									to="/"
+									to="/doseAlarm"
 								/>
 
 								{/* HomeCard 2 */}
@@ -260,7 +260,7 @@ export default function Home() {
 									imageSrc="/community.png"
 									altText="Community"
 									title="Community"
-									to="/"
+									to="/community"
 								/>
 							</button>
 						)
