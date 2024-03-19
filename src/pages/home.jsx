@@ -9,7 +9,6 @@ import Popup from '../components/videoModal';
 import Signup from './Signup';
 import Login from './login';
 
-import Skeleton from '@yisheng90/react-loading';
 
 import { getAuth } from "firebase/auth";
 export default function Home() {
@@ -129,9 +128,7 @@ export default function Home() {
 						// If there is a logged-in user, display their email and a logout button
 						<>
 							<p>{currentUser?.email}</p>
-							{/* <button className="text-[#294a26] font-semibold" onClick={handleLogout}>
-								Logout
-							</button> */}
+							
 						</>
 					) : (
 						// If there is no logged-in user, display login and signup buttons
@@ -180,7 +177,7 @@ export default function Home() {
 						{isLoading ? (
 
 							<div>
-								<Skeleton width='w-full' />
+
 							</div>
 
 						) : (
@@ -235,6 +232,11 @@ export default function Home() {
 									<div className="h-full w-1/2 bg-gray-300"></div>
 								</div>
 
+								{/* Loading Skeleton 4 */}
+								<div className="w-64 h-64 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
+									<div className="h-full w-1/2 bg-gray-300"></div>
+								</div>
+
 
 							</div>
 						) : (
@@ -262,6 +264,7 @@ export default function Home() {
 									title="Community"
 									to="/community"
 								/>
+
 							</button>
 						)
 					) : null}
