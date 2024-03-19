@@ -3,7 +3,8 @@ import { auth, db, storage } from "../../Firebase"; // Make sure storage is expo
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FiSend, FiPaperclip } from 'react-icons/fi';
 
 const SendMessage = ({ scroll }) => {
@@ -56,7 +57,16 @@ const SendMessage = ({ scroll }) => {
 	const sendMessage = async (event) => {
 		event.preventDefault();
 		if (message.trim() === "" && !file) {
-			alert("Enter a valid message or select a file to send");
+			toast.error(("insert some text/file"), {
+				position: "top-center",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
 			return;
 		}
 
@@ -103,7 +113,7 @@ const SendMessage = ({ scroll }) => {
 					id="messageInput"
 					name="messageInput"
 					type="text"
-					placeholder="Type message..."
+					placeholder="insert file / Add text"
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
 					className="flex-1 mx-4 rounded-full py-2 px-4 outline-none focus:ring-2 focus:ring-[#517028]"
@@ -112,6 +122,7 @@ const SendMessage = ({ scroll }) => {
 					<FiSend className="text-xl" />
 				</button>
 			</form>
+			<ToastContainer />
 		</>
 	);
 };
