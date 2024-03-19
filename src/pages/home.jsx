@@ -225,16 +225,18 @@ export default function Home() {
 								))}
 							</div>
 						) : (
-							<button onClick={handleLoginToggle} className="flex flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out fade-in">
+							<button onClick={currentUser?.email ? null : handleLoginToggle} className="flex flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out fade-in">
 								{/* HomeCard 1 */}
+
 								<HomeCard
 									imageSrc="/doseAlarm.png"
 									altText="Dose Alarm"
 									title="Dose Alarm"
-									to="/doseAlarm"
+									to={currentUser?.email ? "/doseAlarm" : '/'}
 								/>
 
 								{/* HomeCard 2 */}
+
 								<HomeCard
 									imageSrc="/doctorConsultation.png"
 									altText="Doctor Consultation"
@@ -243,14 +245,16 @@ export default function Home() {
 								/>
 
 								{/* HomeCard 3 */}
+
 								<HomeCard
 									imageSrc="/community.png"
 									altText="Community"
 									title="Community"
-									to="/community"
+									to={currentUser?.email ? "/community" : '/'}
 								/>
 
 								{/* HomeCard 4 */}
+
 								<HomeCard
 									imageSrc="/map.png"
 									altText="Fourth Card"
