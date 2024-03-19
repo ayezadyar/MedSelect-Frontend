@@ -241,7 +241,7 @@ export default function Home() {
 									imageSrc="/doctorConsultation.png"
 									altText="Doctor Consultation"
 									title="Doctor Consultation"
-									to="/"
+										to={currentUser?.email ? "/chat" : '/'}
 								/>
 
 								{/* HomeCard 3 */}
