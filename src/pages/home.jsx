@@ -128,7 +128,7 @@ export default function Home() {
 						// If there is a logged-in user, display their email and a logout button
 						<>
 							<p>{currentUser?.email}</p>
-							
+
 						</>
 					) : (
 						// If there is no logged-in user, display login and signup buttons
@@ -217,30 +217,15 @@ export default function Home() {
 					{showCards ? (
 						isLoading ? (
 							<div className="flex flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out fade-in">
-								{/* Loading Skeleton 1 */}
-								<div className="w-64 h-64 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
-									<div className="h-full w-1/2 bg-gray-300"></div>
-								</div>
-
-								{/* Loading Skeleton 2 */}
-								<div className="w-64 h-64 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
-									<div className="h-full w-1/2 bg-gray-300"></div>
-								</div>
-
-								{/* Loading Skeleton 3 */}
-								<div className="w-64 h-64 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
-									<div className="h-full w-1/2 bg-gray-300"></div>
-								</div>
-
-								{/* Loading Skeleton 4 */}
-								<div className="w-64 h-64 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
-									<div className="h-full w-1/2 bg-gray-300"></div>
-								</div>
-
-
+								{/* Loading Skeletons */}
+								{[1, 2, 3, 4].map((index) => (
+									<div key={index} className="w-64 h-64 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
+										<div className="h-full w-1/2 bg-gray-300"></div>
+									</div>
+								))}
 							</div>
 						) : (
-							<button onClick={handleLoginToggle} className="flex flex-col sm:flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out fade-in">
+							<button onClick={handleLoginToggle} className="flex flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out fade-in">
 								{/* HomeCard 1 */}
 								<HomeCard
 									imageSrc="/doseAlarm.png"
@@ -265,10 +250,16 @@ export default function Home() {
 									to="/community"
 								/>
 
+								{/* HomeCard 4 */}
+								<HomeCard
+									imageSrc="/map.png"
+									altText="Fourth Card"
+									title="Request A Medicine"
+									to="/"
+								/>
 							</button>
 						)
 					) : null}
-
 				</div>
 
 				{/* Popup Overlay and Content */}
