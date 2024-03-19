@@ -11,7 +11,7 @@ const HomeCard = ({ imageSrc, altText, title, to }) => (
 					<img
 						src={imageSrc}
 						alt={altText}
-						className="w-28 h-28 mx-auto my-10 mb-2 object-cover rounded"
+						className="w-28 h-26 mx-auto my-10 mb-2 object-cover rounded"
 					/>
 					<h2 className="text-base sm:text-lg font-semibold mb-2">{title}</h2>
 				</div>
