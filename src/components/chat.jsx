@@ -28,7 +28,6 @@ const ChatBox = () => {
 		return () => unsubscribe();
 	}, []);
 
-	// Automatically scroll to the bottom on new messages
 	useEffect(() => {
 		if (scroll.current) {
 			scroll.current.scrollIntoView({ behavior: "smooth" });
@@ -36,22 +35,25 @@ const ChatBox = () => {
 	}, [messages]);
 
 	return (
-		<main className="chat-box">
-			<div className="messages-wrapper">
-				{messages.map((message) => (
-					<div key={message.id}>
-						<Message message={message} />
-						{/* Display file if exists */}
-						{message.fileUrl && (
-							<a href={message.fileUrl} target="_blank" rel="noopener noreferrer">
-								<img src={message.fileUrl} alt="Uploaded File" style={{ maxWidth: '200px', maxHeight: '200px' }} />
-							</a>
-						)}
-					</div>
-				))}
+		<main className="flex flex-col h-screen">
+			<div className="flex-grow overflow-auto p-4">
+				<div className="messages-wrapper space-y-4 flex flex-col items-end">
+					{messages.map((message) => (
+						<div key={message.id} className="break-words max-w-xs">
+							<Message message={message} />
+							{message.fileUrl && (
+								<a href={message.fileUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2">
+									<img src={message.fileUrl} alt="Uploaded File" className="rounded-lg shadow-md border" />
+								</a>
+							)}
+						</div>
+					))}
+				</div>
+				<span ref={scroll}></span>
 			</div>
-			<span ref={scroll}></span>
-			<SendMessage scroll={scroll} />
+			<div className="p-4 bg-gray-100">
+				<SendMessage scroll={scroll} />
+			</div>
 		</main>
 	);
 };
