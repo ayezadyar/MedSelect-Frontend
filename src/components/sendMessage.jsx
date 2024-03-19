@@ -14,14 +14,22 @@ const SendMessage = ({ scroll }) => {
 	const auth = getAuth();
 
 	const handleFileChange = (e) => {
-		setFile(e.target.files[0]); // Assuming single file upload; adjust if multiple
+		const selectedFile = e.target.files[0];
+		if (selectedFile) {
+			setFile({
+				rawFile: selectedFile,
+				name: selectedFile.name,
+				size: selectedFile.size,
+				preview: selectedFile.type.startsWith("image/") ? URL.createObjectURL(selectedFile) : null,
+			}); // Include file preview if it's an image
+		}
 	};
 
 	const uploadFile = async (file) => {
 		if (!file) return null;
 		setIsUploading(true);
 		const fileRef = ref(storage, `files/${file.name}`);
-		const uploadTask = uploadBytesResumable(fileRef, file);
+		const uploadTask = uploadBytesResumable(fileRef, file.rawFile);
 
 		return new Promise((resolve, reject) => {
 			uploadTask.on(
@@ -29,7 +37,6 @@ const SendMessage = ({ scroll }) => {
 				(snapshot) => {
 					const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 					setUploadProgress(progress);
-					console.log('Upload is ' + progress + '% done');
 				},
 				(error) => {
 					console.log(error);
@@ -72,11 +79,13 @@ const SendMessage = ({ scroll }) => {
 
 	return (
 		<>
-			{isUploading && (
+			{isUploading && file && (
 				<div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-					<div className="bg-white p-5 rounded-lg flex items-center">
-						<div className="mr-4">Uploading: {Math.round(uploadProgress)}%</div>
+					<div className="bg-white p-5 rounded-lg flex flex-col items-center">
+						<div className="mb-2">Uploading: {file.name} ({(file.size / 1024).toFixed(2)} KB)</div>
+						{file.preview && <img src={file.preview} alt="Preview" style={{ maxWidth: '100px', maxHeight: '100px', marginBottom: '10px' }} />}
 						<progress value={uploadProgress} max="100" />
+						<div>{Math.round(uploadProgress)}%</div>
 					</div>
 				</div>
 			)}
