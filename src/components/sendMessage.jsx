@@ -106,9 +106,9 @@ const SendMessage = ({ scroll }) => {
 					placeholder="Type message..."
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
-					className="flex-1 mx-4 rounded-full py-2 px-4 outline-none focus:ring-2 focus:ring-blue-500"
+					className="flex-1 mx-4 rounded-full py-2 px-4 outline-none focus:ring-2 focus:ring-[#517028]"
 				/>
-				<button type="submit" className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+				<button type="submit" className="p-2 rounded-full bg-[#517028] text-white hover:bg-[#294a26] focus:outline-none focus:ring-2 focus:ring-[#294a26] focus:ring-offset-2">
 					<FiSend className="text-xl" />
 				</button>
 			</form>
