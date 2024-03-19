@@ -23,6 +23,7 @@ export default function Home() {
 				setMedicines(parsedData);
 			} catch (error) {
 				console.error("Error loading CSV data:", error);
+				console.error("Error loading CSV data:", error);
 			}
 		};
 
