@@ -7,6 +7,7 @@ import Login from './pages/login'
 import Signup from './pages/Signup'
 import Community from './pages/community'
 import DoseAlarm from './pages/doseAlarm'
+import Chat from './components/chat'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/doseAlarm" element={<DoseAlarm />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </>
   )
