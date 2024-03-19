@@ -58,7 +58,9 @@ const ChatBox = () => {
 				<div className="flex-grow overflow-auto p-4">
 					<div className="messages-wrapper space-y-4 flex flex-col items-end">
 						{messages.map((message) => (
-							<div key={message.id} className="break-words max-w-xs">
+							<div key={message.id}
+								className="break-words max-w-xs p-4 mb-4 rounded shadow"
+								style={{ borderColor: '#517028', borderWidth: '1px', borderStyle: 'solid' }}>
 								<Message message={message} />
 								{message.fileUrl && (
 									<a href={message.fileUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2">
@@ -71,6 +73,7 @@ const ChatBox = () => {
 								)}
 							</div>
 						))}
+
 					</div>
 					<span ref={scroll}></span>
 				</div>
