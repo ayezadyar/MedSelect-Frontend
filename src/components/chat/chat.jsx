@@ -38,7 +38,15 @@ const ChatBox = () => {
 			scroll.current.scrollIntoView({ behavior: "smooth" });
 		}
 	}, [messages]);
-
+	function getFileNameFromUrl(url) {
+		const fileName = url.substring(url.lastIndexOf('/') + 1);
+		return fileName;
+	}
+	function getFileNameWithoutExtension(fileName) {
+		const parts = fileName.split('.');
+		const baseName = parts.slice(0, -1).join('.');
+		return baseName;
+	}
 	return (
 		<div className="flex h-screen">
 			{/* SideNav Component */}
@@ -64,12 +72,20 @@ const ChatBox = () => {
 								{message.fileUrl && (
 									<a href={message.fileUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2">
 										{message.fileUrl.includes('.pdf') ? (
-											<FiFileText className="h-10 w-10 text-gray-700" />
+											<div className="flex items-center">
+												<FiFileText className="h-10 w-10 text-gray-700" />
+												<div className="ml-2">
+													{getFileNameFromUrl(decodeURIComponent(getFileNameWithoutExtension(message.fileUrl)))}
+												</div>
+											</div>
+										) : message.fileUrl.includes('.mp4') || message.fileUrl.includes('.webm') || message.fileUrl.includes('.mkv') ? (
+											<video src={message.fileUrl} alt="Uploaded File" className="rounded-lg shadow-md " />
 										) : (
 											<img src={message.fileUrl} alt="Uploaded File" className="rounded-lg shadow-md " />
 										)}
 									</a>
 								)}
+
 							</div>
 						))}
 					</div>
