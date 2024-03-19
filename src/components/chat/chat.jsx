@@ -79,7 +79,7 @@ const ChatBox = () => {
 												</div>
 											</div>
 										) : message.fileUrl.includes('.mp4') || message.fileUrl.includes('.webm') || message.fileUrl.includes('.mkv') ? (
-											<video src={message.fileUrl} alt="Uploaded File" className="rounded-lg shadow-md " />
+											<video src={message.fileUrl} alt="Uploaded File" className="rounded-lg shadow-md "autoPlay />
 										) : (
 											<img src={message.fileUrl} alt="Uploaded File" className="rounded-lg shadow-md " />
 										)}
