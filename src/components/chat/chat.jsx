@@ -7,7 +7,6 @@ import { FiSend, FiPaperclip, FiFileText } from 'react-icons/fi';
 import SideNav from "../sideNav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faHippo, faMagnifyingGlass, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
-
 const ChatBox = () => {
 	const [messages, setMessages] = useState([]);
 	const scroll = useRef();
