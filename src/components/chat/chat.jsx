@@ -53,38 +53,35 @@ const ChatBox = () => {
 			</button>
 
 			{/* Main Chat Content, adjusting padding based on SideNav state */}
-			<main className={`flex flex-col flex-grow ${isNavOpen ? 'pl-64' : 'pl-0'}`}>
+			<main className={`flex flex-col flex-grow transition-padding duration-500 ${isNavOpen ? 'pl-64' : 'pl-0'}`}>
 				{/* Messages List */}
 				<div className="flex-grow overflow-auto p-4">
 					<div className="messages-wrapper space-y-4 flex flex-col items-end">
 						{messages.map((message) => (
 							<div key={message.id}
-								className="break-words max-w-xs p-4 mb-4 rounded shadow"
-								style={{ borderColor: '#517028', borderWidth: '1px', borderStyle: 'solid' }}>
+								className="break-words max-w-xs p-4 mb-4 rounded shadow-md border border-gray-300 bg-white">
 								<Message message={message} />
 								{message.fileUrl && (
 									<a href={message.fileUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2">
 										{message.fileUrl.includes('.pdf') ? (
-											<FiFileText className="h-10 w-10 ml-10" />
+											<FiFileText className="h-10 w-10 text-gray-700" />
 										) : (
-											<img src={message.fileUrl} alt="Uploaded File" className="rounded-lg shadow-md border" />
+											<img src={message.fileUrl} alt="Uploaded File" className="rounded-lg shadow-md " />
 										)}
 									</a>
 								)}
 							</div>
 						))}
-
 					</div>
 					<span ref={scroll}></span>
 				</div>
 				{/* Send Message Component */}
-				<div className={`p-4 bg-gray-100 `}>
+				<div className={`p-4 bg-gray-50 border-t border-gray-300`}>
 					<SendMessage scroll={scroll} />
 				</div>
 			</main>
 		</div>
 	);
-
 
 };
 
