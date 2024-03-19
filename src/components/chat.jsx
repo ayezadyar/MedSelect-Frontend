@@ -51,8 +51,9 @@ const ChatBox = () => {
 			>
 				<FontAwesomeIcon icon={faBars} size="lg" />
 			</button>
-			{/* Main Chat Content */}
-			<main className="flex flex-col flex-grow">
+
+			{/* Main Chat Content, adjusting padding based on SideNav state */}
+			<main className={`flex flex-col flex-grow ${isNavOpen ? 'pl-64' : 'pl-0'}`}>
 				{/* Messages List */}
 				<div className="flex-grow overflow-auto p-4">
 					<div className="messages-wrapper space-y-4 flex flex-col items-end">
@@ -74,12 +75,13 @@ const ChatBox = () => {
 					<span ref={scroll}></span>
 				</div>
 				{/* Send Message Component */}
-				<div className="p-4 bg-gray-100">
+				<div className={`p-4 bg-gray-100 `}>
 					<SendMessage scroll={scroll} />
 				</div>
 			</main>
 		</div>
 	);
+
 
 };
 
