@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SendDOCMessage = ({ onSend }) => {
+const SendDOCMessage = ({ onSend,scroll }) => {
 	const [message, setMessage] = useState('');
 	const [file, setFile] = useState(null); // State to manage the uploaded file
 
@@ -12,6 +12,7 @@ const SendDOCMessage = ({ onSend }) => {
 			setMessage('');
 			setFile(null); // Reset file state
 		}
+		scroll.current.scrollIntoView({ behavior: "smooth" });
 	};
 
 	const handleFileChange = (e) => {
