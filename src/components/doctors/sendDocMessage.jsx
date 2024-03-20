@@ -33,7 +33,7 @@ const SendDOCMessage = ({ onSend,scroll }) => {
 				onChange={handleFileChange}
 				className="file-input mr-2"
 			/>
-			<button type="submit" className="send-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+			<button type="submit" className="send-button bg-[#517028] hover:bg-[#294a26] text-white font-bold py-2 px-4 rounded-full">
 				Send
 			</button>
 		</form>
