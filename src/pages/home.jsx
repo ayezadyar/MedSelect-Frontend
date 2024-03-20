@@ -241,7 +241,7 @@ export default function Home() {
 									imageSrc="/doctorConsultation.png"
 									altText="Doctor Consultation"
 									title="Doctor Consultation"
-										to={currentUser?.email ? "/chat" : '/'}
+									to={currentUser?.email ? "/doctors" : '/'}
 								/>
 
 								{/* HomeCard 3 */}
@@ -250,7 +250,7 @@ export default function Home() {
 									imageSrc="/community.png"
 									altText="Community"
 									title="Community"
-										to={currentUser?.email ? "/chat" : '/'}
+									to={currentUser?.email ? "/chat" : '/'}
 								/>
 
 								{/* HomeCard 4 */}
