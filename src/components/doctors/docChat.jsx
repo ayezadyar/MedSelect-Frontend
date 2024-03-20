@@ -1,49 +1,41 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from 'react-router-dom';
-import { query, collection, orderBy, onSnapshot, limit, addDoc, where } from "firebase/firestore";
-import { db, auth } from "../../Firebase"; // Adjust the import path as necessary
+import { useParams } from "react-router-dom";
+import { query, collection, orderBy, onSnapshot, limit, addDoc, where, getFirestore } from "firebase/firestore";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import { auth } from "../../Firebase"; // Adjust the import path as necessary
 import MessageDoc from "../doctors/messageDoc"; // Adjust the import path as necessary
 import SendDocMessage from "../doctors/sendDocMessage"; // Adjust the import path as necessary
-import SideNav from "../sideNav"; // Adjust the import path as necessary
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const DocChat = () => {
-	const [currentUserID, setCurrentUserID] = useState(null);
-	const user = auth?.currentUser.uid
-	const { otherUserID } = useParams(); // Get the other user's ID from the URL
 	const [messages, setMessages] = useState([]);
 	const scroll = useRef();
-	const [isNavOpen, setIsNavOpen] = useState(false);
-
-	const toggleNav = () => setIsNavOpen(!isNavOpen);
-	console.log(user, "the user")
+	const user = auth.currentUser?.uid; // Make sure to handle authentication state correctly
+	const { otherUserID } = useParams(); // Get the other user's ID from the URL
+	const db = getFirestore();
+	console.log(messages,"messages")
 
 	useEffect(() => {
-		// setCurrentUserID(user)
-		// Check if both currentUserID and otherUserID are defined
 		if (user && otherUserID) {
 			const q = query(
 				collection(db, "chat"),
-				where("senderId", "in", [user, otherUserID]),
-				where("receiverId", "in", [user, otherUserID]),
+				where("participants", "array-contains", user),
 				orderBy("createdAt"),
 				limit(50)
 			);
 
 			const unsubscribe = onSnapshot(q, (querySnapshot) => {
-				const fetchedMessages = querySnapshot.docs.map(doc => ({
-					...doc.data(),
-					id: doc.id,
-				})).sort((a, b) => a.createdAt - b.createdAt); // Adjust sorting if needed
+				const fetchedMessages = querySnapshot.docs
+					.map((doc) => ({
+						...doc.data(),
+						id: doc.id,
+					}))
+					.filter((msg) => msg.participants.includes(otherUserID)) // Additional filter for messages between the two users
+					.sort((a, b) => a.createdAt - b.createdAt);
 				setMessages(fetchedMessages);
 			});
 			return () => unsubscribe();
 		}
-		console.log(user, otherUserID, 'both users')
-	}, [user, otherUserID]);
-
-	console.log(messages, "the messages")
+	}, [user, otherUserID, db]);
 
 	useEffect(() => {
 		if (scroll.current) {
@@ -51,23 +43,30 @@ const DocChat = () => {
 		}
 	}, [messages]);
 
-	const sendMessage = async (messageContent) => {
-		try {
-			await addDoc(collection(db, "chat"), {
-				senderId: user,
-				receiverId: otherUserID,
-				message: messageContent,
-				createdAt: new Date()
-			});
-			console.log('dara sebt')
-		} catch (error) {
-			console.error("Error sending message: ", error);
-		}
-	};
+	const sendMessage = async (messageContent, file = null) => {
+		const messageData = {
+			senderId: user,
+			receiverId: otherUserID,
+			message: messageContent,
+			createdAt: new Date(),
+			participants: [user, otherUserID],
+			imageUrl: null, // Default to null, update if file is uploaded
+		};
 
+		// If there's a file, upload it first
+		if (file) {
+			const storage = getStorage();
+			const fileRef = storageRef(storage, `chat/${new Date().getTime()}_${file.name}`);
+			const fileSnapshot = await uploadBytes(fileRef, file);
+			const imageUrl = await getDownloadURL(fileSnapshot.ref);
+			messageData.imageUrl = imageUrl;
+		}
+
+		// Add the message to Firestore
+		await addDoc(collection(db, "chat"), messageData);
+	};
 	return (
 		<div className="">
-
 			{/* Message List */}
 			<div className="flex flex-col justify-end mb-2">
 				{messages.map((msg) => (
@@ -80,7 +79,6 @@ const DocChat = () => {
 			<SendDocMessage onSend={sendMessage} />
 		</div>
 	);
-
 };
 
 export default DocChat;

@@ -8,9 +8,19 @@ const MessageDoc = ({ message }) => {
 
 	return (
 		<div className={`flex ${messageAlignmentClass} my-2 mx-4`}>
-			<div className={`message-text ${messageBgColorClass} ${textColorClass} p-4 rounded-lg max-w-xs md:max-w-md lg:max-w-lg`}>
-				{message.message}
-			</div>
+			{/* Text Message */}
+			{message.message && (
+				<div className={`message-text ${messageBgColorClass} ${textColorClass} p-4 rounded-lg max-w-xs md:max-w-md lg:max-w-lg`}>
+					{message.message}
+				</div>
+			)}
+
+			{/* Image File */}
+			{message.imageUrl && (
+				<div className={`${messageAlignmentClass} max-w-xs md:max-w-md lg:max-w-lg`}>
+					<img src={message.imageUrl} alt="Uploaded File" className="rounded-lg mt-2" style={{ maxWidth: '100%', height: 'auto' }} />
+				</div>
+			)}
 		</div>
 	);
 };
