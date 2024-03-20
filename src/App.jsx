@@ -9,7 +9,8 @@ import Community from './pages/community'
 import DoseAlarm from './pages/doseAlarm'
 // import Chat from './components/chat'
 import ChatBox from './components/chat/chat'
-import DoctorList from './components/doctorsList'
+import DoctorList from './components/doctors/doctorsList'
+import DocChat from './components/doctors/docChat'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/doseAlarm" element={<DoseAlarm />} />
         <Route path="/chat" element={<ChatBox />} />
         <Route path="/doctors" element={<DoctorList />} />
+        <Route path="/docchat/:otherUserID" element={<DocChat />} />
 
       </Routes>
     </>
