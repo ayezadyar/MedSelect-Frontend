@@ -7,45 +7,51 @@ import { FiSend, FiPaperclip, FiFileText } from 'react-icons/fi';
 import SideNav from "../sideNav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faHippo, faMagnifyingGlass, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+
 const ChatBox = () => {
-	const [messages, setMessages] = useState([]);
-	const scroll = useRef();
-	const [isNavOpen, setIsNavOpen] = useState(true);
-	const toggleNav = () => setIsNavOpen(!isNavOpen);
+	const [messages, setMessages] = useState([]); // State to hold messages
+	const scroll = useRef(); // Reference to scroll to the bottom of messages
+	const [isNavOpen, setIsNavOpen] = useState(true); // State to manage navigation visibility
+
+	const toggleNav = () => setIsNavOpen(!isNavOpen); // Function to toggle navigation visibility
+
 	useEffect(() => {
 		const q = query(
-			collection(db, "messages"),
-			orderBy("createdAt", "desc"),
-			limit(50)
+			collection(db, "messages"), // Collection reference from Firebase
+			orderBy("createdAt", "desc"), // Order messages by createdAt in descending order
+			limit(50) // Limit messages to 50
 		);
 
 		const unsubscribe = onSnapshot(q, (querySnapshot) => {
-			const fetchedMessages = [];
+			const fetchedMessages = []; // Array to hold fetched messages
 			querySnapshot.forEach((doc) => {
-				fetchedMessages.push({ ...doc.data(), id: doc.id });
+				fetchedMessages.push({ ...doc.data(), id: doc.id }); // Push each message into the array
 			});
 			const sortedMessages = fetchedMessages.sort(
 				(a, b) => a.createdAt.seconds - b.createdAt.seconds
-			);
-			setMessages(sortedMessages);
+			); // Sort messages by createdAt
+			setMessages(sortedMessages); // Set messages state
 		});
-		return () => unsubscribe();
+		return () => unsubscribe(); // Cleanup function to unsubscribe from Firebase
 	}, []);
 
 	useEffect(() => {
 		if (scroll.current) {
-			scroll.current.scrollIntoView({ behavior: "smooth" });
+			scroll.current.scrollIntoView({ behavior: "smooth" }); // Scroll to the bottom of messages
 		}
 	}, [messages]);
+
 	function getFileNameFromUrl(url) {
 		const fileName = url.substring(url.lastIndexOf('/') + 1);
 		return fileName;
 	}
+
 	function getFileNameWithoutExtension(fileName) {
 		const parts = fileName.split('.');
 		const baseName = parts.slice(0, -1).join('.');
 		return baseName;
 	}
+
 	return (
 		<div className="flex h-screen">
 			{/* SideNav Component */}
@@ -67,7 +73,7 @@ const ChatBox = () => {
 						{messages.map((message) => (
 							<div key={message.id}
 								className="break-words max-w-xs p-4 mb-4 rounded shadow-md border border-gray-300 bg-white">
-								<Message message={message} />
+								<Message message={message} /> {/* Message Component */}
 								{message.fileUrl && (
 									<a href={message.fileUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2">
 										{message.fileUrl.includes('.pdf') ? (
@@ -78,13 +84,12 @@ const ChatBox = () => {
 												</div>
 											</div>
 										) : message.fileUrl.includes('.mp4') || message.fileUrl.includes('.webm') || message.fileUrl.includes('.mkv') ? (
-											<video src={message.fileUrl} alt="Uploaded File" className="rounded-lg shadow-md "autoPlay />
+											<video src={message.fileUrl} alt="Uploaded File" className="rounded-lg shadow-md " autoPlay />
 										) : (
 											<img src={message.fileUrl} alt="Uploaded File" className="rounded-lg shadow-md " />
 										)}
 									</a>
 								)}
-
 							</div>
 						))}
 					</div>
