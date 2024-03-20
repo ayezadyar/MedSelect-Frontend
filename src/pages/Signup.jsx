@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../Firebase";
+import { db, auth } from "../Firebase";
 import Login from "./login";
 import './index.css'
 import { Link, useNavigate } from "react-router-dom";
-
+import { doc, setDoc } from "firebase/firestore";
 
 function Signup() {
   const navigate = useNavigate();
@@ -36,21 +36,24 @@ function Signup() {
     setSubmitButtonDisabled(true);
     createUserWithEmailAndPassword(auth, values.email, values.pass)
       .then(async (res) => {
-        setSubmitButtonDisabled(false);
         const user = res.user;
         await updateProfile(user, {
           displayName: values.name,
         });
-        navigate("/")
-
-        // handleSignupToggle(); // Close signup popup
+        await setDoc(doc(db, "users", user.uid), {
+          displayName: values.name,
+          email: values.email,
+          // Add any other user data you want to store
+        });
+        setSubmitButtonDisabled(false);
+        navigate("/");
+        handleSignupToggle()
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);
         setErrorMsg(err.message);
       });
   };
-
   return (
     <>
       <div className="min-h-screen flex items-center justify-center">
@@ -112,7 +115,7 @@ function Signup() {
         {/* Login Popup */}
         {isLoginOpen && (
           <div className="fixed top-0 left-0 w-full h-full z-30 flex justify-center items-center">
-            <Login handleClose={handleLoginToggle} />
+            <Login handleClose={setLoginOpen} />
           </div>
         )}
       </div>
