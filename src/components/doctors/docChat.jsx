@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { query, collection, orderBy, onSnapshot, limit, addDoc, where, getFirestore } from "firebase/firestore";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -12,7 +12,15 @@ const DocChat = () => {
 	const user = auth.currentUser?.uid; // Make sure to handle authentication state correctly
 	const { otherUserID } = useParams(); // Get the other user's ID from the URL
 	const db = getFirestore();
-	console.log(messages,"messages")
+	console.log(messages, "messages")
+	useEffect(() => {
+		setTimeout(() => {
+			if (scroll.current) {
+				scroll.current.scrollIntoView({ behavior: "smooth" });
+			}
+		}, 100); // Adjust delay as necessary
+	}, [messages]);
+
 
 	useEffect(() => {
 		if (user && otherUserID) {
@@ -37,11 +45,6 @@ const DocChat = () => {
 		}
 	}, [user, otherUserID, db]);
 
-	useEffect(() => {
-		if (scroll.current) {
-			scroll.current.scrollIntoView({ behavior: "smooth" });
-		}
-	}, [messages]);
 
 	const sendMessage = async (messageContent, file = null) => {
 		const messageData = {
@@ -66,7 +69,7 @@ const DocChat = () => {
 		await addDoc(collection(db, "chat"), messageData);
 	};
 	return (
-		<div className="">
+		<div className="flex flex-col justify-end mb-2 pb-16">
 			{/* Message List */}
 			<div className="flex flex-col justify-end mb-2">
 				{messages.map((msg) => (
@@ -76,7 +79,9 @@ const DocChat = () => {
 			</div>
 
 			{/* Send Message Form */}
-			<SendDocMessage onSend={sendMessage} />
+			<SendDocMessage onSend={sendMessage}
+				scroll={scroll}
+			/>
 		</div>
 	);
 };
