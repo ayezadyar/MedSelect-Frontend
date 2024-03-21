@@ -23,9 +23,9 @@ const SendDOCMessage = ({ onSend, scroll }) => {
 
 
 	return (
-		<form onSubmit={handleSubmit} className="send-message-form bg-gray-100 p-4 fixed bottom-0 w-full flex justify-between items-center">
-			<label htmlFor="file-upload" className="file-upload-label mr-2">
-				<FiPaperclip className="text-xl text-gray-600 hover:text-gray-800" />
+		<form onSubmit={handleSubmit} className="">
+			<label htmlFor="file-upload" className="">
+				<FiPaperclip className="" />
 				<input
 					id="file-upload"
 					type="file"
@@ -38,9 +38,9 @@ const SendDOCMessage = ({ onSend, scroll }) => {
 				value={message}
 				onChange={(e) => setMessage(e.target.value)}
 				placeholder="Type a message..."
-				className="input-field border rounded-full py-2 px-4 flex-grow mr-2"
+				className=""
 			/>
-			<button type="submit" className="send-button bg-[#517028] hover:bg-[#294a26] text-white font-bold py-2 px-2 rounded-full">
+			<button type="submit" className="">
 				<FiSend className="text-xl" />
 			</button>
 		</form>
