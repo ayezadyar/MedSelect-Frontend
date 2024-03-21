@@ -8,8 +8,12 @@ import SendDocMessage from "../doctors/sendDocMessage"; // Adjust the import pat
 import SideNav from "../sideNav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import SendMessage from "../chat/sendMessage";
 
 const DocChat = () => {
+
+	const [progress, setProgress] = useState(0)
+
 	const [messages, setMessages] = useState([]);
 	const scroll = useRef();
 	const user = auth.currentUser?.uid; // Make sure to handle authentication state correctly
@@ -48,52 +52,7 @@ const DocChat = () => {
 		}
 	}, [user, otherUserID, db]);
 
-	const sendMessage = async (messageContent, file = null) => {
-		const messageData = {
-			senderId: user,
-			receiverId: otherUserID,
-			message: messageContent,
-			createdAt: new Date(),
-			participants: [user, otherUserID],
-			imageUrl: null, // Default to null, update if file is uploaded
-		};
-
-		// If there's a file, upload it first
-		if (file) {
-			const storage = getStorage();
-			const fileRef = storageRef(storage, `chat/${new Date().getTime()}_${file.name}`);
-
-			// Create a reference for the upload task
-			const uploadTask = uploadBytesResumable(fileRef, file);
-
-			// Listen for state changes, errors, and completion of the upload.
-			uploadTask.on('state_changed',
-				(snapshot) => {
-					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-					const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-					console.log('Upload is ' + progress + '% done');
-					// Update your progress bar here
-				},
-				(error) => {
-					// Handle unsuccessful uploads
-					console.error(error);
-				},
-				() => {
-					// Handle successful uploads on complete
-					console.log('Upload successful');
-					// Get download URL and update messageData with the imageUrl
-					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-						messageData.imageUrl = downloadURL;
-						// Add the message to Firestore
-						addDoc(collection(db, "chat"), messageData);
-					});
-				}
-			);
-		} else {
-			// If no file, directly add the message to Firestore
-			await addDoc(collection(db, "chat"), messageData);
-		}
-	};
+	
 
 	const [isNavOpen, setIsNavOpen] = useState(false);
 	const toggleNav = () => setIsNavOpen(!isNavOpen);
@@ -128,7 +87,8 @@ const DocChat = () => {
 				</div>
 				{/* Send Message Component */}
 				<div className={`p-4 bg-gray-50 border-t border-gray-300`}>
-					<SendDocMessage onSend={sendMessage} scroll={scroll} />
+					<SendDocMessage  scroll={scroll} user={user} otherUserID={otherUserID}  />
+					{/* <SendMessage scroll={scroll} chatCollection={"chat"} fileCollection={"chat"} /> */}
 				</div>
 			</main>
 		</div>
