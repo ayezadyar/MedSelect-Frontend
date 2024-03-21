@@ -10,7 +10,7 @@ import Signup from './Signup';
 import Login from './login';
 
 
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 export default function Home() {
 	const [isNavOpen, setNavOpen] = useState(false);
 	const [medicines, setMedicines] = useState([]);
@@ -39,17 +39,22 @@ export default function Home() {
 		setPopupOpen(!isPopupOpen);
 	};
 
-	const user = auth.currentUser;
+
 	useEffect(() => {
-		if (user) {
-			// If there's a current user, set it to state
-			setCurrentUser(user);
-		} else {
-			// If no current user, set state to null
-			setCurrentUser(null);
-		}
-		console.log(currentUser?.email, "\n", user?.email, "\n name and email")
-	}, [user]);
+		// Listen for authentication state changes
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				// If there's a user, we set it
+				setCurrentUser(user);
+			} else {
+				// User is signed out
+				setCurrentUser(null);
+			}
+		});
+
+		return () => unsubscribe(); // Unsubscribe from the listener when the component unmounts
+	}, []);
+
 
 	useEffect(() => {
 		// Load CSV data
