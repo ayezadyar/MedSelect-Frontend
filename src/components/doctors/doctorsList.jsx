@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { db, auth } from '../../Firebase'; // Assuming you have a firebase.js file that initializes Firebase
 import { collection, query, where, onSnapshot } from "firebase/firestore";
-import DocChat from './docChat';
+
 import { useNavigate } from 'react-router-dom';
 
 const DoctorList = () => {
