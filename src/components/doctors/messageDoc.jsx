@@ -6,7 +6,7 @@ const MessageDoc = ({ message }) => {
 	const messageAlignmentClass = message.isSender ? 'items-end' : 'items-start';
 	const messageBgColorClass = message.isSender ? 'bg-[#517028]' : 'bg-gray-300';
 	const textColorClass = message.isSender ? 'text-white' : 'text-black';
-	
+
 	function getFileNameFromUrl(url) {
 		const fileName = url.substring(url.lastIndexOf('/') + 1);
 		return fileName;
