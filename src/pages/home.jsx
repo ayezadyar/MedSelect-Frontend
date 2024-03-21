@@ -60,7 +60,7 @@ export default function Home() {
 		// Load CSV data
 		const fetchData = async () => {
 			try {
-				const response = await fetch('data1.csv');
+				const response = await fetch('data.csv');
 				const data = await response.text();
 				const parsedData = Papa.parse(data, { header: true }).data;
 				setMedicines(parsedData);
@@ -224,7 +224,7 @@ export default function Home() {
 							<div className="flex flex-row flex-wrap justify-around w-full max-w-6xl mb-8 fade-out fade-in">
 								{/* Loading Skeletons */}
 								{[1, 2, 3, 4].map((index) => (
-									<div key={index} className="w-64 h-64 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
+									<div key={index} className="w-48 h-48 bg-gray-200 animate-pulse rounded-lg overflow-hidden mx-4 my-2">
 										<div className="h-full w-1/2 bg-gray-300"></div>
 									</div>
 								))}
