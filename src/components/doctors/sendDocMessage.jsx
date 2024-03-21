@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiPaperclip } from 'react-icons/fi';
+import { FiPaperclip, FiSend } from 'react-icons/fi';
 const SendDOCMessage = ({ onSend, scroll }) => {
 	const [message, setMessage] = useState('');
 	const [file, setFile] = useState(null); // State to manage the uploaded file
@@ -25,7 +25,7 @@ const SendDOCMessage = ({ onSend, scroll }) => {
 	return (
 		<form onSubmit={handleSubmit} className="send-message-form bg-gray-100 p-4 fixed bottom-0 w-full flex justify-between items-center">
 			<label htmlFor="file-upload" className="file-upload-label mr-2">
-				<FiPaperclip size={24} className="file-icon" />
+				<FiPaperclip className="text-xl text-gray-600 hover:text-gray-800" />
 				<input
 					id="file-upload"
 					type="file"
@@ -40,8 +40,8 @@ const SendDOCMessage = ({ onSend, scroll }) => {
 				placeholder="Type a message..."
 				className="input-field border rounded-full py-2 px-4 flex-grow mr-2"
 			/>
-			<button type="submit" className="send-button bg-[#517028] hover:bg-[#294a26] text-white font-bold py-2 px-4 rounded-full">
-				Send
+			<button type="submit" className="send-button bg-[#517028] hover:bg-[#294a26] text-white font-bold py-2 px-2 rounded-full">
+				<FiSend className="text-xl" />
 			</button>
 		</form>
 	);
