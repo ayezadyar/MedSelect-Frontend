@@ -75,8 +75,7 @@ const DoctorList = () => {
 				<h1 className="text-center my-6 font-semibold text-2xl text-[#517028] mx-6">Doctors List</h1>
 				<div className="overflow-auto px-6">
 					{users.map((user) => (
-						// Skip rendering the component if the user is the current user
-						user.uid !== auth.currentUser.uid ? (
+						user.uid !== auth.currentUser.uid && (  // Change here: use '&&' instead of the ternary operator for conditional rendering
 							<div
 								key={user.uid}
 								className="my-4 mr-4 ml-1 p-6 border-b border-gray-200 rounded-3xl bg-[#517028] w-full box-border shadow-lg"
@@ -96,12 +95,13 @@ const DoctorList = () => {
 									</div>
 								)}
 							</div>
-						) : ''
+						)
 					))}
 				</div>
 			</div>
 		</div>
 	);
+
 
 
 
