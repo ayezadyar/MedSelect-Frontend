@@ -55,7 +55,7 @@ export default function Home() {
 		// Load CSV data
 		const fetchData = async () => {
 			try {
-				const response = await fetch('data.csv');
+				const response = await fetch('data1.csv');
 				const data = await response.text();
 				const parsedData = Papa.parse(data, { header: true }).data;
 				setMedicines(parsedData);
@@ -285,7 +285,7 @@ export default function Home() {
 				{/* Signup Popup */}
 				{isSignupOpen && (
 					<div className="fixed top-0 left-0 w-full h-full z-30 flex justify-center items-center">
-						<Signup handleClose={handleSignupToggle} />
+						<Signup setSignupOpen={setSignupOpen} />
 					</div>
 				)}
 			</div>

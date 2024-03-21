@@ -6,7 +6,7 @@ import './index.css'
 import { Link, useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 
-function Signup() {
+function Signup({ setSignupOpen }) {
   const navigate = useNavigate();
   const [values, setValues] = useState({
     name: "",
@@ -16,7 +16,7 @@ function Signup() {
   const [errorMsg, setErrorMsg] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
   const [isLoginOpen, setLoginOpen] = useState(false);
-  const [isSignupOpen, setSignupOpen] = useState(false);
+  // const [isSignupOpen, setSignupOpen] = useState(false);
 
   const handleLoginToggle = () => {
     setLoginOpen(!isLoginOpen);
@@ -47,7 +47,7 @@ function Signup() {
         });
         setSubmitButtonDisabled(false);
         navigate("/");
-        handleSignupToggle()
+        setSignupOpen(false)
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);
