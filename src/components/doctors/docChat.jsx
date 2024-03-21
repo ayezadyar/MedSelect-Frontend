@@ -115,10 +115,10 @@ const DocChat = () => {
 			<main className={`flex flex-col flex-grow transition-padding duration-500 ${isNavOpen ? 'pl-64' : 'pl-0'}`}>
 				{/* Messages List */}
 				<div className="flex-grow overflow-auto p-4">
-					<div className="flex flex-col justify-end mb-2 pb-16">
+					<div className="flex flex-col justify-end ">
 						{messages.map((msg) => (
 							<div key={msg.id}
-								className="flex flex-col justify-end mb-2">
+								className="flex flex-col justify-end ">
 								<MessageDoc message={{ ...msg, isSender: msg.senderId === user }} />
 								{/* Additional content based on your needs */}
 							</div>
