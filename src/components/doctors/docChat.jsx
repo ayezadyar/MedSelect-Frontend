@@ -71,7 +71,7 @@ const DocChat = () => {
 		<>
 			<div className={`flex h-screen ${isNavOpen ? 'pl-3' : 'pl-5'}`}> {/* Adjust the left padding based on SideNav state */}
 				{otherUserInfo && (
-					<div className="fixed  text-[#294a26] text-center py-2 w-full z-40 transition-all duration-500" style={{ left: isNavOpen ? '0px' : '0px', right: 0 }}> {/* Make banner responsive */}
+					<div className="fixed font-semibold text-xl text-[#294a26] text-center py-2 w-full z-40 transition-all duration-500" style={{ left: isNavOpen ? '0px' : '0px', right: 0 }}> {/* Make banner responsive */}
 						{otherUserInfo[0]?.email}
 					</div>
 				)}
