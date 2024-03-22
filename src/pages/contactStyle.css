@@ -173,4 +173,42 @@ form .form-row .textarea {
   .submit-btn .input-data {
     width: 40% !important;
   }
+
+}
+
+/* contactStyle.css */
+.submit-button-row {
+  background-color: #517028;
+  /* Base background color */
+  color: white;
+  /* Text color */
+  margin-left: auto;
+  /* Centering the button horizontally */
+  margin-right: auto;
+  /* Centering the button horizontally */
+  width: fit-content;
+  /* Adjust width to fit its content */
+  border-radius: 0.375rem;
+  /* Rounded corners (equivalent to Tailwind's rounded-md) */
+  cursor: pointer;
+  /* Hand cursor on hover */
+}
+
+.submit-button-row:hover {
+  background-color: #294a26;
+  /* Darker green on hover */
+}
+
+/* Adjust the inner spacing and appearance of the submit input */
+.submit-button-row input[type="submit"] {
+  background: none;
+  /* Remove any default background */
+  color: inherit;
+  /* Inherit text color from parent */
+  border: none;
+  /* Remove default border */
+  padding: 0.5rem 1rem;
+  /* Padding inside the button */
+  width: 100%;
+  /* Make the input fill the div */
 }
