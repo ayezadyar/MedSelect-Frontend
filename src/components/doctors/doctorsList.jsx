@@ -89,7 +89,9 @@ const DoctorList = () => {
 								</div>
 								{expandedUserId === user.uid && (
 									<div className="mt-2 text-white">
-										<p>{user.description}</p>
+										<p>{user.licenseNumber}</p>
+										<p>{user.domain}</p>
+										<p>{user.experience}</p>
 									</div>
 								)}
 							</div>
