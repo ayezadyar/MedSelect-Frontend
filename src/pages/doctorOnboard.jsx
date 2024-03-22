@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { db, auth } from '../Firebase';
+import { collection, query, onSnapshot } from 'firebase/firestore';
 import "./contactStyle.css";
 import SideNav from "../components/sideNav";
+
+
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 const DoctorOnBoard = () => {
+
+
+	const auth = getAuth();
 	const [isNavOpen, setNavOpen] = useState(false);
-	const toggleNav = () => setNavOpen(!isNavOpen);
 
 	const [userName, setUserName] = useState('');
 	const [emailAddress, setEmailAddress] = useState('');
@@ -13,6 +20,7 @@ const DoctorOnBoard = () => {
 	const [license, setLicense] = useState('');
 	const [domain, setDomain] = useState('');
 
+	const toggleNav = () => setNavOpen(!isNavOpen);
 	const handleExperienceChange = (event) => {
 		const value = event.target.value;
 		if (/^\d*$/.test(value) && (value === "" || parseInt(value, 10) < 50)) {
@@ -31,6 +39,26 @@ const DoctorOnBoard = () => {
 		setter(event.target.value);
 	};
 
+
+	const [currentUser, setCurrentUser] = useState('')
+	useEffect(() => {
+		// Listen for authentication state changes
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				// If there's a user, we set it
+				setCurrentUser(user);
+				setEmailAddress(user.email);
+				setUserName(user.displayName);
+			} else {
+				// User is signed out
+				setCurrentUser(null);
+			}
+		});
+
+		return () => unsubscribe(); // Unsubscribe from the listener when the component unmounts
+	}, []);
+
+	console.log(currentUser, 'current user')
 	return (
 		<div className="flex overflow-hidden">
 			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
@@ -43,12 +71,12 @@ const DoctorOnBoard = () => {
 					<form action="#">
 						<div className="form-row">
 							<div className="input-data">
-								<input type="text" value={userName} onChange={handleChange(setUserName)} required />
+								<input type="text" value={userName} onChange={handleChange(setUserName)} />
 								<div className="underline"></div>
 								<label>User Name</label>
 							</div>
 							<div className="input-data">
-								<input type="email" value={emailAddress} onChange={handleChange(setEmailAddress)} required />
+								<input type="email" value={emailAddress} onChange={handleChange(setEmailAddress)} />
 								<div className="underline"></div>
 								<label>Email Address</label>
 							</div>
