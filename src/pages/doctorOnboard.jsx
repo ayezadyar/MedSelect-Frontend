@@ -6,7 +6,8 @@ import { db, auth } from '../Firebase';
 import "./contactStyle.css";
 import SideNav from "../components/sideNav";
 import { collection, query, onSnapshot, doc, updateDoc } from 'firebase/firestore';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 const DoctorOnBoard = () => {
@@ -30,11 +31,16 @@ const DoctorOnBoard = () => {
 	};
 
 	const handleLicenseChange = (event) => {
-		const value = event.target.value.toUpperCase(); // Assuming uppercase for consistency
-		// if (/^[A-Z]{0,2}-\d{5}-[A-Z]{0,2}$/.test(value)) {
-		// }
-		setLicense(value);
+		const value = event.target.value;
+		console.log("Input value:", value); // Check the input value
+		if (/^[A-Z]{0,2}-\d{5}-[A-Z]{0,2}$/.test(value)) {
+			console.log("Valid license format."); // Check if it detects valid format
+			setLicense(value);
+		} else {
+			console.log("Invalid license format."); // Check if it detects invalid format
+		}
 	};
+
 
 	const handleChange = (setter) => (event) => {
 		setter(event.target.value);
@@ -54,6 +60,16 @@ const DoctorOnBoard = () => {
 					isDoctor: true
 				});
 				console.log("User updated successfully");
+				toast.info(('User data updated'), {
+					position: "top-right",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "light",
+				});
 				// Optionally, redirect the user or show a success message
 			} catch (error) {
 				console.error("Error updating user:", error);
@@ -137,6 +153,7 @@ const DoctorOnBoard = () => {
 					</form>
 				</div>
 			</div>
+			<ToastContainer />
 		</div>
 	);
 };
