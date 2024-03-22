@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { db, auth } from '../Firebase';
-import { collection, query, onSnapshot } from 'firebase/firestore';
+// import { collection, query, onSnapshot } from 'firebase/firestore';
 import "./contactStyle.css";
 import SideNav from "../components/sideNav";
+import { collection, query, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -30,13 +31,39 @@ const DoctorOnBoard = () => {
 
 	const handleLicenseChange = (event) => {
 		const value = event.target.value.toUpperCase(); // Assuming uppercase for consistency
-		if (/^[A-Z]{0,2}-\d{5}-[A-Z]{0,2}$/.test(value)) {
-			setLicense(value);
-		}
+		// if (/^[A-Z]{0,2}-\d{5}-[A-Z]{0,2}$/.test(value)) {
+		// }
+		setLicense(value);
 	};
 
 	const handleChange = (setter) => (event) => {
 		setter(event.target.value);
+	};
+
+	const handleSubmit = async (event) => {
+		event.preventDefault(); // Prevent default form submission
+
+		if (currentUser) {
+			const userDocRef = doc(db, "users", currentUser.uid); // Reference to the user's document
+
+			try {
+				await updateDoc(userDocRef, {
+					experience: experience,
+					domain: domain,
+					licenseNumber: license, // Assuming you want to store it as licenseNumber
+					isDoctor: true
+				});
+				console.log("User updated successfully");
+				// Optionally, redirect the user or show a success message
+			} catch (error) {
+				console.error("Error updating user:", error);
+				// Optionally, show an error message
+			}
+		} else {
+			console.log("No user to update");
+			// Handle case when there is no user logged in or selected
+		}
+		console.log('edit function called');
 	};
 
 
@@ -68,7 +95,7 @@ const DoctorOnBoard = () => {
 				</button>
 				<div className="container px-4 md:px-8 lg:px-16">
 					<h2 className="text-center font-bold text-2xl mb-6">Doctors On Board</h2>
-					<form action="#">
+					<form action="#" onSubmit={handleSubmit}>
 						<div className="form-row">
 							<div className="input-data">
 								<input type="text" value={userName} onChange={handleChange(setUserName)} />
