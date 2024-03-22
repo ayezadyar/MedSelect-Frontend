@@ -24,13 +24,7 @@ const SideNav = ({ isNavOpen, toggleNav }) => (
 			>
 				ABOUT US
 			</Link>
-			{/* <Link
-				to="/community"
-				className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
-				onClick={toggleNav}
-			>
-				JOIN COMMUNITY
-			</Link> */}
+			
 			<Link
 				to="/contact"
 				className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
@@ -38,13 +32,13 @@ const SideNav = ({ isNavOpen, toggleNav }) => (
 			>
 				CONTACT US
 			</Link>
-			{/* <Link
-				to="/how-it-works"
+			<Link
+				to="/doctorOnboard"
 				className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
 				onClick={toggleNav}
 			>
-				HOW IT WORKS
-			</Link> */}
+				Switch to doctor
+			</Link>
 		</div>
 	</div>
 );
