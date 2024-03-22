@@ -43,6 +43,8 @@ function Signup({ setSignupOpen }) {
         await setDoc(doc(db, "users", user.uid), {
           displayName: values.name,
           email: values.email,
+          isDoctor: false,
+          isPharmacist: false
           // Add any other user data you want to store
         });
         setSubmitButtonDisabled(false);
