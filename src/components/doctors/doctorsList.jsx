@@ -26,7 +26,9 @@ const DoctorList = () => {
 						...doc.data(),
 					}));
 					// Filter out the current user from the list
-					const filteredUsers = allUsers.filter((user) => user.uid !== auth.currentUser.uid);
+					const filteredUsers = allUsers.filter((user) =>
+						user.uid !== auth.currentUser.uid && user.isDoctor === true
+					);
 					setUsers(filteredUsers);
 				});
 
@@ -40,6 +42,7 @@ const DoctorList = () => {
 			isSubscribed = false; // Set to false when component unmounts
 		};
 	}, []);
+
 
 	// Toggle expanded user description
 	const toggleUserDescription = (userId) => {
@@ -71,7 +74,7 @@ const DoctorList = () => {
 					<FontAwesomeIcon icon={faBars} size="sm" />
 				</button>
 
-				<h1 className="text-center my-6 font-semibold text-xl lg:text-2xl text-[#517028] px-6">Doctors List</h1>
+				<h1 className="text-center my-6 font-semibold text-xl lg:text-2xl text-[#294a26] px-6">Doctors List</h1>
 				<div className="overflow-auto px-6">
 					{users.map((user) => (
 						user.uid !== auth.currentUser.uid && (
@@ -89,9 +92,9 @@ const DoctorList = () => {
 								</div>
 								{expandedUserId === user.uid && (
 									<div className="mt-2 text-white">
-										<p>{user.licenseNumber}</p>
-										<p>{user.domain}</p>
-										<p>{user.experience}</p>
+										<p className='font-semibold'>{`License number : `}<span className='font-normal font-sans'>{`${user.licenseNumber}`}</span></p>
+										<p className='font-semibold'>{`Domain : `}<span className='font-normal font-sans'>{`${user.domain}`}</span></p>
+										<p className='font-semibold'>{`Year of experience : `}<span className='font-normal font-sans'>{`${user.experience}`}</span></p>
 									</div>
 								)}
 							</div>
