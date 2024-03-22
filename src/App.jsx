@@ -8,7 +8,7 @@ import Signup from './pages/Signup'
 import Community from './pages/community'
 import DoseAlarm from './pages/doseAlarm'
 // import Chat from './components/chat'
-import ChatBox from './components/chat/chat'
+import ChatBox from './components/community/chat'
 import DoctorList from './components/doctors/doctorsList'
 import DocChat from './components/doctors/docChat'
 
