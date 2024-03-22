@@ -25,10 +25,18 @@ const DoctorList = () => {
 						uid: doc.id,
 						...doc.data(),
 					}));
-					// Filter out the current user from the list
-					const filteredUsers = allUsers.filter((user) =>
-						user.uid !== auth.currentUser.uid && user.isDoctor === true
-					);
+					// Filter out the current user from the list if not a doctor
+					let filteredUsers;
+					filteredUsers = allUsers.filter((user) => user.uid === auth.currentUser.uid)
+					console.log(auth.currentUser.uid, "doc var")
+
+					if (filteredUsers[0].isDoctor) {
+						filteredUsers = allUsers.filter((user) => user.uid !== auth.currentUser.uid);
+					} else {
+						filteredUsers = allUsers.filter((user) =>
+							user.uid !== auth.currentUser.uid && user.isDoctor === true
+						);
+					}
 					setUsers(filteredUsers);
 				});
 
@@ -42,7 +50,7 @@ const DoctorList = () => {
 			isSubscribed = false; // Set to false when component unmounts
 		};
 	}, []);
-
+	console.log(users, "users in list")
 
 	// Toggle expanded user description
 	const toggleUserDescription = (userId) => {
@@ -90,11 +98,11 @@ const DoctorList = () => {
 										handleUserSelect(user.uid);
 									}} className="text-white cursor-pointer">{user.email}</p>
 								</div>
-								{expandedUserId === user.uid && (
+								{expandedUserId === user.uid && user?.licenseNumber && (
 									<div className="mt-2 text-white">
-										<p className='font-semibold'>{`License number : `}<span className='font-normal font-sans'>{`${user.licenseNumber}`}</span></p>
-										<p className='font-semibold'>{`Domain : `}<span className='font-normal font-sans'>{`${user.domain}`}</span></p>
-										<p className='font-semibold'>{`Year of experience : `}<span className='font-normal font-sans'>{`${user.experience}`}</span></p>
+										<p className='font-semibold'>{`License number : `}<span className='font-normal font-sans'>{`${user?.licenseNumber}`}</span></p>
+										<p className='font-semibold'>{`Domain : `}<span className='font-normal font-sans'>{`${user?.domain}`}</span></p>
+										<p className='font-semibold'>{`Year of experience : `}<span className='font-normal font-sans'>{`${user?.experience}`}</span></p>
 									</div>
 								)}
 							</div>
