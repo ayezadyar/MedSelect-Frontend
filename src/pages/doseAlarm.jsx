@@ -5,18 +5,53 @@ import { faBars, faPlus, faEdit, faTrash, faToggleOn, faBell } from "@fortawesom
 import { Howl } from 'howler';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { db } from '../Firebase'; // Adjust this path to where you initialize Firebase
+import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc, query, where, onSnapshot } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 const AlarmClock = () => {
+  const auth = getAuth();
   const [alarms, setAlarms] = useState([]);
   const [newAlarmTime, setNewAlarmTime] = useState('');
   const [newAlarmName, setNewAlarmName] = useState('');
   const [currentTime, setCurrentTime] = useState('');
   const [isNavOpen, setNavOpen] = useState(false);
   const [editAlarmIndex, setEditAlarmIndex] = useState(null);
-
+  const [currentUser, setCurrentUser] = useState(null);
   const sound = new Howl({
     src: ['/alarm.mp3'], // Make sure this path is correct for your project
   });
+  useEffect(() => {
+    // Listen for authentication state changes
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // If there's a user, we set it
+        setCurrentUser(user);
+      } else {
+        // User is signed out
+        setCurrentUser(null);
+      }
+    });
+
+    return () => unsubscribe(); // Unsubscribe from the listener when the component unmounts
+  }, []);
+
+  useEffect(() => {
+    // Assuming you have a currentUser state that contains the uid of the logged-in user
+    if (!currentUser) return;
+
+    const q = query(collection(db, "alarms"), where("uid", "==", currentUser.uid));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const alarmsArray = [];
+      querySnapshot.forEach((doc) => {
+        alarmsArray.push({ id: doc.id, ...doc.data() });
+      });
+      setAlarms(alarmsArray);
+    });
+
+    // Cleanup function to unsubscribe from the listener when the component unmounts
+    return () => unsubscribe();
+  }, [currentUser]); // Dependency array, re-run the effect if currentUser changes
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -56,14 +91,15 @@ const AlarmClock = () => {
     return `${hours}:${minutes}:00`;
   };
 
-  const handleAlarmOff = (index) => {
-    const updatedAlarms = alarms.map((alarm, i) => (
-      i === index ? { ...alarm, isActive: false } : alarm
-    ));
-    setAlarms(updatedAlarms);
+  const handleAlarmOff = async (index) => {
+    const alarmId = alarms[index].id;
+    await updateDoc(doc(db, "alarms", alarmId), { isActive: false });
+
+    // Optionally, manually update state or fetch alarms again
   };
 
-  const addNewAlarm = () => {
+
+  const addNewAlarm = async () => {
     if (!newAlarmTime || !newAlarmName) {
       toast.error(("Please set a time and name for the alarm."), {
         position: "top-right",
@@ -78,19 +114,22 @@ const AlarmClock = () => {
       return;
     }
     const formattedTime = formatTime(newAlarmTime + ' AM');
+    const newAlarm = { name: newAlarmName, time: formattedTime, isActive: true, uid: currentUser.uid };
+
     if (editAlarmIndex !== null) {
-      // If editing, update the existing alarm
-      const updatedAlarms = [...alarms];
-      updatedAlarms[editAlarmIndex] = { name: newAlarmName, time: formattedTime, isActive: true };
-      setAlarms(updatedAlarms);
-      setEditAlarmIndex(null);
+      const alarmId = alarms[editAlarmIndex].id;
+      await updateDoc(doc(db, "alarms", alarmId), newAlarm);
     } else {
-      // If not editing, add a new alarm
-      setAlarms([...alarms, { name: newAlarmName, time: formattedTime, isActive: true }]);
+      await addDoc(collection(db, "alarms"), newAlarm);
     }
+
+    // Clear inputs and fetch alarms again
     setNewAlarmTime('');
     setNewAlarmName('');
+    setEditAlarmIndex(null);
+    // Optionally, fetch alarms again or manually update state
   };
+
 
   const toggleNav = () => {
     setNavOpen(!isNavOpen);
@@ -102,11 +141,13 @@ const AlarmClock = () => {
     setNewAlarmTime(alarms[index].time);
   };
 
-  const deleteAlarm = (index) => {
-    const updatedAlarms = [...alarms];
-    updatedAlarms.splice(index, 1);
-    setAlarms(updatedAlarms);
+  const deleteAlarm = async (index) => {
+    const alarmId = alarms[index].id;
+    await deleteDoc(doc(db, "alarms", alarmId));
+
+    // Optionally, fetch alarms again or manually update state
   };
+
 
   return (
     <div className="flex flex-col h-screen">
