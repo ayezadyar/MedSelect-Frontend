@@ -11,6 +11,29 @@ const DoctorOnBoard = () => {
 		setNavOpen(!isNavOpen);
 	};
 
+	const [experience, setExperience] = useState('');
+
+	const handleExperienceChange = (event) => {
+		const value = event.target.value;
+		// Regex to allow only numbers
+		const regex = /^\d*$/;
+		if (regex.test(value) && (value === "" || parseInt(value) < 50)) {
+			setExperience(value);
+		}
+	};
+
+	const [license, setLicense] = useState('');
+
+	const handleLicenseChange = (event) => {
+		const value = event.target.value.toUpperCase(); // Optional: Convert to upper case
+		// Allow input as per the license format (xx-00000-xx), but be flexible for mid-typing
+		const regex = /^[A-Z]{0,2}(-?\d{0,5})?(-?[A-Z]{0,2})?$/;
+		if (regex.test(value)) {
+			setLicense(value);
+		}
+	};
+
+
 	return (
 		<div className="flex overflow-hidden">
 			{/* Side Navigation */}
@@ -33,7 +56,6 @@ const DoctorOnBoard = () => {
 					<h2 className="text-center font-bold text-2xl mb-6">Doctors On Board</h2>
 					<form action="#">
 						<div className="form-row">
-							{/* Make input and labels responsive */}
 							{/* User Name */}
 							<div className="input-data">
 								<input type="text" required />
@@ -50,7 +72,12 @@ const DoctorOnBoard = () => {
 						{/* Experience (Years) */}
 						<div className="form-row">
 							<div className="input-data">
-								<input type="text" required />
+								<input
+									type="text"
+									value={experience}
+									onChange={handleExperienceChange}
+									required
+								/>
 								<div className="underline"></div>
 								<label>Experience (Years)</label>
 							</div>
@@ -58,9 +85,15 @@ const DoctorOnBoard = () => {
 						{/* License Number */}
 						<div className="form-row">
 							<div className="input-data">
-								<input type="text" required />
+								<input
+									type="text"
+									value={license}
+									onChange={handleLicenseChange}
+									// placeholder="License Number (XX-00000-XX)"
+									required
+								/>
 								<div className="underline"></div>
-								<label>License Number</label>
+								<label>License Number (XX-00000-XX)</label>
 							</div>
 						</div>
 						{/* Domain */}
