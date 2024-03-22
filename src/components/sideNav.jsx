@@ -1,9 +1,7 @@
 // SideNav.js
-
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { auth } from '../Firebase';
+
 import { getAuth, onAuthStateChanged } from "firebase/auth";;
 
 const SideNav = ({ isNavOpen, toggleNav }) => {
