@@ -51,41 +51,39 @@ const DoctorList = () => {
 		setSelectedUser(selectedUserID);
 		navigate(`/docchat/${selectedUserID}`);
 	};
-	const [isNavOpen, setNavOpen] = useState(true);
+	const [isNavOpen, setNavOpen] = useState(false);
 
 	const toggleNav = () => {
 		setNavOpen(!isNavOpen);
 	};
 	return (
-		<div className="flex rounded-lg">
+		<div className="flex flex-col lg:flex-row rounded-lg">
 			{/* Side Navigation */}
 			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
 
 			{/* Main Content */}
-			<div className={`flex flex-col flex-1 transition-margin duration-300 ${isNavOpen ? 'ml-64' : 'ml-0'}`}>
+			<div className={`flex-1 ${isNavOpen ? 'lg:ml-64' : 'lg:ml-0'} transition-all duration-300 ease-in-out`}>
 				{/* Burger Icon for toggling SideNav */}
 				<button
 					className={`absolute top-4 left-4 z-50 cursor-pointer text-2xl font-bold ${isNavOpen ? 'text-white' : 'text-black'}`}
 					onClick={toggleNav}
 				>
-					{/* Assuming FontAwesomeIcon is correctly imported and faBars is available */}
 					<FontAwesomeIcon icon={faBars} size="sm" />
 				</button>
 
-				<h1 className="text-center my-6 font-semibold text-2xl text-[#517028] mx-6">Doctors List</h1>
+				<h1 className="text-center my-6 font-semibold text-xl lg:text-2xl text-[#517028] px-6">Doctors List</h1>
 				<div className="overflow-auto px-6">
 					{users.map((user) => (
-						user.uid !== auth.currentUser.uid && (  // Change here: use '&&' instead of the ternary operator for conditional rendering
+						user.uid !== auth.currentUser.uid && (
 							<div
 								key={user.uid}
-								className="my-4 mr-4 ml-1 p-6 border-b border-gray-200 rounded-3xl bg-[#517028] w-full box-border shadow-lg"
+								className="my-4 mx-1 lg:mx-4 p-6 border-b border-gray-200 rounded-3xl bg-[#517028] shadow-lg cursor-pointer hover:shadow-2xl transition-shadow duration-300 ease-in-out"
 								onClick={() => toggleUserDescription(user.uid)}
 							>
 								<div className="flex justify-between items-center">
-									<h5 className="text-lg text-white cursor-pointer">{user.displayName}</h5>
-									{/* Clicking the email will call handleUserSelect */}
+									<h5 className="text-lg text-white">{user.displayName}</h5>
 									<p onClick={(e) => {
-										e.stopPropagation(); // Prevent toggleUserDescription from being called
+										e.stopPropagation();
 										handleUserSelect(user.uid);
 									}} className="text-white cursor-pointer">{user.email}</p>
 								</div>
