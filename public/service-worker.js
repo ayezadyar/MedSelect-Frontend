@@ -78,7 +78,57 @@ self.addEventListener('sync', event => {
 });
 
 function doSync() {
-    // Implement your background sync logic here
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open('failedRequests', 1);
+
+        request.onerror = function(event) {
+            console.error('IndexedDB error:', event.target.error);
+            reject(event.target.error);
+        };
+
+        request.onsuccess = function(event) {
+            const db = event.target.result;
+            const transaction = db.transaction(['requests'], 'readwrite');
+            const objectStore = transaction.objectStore('requests');
+            const getRequest = objectStore.getAll();
+
+            getRequest.onerror = function(event) {
+                console.error('Error retrieving failed requests:', event.target.error);
+                reject(event.target.error);
+            };
+
+            getRequest.onsuccess = function(event) {
+                const failedRequests = event.target.result;
+
+                const retryPromises = failedRequests.map(request => {
+                    return fetch(request.url, request.options)
+                        .then(response => {
+                            objectStore.delete(request.id);
+                        })
+                        .catch(error => {
+                            console.error('Error retrying request:', error);
+                        });
+                });
+
+                Promise.all(retryPromises)
+                    .then(() => {
+                        console.log('All failed requests retried successfully');
+                        resolve();
+                    })
+                    .catch(error => {
+                        console.error('Error retrying failed requests:', error);
+                        reject(error);
+                    });
+            };
+        };
+
+        request.onupgradeneeded = function(event) {
+            const db = event.target.result;
+            const objectStore = db.createObjectStore('requests', { keyPath: 'id', autoIncrement: true });
+            objectStore.createIndex('url', 'url', { unique: false });
+            objectStore.createIndex('options', 'options', { unique: false });
+        };
+    });
 }
 
 self.addEventListener('push', event => {
