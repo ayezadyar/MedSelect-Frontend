@@ -1,40 +1,87 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import "./contactStyle.css";
+import SideNav from "../components/sideNav";
 
 const DoctorOnBoard = () => {
+	const [isNavOpen, setNavOpen] = useState(false);
+
+	const toggleNav = () => {
+		setNavOpen(!isNavOpen);
+	};
+
 	return (
-		<div className="bg-white text-gray-800 p-5">
-			<h2 className="text-center text-2xl font-bold mb-6">Doctors On Board</h2>
-			<form className="max-w-md mx-auto">
-				<div className="mb-4">
-					<label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
-					<input type="text" id="firstName" className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm" />
+		<div className="flex overflow-hidden">
+			{/* Side Navigation */}
+			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
+
+			{/* Main Content */}
+			<div
+				className={`flex flex-col justify-center items-center min-h-screen transition-margin duration-300 w-full ${isNavOpen ? "ml-64" : "ml-0"}`}
+			>
+				{/* Burger Icon */}
+				<button
+					className={`absolute top-4 left-4 z-20 cursor-pointer font-bold ${isNavOpen ? "text-white" : "text-black"}`}
+					onClick={toggleNav}
+				>
+					<FontAwesomeIcon icon={faBars} size="lg" />
+				</button>
+
+				{/* Adjust container padding/margin for responsiveness */}
+				<div className="container px-4 md:px-8 lg:px-16">
+					<h2 className="text-center font-bold text-2xl mb-6">Doctors On Board</h2>
+					<form action="#">
+						<div className="form-row">
+							{/* Make input and labels responsive */}
+							{/* User Name */}
+							<div className="input-data">
+								<input type="text" required />
+								<div className="underline"></div>
+								<label>User Name</label>
+							</div>
+							{/* Email Address */}
+							<div className="input-data">
+								<input type="email" required />
+								<div className="underline"></div>
+								<label>Email Address</label>
+							</div>
+						</div>
+						{/* Experience (Years) */}
+						<div className="form-row">
+							<div className="input-data">
+								<input type="text" required />
+								<div className="underline"></div>
+								<label>Experience (Years)</label>
+							</div>
+						</div>
+						{/* License Number */}
+						<div className="form-row">
+							<div className="input-data">
+								<input type="text" required />
+								<div className="underline"></div>
+								<label>License Number</label>
+							</div>
+						</div>
+						{/* Domain */}
+						<div className="form-row">
+							<div className="input-data">
+								<input type="text" required />
+								<div className="underline"></div>
+								<label>Domain</label>
+							</div>
+						</div>
+						<center>
+							<div className="form-row bg-[#517028] hover:bg-[#294a26] text-white overflow-hidden w-44 rounded-md cursor-pointer">
+								<div className="input-data">
+									<div className="inner"></div>
+									<input type="submit" value="submit" />
+								</div>
+							</div>
+						</center>
+					</form>
 				</div>
-				<div className="mb-4">
-					<label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name</label>
-					<input type="text" id="lastName" className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm" />
-				</div>
-				<div className="mb-4">
-					<label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
-					<input type="email" id="email" className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm" />
-				</div>
-				<div className="mb-4">
-					<label htmlFor="experience" className="block text-sm font-medium text-gray-700">Experience (Years)</label>
-					<input type="number" id="experience" className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm" />
-				</div>
-				<div className="mb-4">
-					<label htmlFor="licenseNumber" className="block text-sm font-medium text-gray-700">License Number</label>
-					<input type="text" id="licenseNumber" className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm" />
-				</div>
-				<div className="mb-4">
-					<label htmlFor="domain" className="block text-sm font-medium text-gray-700">Domain</label>
-					<input type="text" id="domain" className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm" />
-				</div>
-				<div className="text-center">
-					<button type="submit" className="mt-3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-						Submit
-					</button>
-				</div>
-			</form>
+			</div>
 		</div>
 	);
 }
