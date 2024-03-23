@@ -98,8 +98,6 @@ const DoctorOnBoard = () => {
 				if (userDocSnap.exists()) {
 					// Extract user details from the document
 					const userDetails = userDocSnap.data();
-					const userEmailDomain = userDetails.email; // Assuming the email field exists and is correctly formatted
-					const userExperience = userDetails.experience; // Assuming an experience field exists
 					setEmailAddress(userDetails.email)
 					setDomain(userDetails.domain)
 					setExperience(userDetails.experience)
