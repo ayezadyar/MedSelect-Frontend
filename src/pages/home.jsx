@@ -22,6 +22,7 @@ export default function Home() {
 	const [isSignupOpen, setSignupOpen] = useState(false);
 	const [isLoading, setisLoading] = useState(true);
 	const [currentUser, setCurrentUser] = useState(null);
+	const [isLogOut, setIsLogOut] = useState(true);
 
 	const auth = getAuth();
 
@@ -123,7 +124,7 @@ export default function Home() {
 	return (
 		<div className="flex">
 			{/* Side Navigation */}
-			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
+			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} isLogout={isLogOut} />
 
 			{/* Main Content and Popup Overlay */}
 			<div className="flex-1 ">

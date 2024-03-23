@@ -14,6 +14,7 @@ import DocChat from './components/doctors/docChat';
 import DoctorOnBoard from './pages/doctorOnboard';
 import { AlarmProvider } from './AlarmContext';
 import GlobalAlarmListener from './GlobalAlarmListener';
+import QRCodeDisplay from './pages/QR';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/doseAlarm" element={<DoseAlarm />} />
           <Route path="/chat" element={<ChatBox />} />
+          <Route path="/share" element={<QRCodeDisplay />} />
           <Route path="/doctors" element={<DoctorList />} />
           <Route path="/docchat/:otherUserID" element={<DocChat />} />
           <Route path="/doctorOnboard" element={<DoctorOnBoard />} />

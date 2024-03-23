@@ -1,9 +1,10 @@
 // SideNav.js
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShareFromSquare } from "@fortawesome/free-regular-svg-icons";
 import { getAuth, onAuthStateChanged } from "firebase/auth"; import LogOut from '../pages/LogOut';
-;
+
 
 const SideNav = ({ isNavOpen, toggleNav, isLogout }) => {
 	const auth = getAuth();
@@ -67,6 +68,13 @@ const SideNav = ({ isNavOpen, toggleNav, isLogout }) => {
 			{/* Logout Button at the bottom */}
 			{isLogout && currentUser &&
 				<div className="p-4">
+					<Link
+						to="/share"
+						className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
+						onClick={toggleNav}
+					>
+						Share <FontAwesomeIcon className='ml-2' icon={faShareFromSquare} />
+					</Link>
 					<div className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300">
 						<LogOut />
 					</div>
