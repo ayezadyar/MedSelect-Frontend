@@ -5,7 +5,7 @@ import { db, auth } from '../Firebase';
 // import { collection, query, onSnapshot } from 'firebase/firestore';
 import "./contactStyle.css";
 import SideNav from "../components/sideNav";
-import { collection, query, onSnapshot, doc, updateDoc } from 'firebase/firestore';
+import { collection, query, onSnapshot, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -86,12 +86,29 @@ const DoctorOnBoard = () => {
 	const [currentUser, setCurrentUser] = useState('')
 	useEffect(() => {
 		// Listen for authentication state changes
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
+		const unsubscribe = onAuthStateChanged(auth, async (user) => {
 			if (user) {
 				// If there's a user, we set it
 				setCurrentUser(user);
-				setEmailAddress(user.email);
-				setUserName(user.displayName);
+
+				// Get the user's document from Firestore
+				const userDocRef = doc(db, 'users', user.uid);
+				const userDocSnap = await getDoc(userDocRef);
+
+				if (userDocSnap.exists()) {
+					// Extract user details from the document
+					const userDetails = userDocSnap.data();
+					const userEmailDomain = userDetails.email; // Assuming the email field exists and is correctly formatted
+					const userExperience = userDetails.experience; // Assuming an experience field exists
+					setEmailAddress(userDetails.email)
+					setDomain(userDetails.domain)
+					setExperience(userDetails.experience)
+					setUserName(userDetails.displayName)
+					setLicense(userDetails.licenseNumber)
+
+				} else {
+					console.log('No such document!');
+				}
 			} else {
 				// User is signed out
 				setCurrentUser(null);
