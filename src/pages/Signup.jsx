@@ -44,7 +44,8 @@ function Signup({ setSignupOpen }) {
           displayName: values.name,
           email: values.email,
           isDoctor: false,
-          isPharmacist: false
+          isPharmacist: false,
+          isMedRequest: false,
           // Add any other user data you want to store
         });
         setSubmitButtonDisabled(false);
