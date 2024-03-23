@@ -131,12 +131,12 @@ const DoctorOnBoard = () => {
 					<form action="#" onSubmit={handleSubmit}>
 						<div className="form-row">
 							<div className="input-data">
-								<input type="text" value={userName} onChange={handleChange(setUserName)} />
+								<input type="text" value={userName} onChange={handleChange(setUserName)} disabled />
 								<div className="underline"></div>
 								<label>User Name</label>
 							</div>
 							<div className="input-data">
-								<input type="email" value={emailAddress} onChange={handleChange(setEmailAddress)} />
+								<input type="email" value={emailAddress} onChange={handleChange(setEmailAddress)} disabled />
 								<div className="underline"></div>
 								<label>Email Address</label>
 							</div>
