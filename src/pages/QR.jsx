@@ -4,7 +4,7 @@ import QRCode from 'qrcode.react';
 
 const QRCodeDisplay = () => {
 	const navigate = useNavigate(); // Hook for navigation
-	const link = "https://www.google.com/";
+	const link = "https://medselect.netlify.app/";
 
 	// Navigate to the home page when clicking anywhere on the screen
 	const handleScreenClick = () => {
