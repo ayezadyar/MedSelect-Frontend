@@ -15,6 +15,7 @@ import DoctorOnBoard from './pages/doctorOnboard';
 import { AlarmProvider } from './AlarmContext';
 import GlobalAlarmListener from './GlobalAlarmListener';
 import QRCodeDisplay from './pages/QR';
+import PharmacyOnBoard from './pages/pharmaOnboard';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/doctors" element={<DoctorList />} />
           <Route path="/docchat/:otherUserID" element={<DocChat />} />
           <Route path="/doctorOnboard" element={<DoctorOnBoard />} />
+          <Route path="/pharmacyOnboard" element={<PharmacyOnBoard />} />
         </Routes>
       </AlarmProvider>
     </Router>
