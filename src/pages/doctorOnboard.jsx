@@ -127,7 +127,7 @@ const DoctorOnBoard = () => {
 					<FontAwesomeIcon icon={faBars} size="lg" />
 				</button>
 				<div className="container px-4 md:px-8 lg:px-16">
-					<h2 className="text-center font-bold text-2xl mb-6">Doctors On Board</h2>
+					<h2 className="text-center font-bold text-2xl mb-6 text-[#294a26]">Doctors On Board</h2>
 					<form action="#" onSubmit={handleSubmit}>
 						<div className="form-row">
 							<div className="input-data">
