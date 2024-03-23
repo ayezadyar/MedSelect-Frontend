@@ -199,16 +199,24 @@ form .form-row .textarea {
   /* Darker green on hover */
 }
 
-/* Adjust the inner spacing and appearance of the submit input */
 .submit-button-row input[type="submit"] {
   background: none;
-  /* Remove any default background */
   color: inherit;
-  /* Inherit text color from parent */
   border: none;
-  /* Remove default border */
   padding: 0.5rem 1rem;
-  /* Padding inside the button */
   width: 100%;
-  /* Make the input fill the div */
+}
+
+.input-data input:disabled~label,
+.textarea textarea:disabled~label {
+  transform: translateY(-20px);
+  font-size: 14px;
+  color: #50642c;
+  /* This color should match your design's needs */
+}
+
+.input-data input:disabled~.underline:before {
+  background: rgba(0, 0, 0, 0.12);
+  transform: scale(1);
+  /* Keep the underline visible but indicate non-interactivity */
 }
