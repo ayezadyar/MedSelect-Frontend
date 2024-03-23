@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";;
+import { getAuth, onAuthStateChanged } from "firebase/auth"; import LogOut from '../pages/LogOut';
+;
 
-const SideNav = ({ isNavOpen, toggleNav }) => {
+const SideNav = ({ isNavOpen, toggleNav, isLogout }) => {
 	const auth = getAuth();
 	const [currentUser, setCurrentUser] = useState('')
 	useEffect(() => {
@@ -24,42 +25,53 @@ const SideNav = ({ isNavOpen, toggleNav }) => {
 	return (
 		<div
 			className={`fixed top-0 left-0 h-full bg-[#517028] w-64 text-white transform ${isNavOpen ? 'translate-x-0' : '-translate-x-full'
-				} transition-transform duration-300 ease-in-out overflow-y-auto`}
+				} transition-transform duration-300 ease-in-out overflow-y-auto flex flex-col justify-between`}
 		>
-			<div className="p-4">
-				<Link
-					to="/"
-					className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
-					onClick={toggleNav}
-					style={{ marginTop: isNavOpen ? "32px" : "0" }}
-				>
-					HOME
-				</Link>
-				<Link
-					to="/about"
-					className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
-					onClick={toggleNav}
-				>
-					ABOUT US
-				</Link>
-
-				<Link
-					to="/contact"
-					className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
-					onClick={toggleNav}
-				>
-					CONTACT US
-				</Link>
-				{currentUser &&
+			<div>
+				{/* Navigation Links */}
+				<div className="p-4">
 					<Link
-						to="/doctorOnboard"
+						to="/"
+						className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
+						onClick={toggleNav}
+						style={{ marginTop: isNavOpen ? "32px" : "0" }}
+					>
+						HOME
+					</Link>
+					<Link
+						to="/about"
 						className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
 						onClick={toggleNav}
 					>
-						SWITCH TO DOCTOR
+						ABOUT US
 					</Link>
-				}
+					<Link
+						to="/contact"
+						className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
+						onClick={toggleNav}
+					>
+						CONTACT US
+					</Link>
+					{currentUser &&
+						<Link
+							to="/doctorOnboard"
+							className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
+							onClick={toggleNav}
+						>
+							SWITCH TO DOCTOR
+						</Link>
+					}
+				</div>
 			</div>
+
+			{/* Logout Button at the bottom */}
+			{isLogout && currentUser &&
+				<div className="p-4">
+					<div className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300">
+						<LogOut />
+					</div>
+				</div>
+			}
 		</div>
 	)
 };
