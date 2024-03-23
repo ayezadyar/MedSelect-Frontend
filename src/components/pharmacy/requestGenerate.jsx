@@ -1,0 +1,114 @@
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { db, auth } from '../../Firebase'; // Adjust import paths as necessary
+import SideNav from '../sideNav';
+import { collection, addDoc, doc, updateDoc, GeoPoint } from 'firebase/firestore';
+
+const RequestGenerate = () => {
+	const [isNavOpen, setNavOpen] = useState(false);
+	const [medicineName, setMedicineName] = useState('');
+	const [longitude, setLongitude] = useState('');
+	const [latitude, setLatitude] = useState('');
+
+	const toggleNav = () => setNavOpen(!isNavOpen);
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		const user = auth.currentUser;
+		if (!user) {
+			console.log("No user signed in");
+			return;
+		}
+
+		try {
+			await addDoc(collection(db, 'medRequest'), {
+				generatorUserId: user.uid,
+				medicineName,
+				location: new GeoPoint(parseFloat(latitude), parseFloat(longitude)),
+				isCurrentlyActive: true
+			});
+
+			await updateDoc(doc(db, 'users', user.uid), {
+				isMedRequest: true
+			});
+
+			console.log("Medicine request added successfully");
+			setMedicineName('');
+			setLongitude('');
+			setLatitude('');
+		} catch (error) {
+			console.error("Error adding medicine request: ", error);
+		}
+	};
+
+	return (
+		<>
+			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
+			<div className="relative flex justify-center min-h-screen">
+				<button
+					className={`absolute top-4 left-4 z-30 cursor-pointer font-bold ${isNavOpen ? "text-white" : "text-black"}`}
+					style={{ zIndex: 20 }}
+					onClick={toggleNav}>
+					<FontAwesomeIcon icon={faBars} size="lg" />
+				</button>
+				<div
+					className="max-w-lg w-full px-4"
+					style={{ zIndex: 10 }}>
+					<form onSubmit={handleSubmit} className="mt-10 bg-white p-6 rounded-lg shadow">
+						<div className="mb-4">
+							<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="medicineName">
+								Medicine Name:
+							</label>
+							<input
+								type="text"
+								value={medicineName}
+								onChange={(e) => setMedicineName(e.target.value)}
+								required
+								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+								id="medicineName"
+							/>
+						</div>
+						<div className="mb-4">
+							<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="latitude">
+								Latitude:
+							</label>
+							<input
+								type="text"
+								value={latitude}
+								onChange={(e) => setLatitude(e.target.value)}
+								required
+								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+								id="latitude"
+							/>
+						</div>
+						<div className="mb-6">
+							<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="longitude">
+								Longitude:
+							</label>
+							<input
+								type="text"
+								value={longitude}
+								onChange={(e) => setLongitude(e.target.value)}
+								required
+								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+								id="longitude"
+							/>
+						</div>
+						<div className="flex items-center justify-center">
+							<button
+								type="submit"
+								className="bg-[#517028] hover:bg-[#294a26] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+							>
+								Submit Request
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</>
+	);
+
+};
+
+export default RequestGenerate;
