@@ -7,7 +7,7 @@ import SendDocMessage from "../doctors/sendDocMessage"; // Adjust the import pat
 import SideNav from "../sideNav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-
+import { format, isToday } from 'date-fns';
 const DocChat = () => {
 
 
@@ -40,11 +40,23 @@ const DocChat = () => {
 					.map((doc) => ({
 						...doc.data(),
 						id: doc.id,
+						createdAt: doc.data().createdAt.toDate(), // Convert Firestore Timestamp to JavaScript Date
 					}))
-					.filter((msg) => msg.participants.includes(otherUserID)) // Additional filter for messages between the two users
-					.sort((a, b) => a.createdAt - b.createdAt);
-				setMessages(fetchedMessages);
+					.filter((msg) => msg.participants.includes(otherUserID));
+
+				// Group messages by their creation date
+				const groupedMessages = fetchedMessages.reduce((groups, message) => {
+					const date = format(message.createdAt, 'yyyy-MM-dd');
+					if (!groups[date]) {
+						groups[date] = [];
+					}
+					groups[date].push(message);
+					return groups;
+				}, {});
+
+				setMessages(groupedMessages);
 			});
+
 			return () => unsubscribe();
 		}
 	}, [user, otherUserID, db]);
@@ -88,20 +100,26 @@ const DocChat = () => {
 				</button>
 
 				{/* Main Chat Content */}
-				<main className={`flex flex-col flex-grow transition-all duration-500 ${isNavOpen ? 'pl-64' : 'pl-0'}`}> {/* Adjust the padding based on SideNav state */}
-					{/* Messages List */}
+				<main className={`flex flex-col flex-grow transition-all duration-500 ${isNavOpen ? 'pl-64' : 'pl-0'}`}>
 					<div className="flex-grow overflow-auto p-4">
-						<div className="flex flex-col justify-end">
-							{messages.map((msg) => (
-								<div key={msg.id} className="flex flex-col justify-end">
-									<MessageDoc message={{ ...msg, isSender: msg.senderId === user }} />
-									{/* Additional content based on your needs */}
+						{Object.entries(messages).map(([date, messagesForDate]) => (
+							<div key={date} className="mb-4">
+								<div className="text-center my-2">
+									{/* Style as needed */}
+									<hr className="border-t border-gray-200 mt-10" />
+									<span className="relative top-[-10px] bg-white px-2">
+										{isToday(new Date(date)) ? 'Today' : format(new Date(date), 'MMMM dd, yyyy')}
+									</span>
 								</div>
-							))}
-							<span ref={scroll}></span>
-						</div>
+								{messagesForDate.map((msg) => (
+									<div key={msg.id} className="flex flex-col justify-end mb-2">
+										<MessageDoc message={{ ...msg, isSender: msg.senderId === user }} />
+									</div>
+								))}
+							</div>
+						))}
+						<span ref={scroll}></span>
 					</div>
-					{/* Send Message Component */}
 					<div className="p-4 bg-gray-50 border-t border-gray-300">
 						<SendDocMessage scroll={scroll} user={user} otherUserID={otherUserID} />
 					</div>
