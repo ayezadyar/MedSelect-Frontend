@@ -6,7 +6,9 @@ import SideNav from '../sideNav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { auth, db } from '../../Firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+
 // const position1 = [31.4181, 73.0776]; // Clock Tower Faisalabad
 // const position2 = [31.4338, 73.0832]; // University of Agriculture, Faisalabad
 
@@ -18,6 +20,7 @@ const MapExample = () => {
 	const [position2, setPosition2] = useState(null);
 	const polylinePoints = [position1, position2];
 	const user = auth.currentUser;
+	const navigate = useNavigate();
 
 	const fetchRequestLocations = async () => {
 		const user = auth.currentUser;
@@ -65,6 +68,26 @@ const MapExample = () => {
 	const toggleNav = () => {
 		setNavOpen(!isNavOpen);
 	};
+
+	const markAsReached = async () => {
+		if (!user) {
+			console.error("No user signed in");
+			return;
+		}
+
+		try {
+			const userDocRef = doc(db, 'users', user.uid); // Reference to the user's document
+			await updateDoc(userDocRef, {
+				isMedRequest: false,
+			});
+			navigate('/');
+			console.log("Request status updated successfully.");
+
+		} catch (error) {
+			console.error("Error updating request status:", error);
+		}
+	};
+
 	console.log(polylinePoints)
 	return (
 		<div className="flex flex-col lg:flex-row rounded-lg items-center justify-center" style={{ height: '100vh' }}>
@@ -90,15 +113,22 @@ const MapExample = () => {
 						/>
 						{polylinePoints[0] && polylinePoints[1] && <>
 							<Marker position={position1}>
-								<Popup>A pretty CSS3 popup.<br />Easily customizable.</Popup>
+								<Popup> Your Location</Popup>
 							</Marker>
 							<Marker position={position2}>
-								<Popup>A pretty CSS3 popup.<br />Easily customizable.</Popup>
+								<Popup>Care pharmacy {distance.toFixed(4)} meters</Popup>
 							</Marker>
 							<Polyline positions={polylinePoints} color="red" />
 						</>}
 					</MapContainer>}
 				</div>
+				<button
+					onClick={markAsReached}
+					className="bg-[#517028] hover:bg-[#294a26] text-white font-bold mt-12 py-2 px-4 rounded"
+					style={{ display: 'block', margin: '14px auto' }}
+				>
+					Reached
+				</button>
 			</div>
 		</div>
 	);
