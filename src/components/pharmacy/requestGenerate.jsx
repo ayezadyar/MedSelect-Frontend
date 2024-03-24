@@ -4,6 +4,8 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { db, auth } from '../../Firebase'; // Adjust import paths as necessary
 import SideNav from '../sideNav';
 import { collection, addDoc, doc, updateDoc, GeoPoint } from 'firebase/firestore';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RequestGenerate = () => {
 	const [isNavOpen, setNavOpen] = useState(false);
@@ -37,6 +39,16 @@ const RequestGenerate = () => {
 			setMedicineName('');
 			setLongitude('');
 			setLatitude('');
+			toast.info(('Medicine request generated'), {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
 		} catch (error) {
 			console.error("Error adding medicine request: ", error);
 		}
@@ -106,6 +118,7 @@ const RequestGenerate = () => {
 					</form>
 				</div>
 			</div>
+			<ToastContainer />
 		</div>
 	);
 
