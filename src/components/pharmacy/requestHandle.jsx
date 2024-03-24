@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, query, where, getDocs, doc, updateDoc, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, updateDoc, getDoc, onSnapshot } from 'firebase/firestore';
 import { auth, db } from '../../Firebase';
 import SideNav from '../sideNav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,30 +13,36 @@ const RequestHandle = () => {
 	const [isNavOpen, setNavOpen] = useState(false);
 
 	useEffect(() => {
-		const fetchRequests = async () => {
-			const q = query(collection(db, 'medRequest'), where('isCurrentlyActive', '==', true));
-			const querySnapshot = await getDocs(q);
-			const fetchedRequests = querySnapshot.docs.map(doc => ({
-				id: doc.id,
-				...doc.data(),
-				loading: true, // Add a loading state to each request
+		const q = query(collection(db, 'medRequest'), where('isCurrentlyActive', '==', true));
+
+		// Subscribe to real-time updates
+		const unsubscribe = onSnapshot(q, (querySnapshot) => {
+			const updatedRequests = querySnapshot.docs.map(docSnapshot => ({
+				id: docSnapshot.id,
+				...docSnapshot.data(),
+				loading: true, 
 			}));
-			setRequests(fetchedRequests);
 
-			fetchedRequests.forEach((request) => {
-				setTimeout(async () => {
-					await updateDoc(doc(db, 'medRequest', request.id), {
-						isCurrentlyActive: false,
-					});
-					setRequests(currentRequests => currentRequests.map(r =>
-						r.id === request.id ? { ...r, loading: false } : r
-					));
-				}, 20000); // 20 seconds
-			});
-		};
+			setRequests(updatedRequests);
+		});
 
-		fetchRequests();
+		// Cleanup function to unsubscribe from the listener when the component unmounts
+		return () => unsubscribe();
 	}, []);
+
+	// Example function to manually set a request as not active anymore
+	// const expireRequest = async (requestId) => {
+	// 	const requestRef = doc(db, 'medRequest', requestId);
+	// 	await updateDoc(requestRef, {
+	// 		isCurrentlyActive: false,
+	// 	}).then(() => {
+	// 		console.log(`Request ${requestId} has been set to inactive.`);
+	// 		// Optionally, refresh the data here or rely on onSnapshot to automatically update the UI
+	// 	}).catch(error => {
+	// 		console.error("Error updating request:", error);
+	// 	});
+	// };
+
 	// Example function within your component
 	const acceptRequest = async (requestId) => {
 		const currentUser = auth.currentUser;
