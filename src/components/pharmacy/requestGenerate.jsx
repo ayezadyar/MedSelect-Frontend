@@ -62,8 +62,9 @@ const RequestGenerate = () => {
 								value={medicineName}
 								onChange={(e) => setMedicineName(e.target.value)}
 								required
-								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+								className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none focus:ring-0 focus:border-black"
 								id="medicineName"
+								style={{ transition: "border-color 0.3s" }}
 							/>
 						</div>
 						<div className="mb-4">
@@ -75,8 +76,9 @@ const RequestGenerate = () => {
 								value={latitude}
 								onChange={(e) => setLatitude(e.target.value)}
 								required
-								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+								className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none focus:ring-0 focus:border-black"
 								id="latitude"
+								style={{ transition: "border-color 0.3s" }}
 							/>
 						</div>
 						<div className="mb-6">
@@ -88,8 +90,9 @@ const RequestGenerate = () => {
 								value={longitude}
 								onChange={(e) => setLongitude(e.target.value)}
 								required
-								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+								className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none focus:ring-0 focus:border-black"
 								id="longitude"
+								style={{ transition: "border-color 0.3s" }}
 							/>
 						</div>
 						<div className="flex items-center justify-center">
