@@ -8,6 +8,8 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { auth, db } from '../../Firebase';
 import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // const position1 = [31.4181, 73.0776]; // Clock Tower Faisalabad
 // const position2 = [31.4338, 73.0832]; // University of Agriculture, Faisalabad
@@ -80,6 +82,17 @@ const MapExample = () => {
 			await updateDoc(userDocRef, {
 				isMedRequest: false,
 			});
+			toast.info('Thanks for connecting', {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+				
+			});
 			navigate('/');
 			console.log("Request status updated successfully.");
 
@@ -100,8 +113,8 @@ const MapExample = () => {
 					<FontAwesomeIcon icon={faBars} size="sm" />
 				</button>
 				<div className="map-container" style={{
-					height: '400px',
-					width: '600px',
+					height: '500px',
+					width: '800px',
 					margin: '0 auto',
 					border: '2px solid #000',
 					boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
@@ -130,6 +143,7 @@ const MapExample = () => {
 					Reached
 				</button>
 			</div>
+			<ToastContainer />
 		</div>
 	);
 
