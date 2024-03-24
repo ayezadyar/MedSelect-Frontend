@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../Firebase';
+import { collection, query, where, getDocs, doc, updateDoc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../../Firebase';
 import SideNav from '../sideNav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import '../../pages/contactStyle.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const RequestHandle = () => {
 	const [requests, setRequests] = useState([]);
 	const [expandedUserId, setExpandedUserId] = useState(null);
@@ -35,6 +37,47 @@ const RequestHandle = () => {
 
 		fetchRequests();
 	}, []);
+	// Example function within your component
+	const acceptRequest = async (requestId) => {
+		const currentUser = auth.currentUser;
+		if (!currentUser) {
+			console.log('No user logged in');
+			return;
+		}
+
+		// Fetch current user's details from the user collection
+		const userRef = doc(db, 'users', currentUser.uid);
+		const userSnap = await getDoc(userRef);
+		if (!userSnap.exists()) {
+			console.log('User details not found');
+			return;
+		}
+
+		const userData = userSnap.data();
+		console.log(userData, "user data: ")
+
+		// Update the medRequest document
+		const requestRef = doc(db, 'medRequest', requestId);
+		await updateDoc(requestRef, {
+			acceptUserID: currentUser.uid,
+			acceptUserLat: userData.location._lat, // Assuming these fields exist
+			acceptUserLong: userData.location._long,
+			isCurrentlyActive: false
+		});
+
+		// Update local state if necessary, e.g., to remove the accepted request from the list
+		setRequests(requests.filter(request => request.id !== requestId));
+		toast.info(('Medicine request generated'), {
+			position: "top-right",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+		});
+	};
 
 	const toggleNav = () => {
 		setNavOpen(!isNavOpen);
@@ -60,7 +103,11 @@ const RequestHandle = () => {
 						>
 							<div className="flex justify-between items-center">
 								<h5 className="text-lg text-white">{request.medicineName}</h5>
-								<p className="text-white cursor-pointer">{request.loading ? "Loading..." : "Expired"}</p>
+								{/* <p className="text-white cursor-pointer">{request.loading ? {} : "Expired"}</p> */}
+								<p onClick={(e) => {
+									e.stopPropagation();
+									acceptRequest(request.id);
+								}} className="text-white cursor-pointer">{request.loading ? "Accept" : "Expired"}</p>
 							</div>
 							{expandedUserId === request.id && request.location && (
 								<div className="mt-2 text-white">
@@ -80,6 +127,7 @@ const RequestHandle = () => {
 					))}
 				</div>
 			</div>
+			<ToastContainer />
 		</div>
 	);
 
