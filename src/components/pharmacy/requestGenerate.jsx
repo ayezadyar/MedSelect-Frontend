@@ -74,7 +74,7 @@ const RequestGenerate = () => {
 								value={medicineName}
 								onChange={(e) => setMedicineName(e.target.value)}
 								required
-								className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none focus:ring-0 focus:border-black"
+								className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none focus:ring-0 focus:border-[#294a26]"
 								id="medicineName"
 								style={{ transition: "border-color 0.3s" }}
 							/>
@@ -88,7 +88,7 @@ const RequestGenerate = () => {
 								value={latitude}
 								onChange={(e) => setLatitude(e.target.value)}
 								required
-								className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none focus:ring-0 focus:border-black"
+								className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none focus:ring-0 focus:border-[#294a26]"
 								id="latitude"
 								style={{ transition: "border-color 0.3s" }}
 							/>
@@ -102,7 +102,7 @@ const RequestGenerate = () => {
 								value={longitude}
 								onChange={(e) => setLongitude(e.target.value)}
 								required
-								className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none focus:ring-0 focus:border-black"
+								className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none focus:ring-0 focus:border-[#294a26]"
 								id="longitude"
 								style={{ transition: "border-color 0.3s" }}
 							/>
