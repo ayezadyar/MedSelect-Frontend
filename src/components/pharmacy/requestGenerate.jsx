@@ -43,13 +43,10 @@ const RequestGenerate = () => {
 	};
 
 	return (
-		<>
+		<div className="flex overflow-hidden">
 			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
-			<div className="relative flex justify-center min-h-screen">
-				<button
-					className={`absolute top-4 left-4 z-30 cursor-pointer font-bold ${isNavOpen ? "text-white" : "text-black"}`}
-					style={{ zIndex: 20 }}
-					onClick={toggleNav}>
+			<div className={`flex flex-col justify-center items-center min-h-screen transition-margin duration-300 w-full ${isNavOpen ? "ml-64" : "ml-0"}`}>
+				<button className={`absolute top-4 left-4 z-20 cursor-pointer font-bold ${isNavOpen ? "text-white" : "text-black"}`} onClick={toggleNav}>
 					<FontAwesomeIcon icon={faBars} size="lg" />
 				</button>
 				<div
@@ -106,7 +103,7 @@ const RequestGenerate = () => {
 					</form>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 
 };
