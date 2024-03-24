@@ -220,3 +220,18 @@ form .form-row .textarea {
   transform: scale(1);
   /* Keep the underline visible but indicate non-interactivity */
 }
+
+
+@keyframes loadingFade {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
+}
+
+.loadingBar {
+  animation: loadingFade 20s linear forwards;
+}
