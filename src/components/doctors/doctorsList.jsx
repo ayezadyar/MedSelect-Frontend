@@ -51,17 +51,17 @@ const DoctorList = () => {
 		};
 	}, []);
 	console.log(users, "users in list")
+	// Function to handle selection of a user
+	const handleUserSelect = (selectedUserID) => {
+		setSelectedUser(selectedUserID);
+		navigate(`/docchat/${selectedUserID}`);
+	};
 
 	// Toggle expanded user description
 	const toggleUserDescription = (userId) => {
 		setExpandedUserId(expandedUserId === userId ? null : userId);
 	};
 
-	// Function to handle selection of a user
-	const handleUserSelect = (selectedUserID) => {
-		setSelectedUser(selectedUserID);
-		navigate(`/docchat/${selectedUserID}`);
-	};
 	const [isNavOpen, setNavOpen] = useState(false);
 
 	const toggleNav = () => {
