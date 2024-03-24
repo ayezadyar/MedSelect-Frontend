@@ -15,6 +15,10 @@ import DoctorOnBoard from './pages/doctorOnboard';
 import { AlarmProvider } from './AlarmContext';
 import GlobalAlarmListener from './GlobalAlarmListener';
 import QRCodeDisplay from './pages/QR';
+import PharmacyOnBoard from './pages/pharmaOnboard';
+import RequestHandle from './components/pharmacy/requestHandle';
+import RequestGenerate from './components/pharmacy/requestGenerate';
+import Maps from './components/pharmacy/map';
 
 function App() {
   return (
@@ -34,6 +38,10 @@ function App() {
           <Route path="/doctors" element={<DoctorList />} />
           <Route path="/docchat/:otherUserID" element={<DocChat />} />
           <Route path="/doctorOnboard" element={<DoctorOnBoard />} />
+          <Route path="/pharmacyOnboard" element={<PharmacyOnBoard />} />
+          <Route path="/requestHandle" element={<RequestHandle />} />
+          <Route path="/requestGenerate" element={<RequestGenerate />} />
+          <Route path="/map" element={<Maps />} />
         </Routes>
       </AlarmProvider>
     </Router>

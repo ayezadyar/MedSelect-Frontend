@@ -2,34 +2,89 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { db, auth } from '../Firebase';
-// import { collection, query, onSnapshot } from 'firebase/firestore';
-import "./contactStyle.css";
-import SideNav from "../components/sideNav";
-import { collection, query, onSnapshot, doc, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, updateDoc, getDoc, GeoPoint } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SideNav from "../components/sideNav";
+import "./contactStyle.css";
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-const DoctorOnBoard = () => {
-
-
+const PharmacyOnBoard = () => {
 	const auth = getAuth();
 	const [isNavOpen, setNavOpen] = useState(false);
+	const [currentUser, setCurrentUser] = useState('');
 
+	// Updated state with only necessary fields
 	const [userName, setUserName] = useState('');
 	const [emailAddress, setEmailAddress] = useState('');
-	const [experience, setExperience] = useState('');
 	const [license, setLicense] = useState('');
-	const [domain, setDomain] = useState('');
+	const [longitude, setLongitude] = useState('');
+	const [latitude, setLatitude] = useState('');
 
 	const toggleNav = () => setNavOpen(!isNavOpen);
-	const handleExperienceChange = (event) => {
-		const value = event.target.value;
-		if (/^\d*$/.test(value) && (value === "" || parseInt(value, 10) < 50)) {
-			setExperience(value);
+
+	const handleChange = setter => event => {
+		setter(event.target.value);
+	};
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		if (currentUser) {
+			const userDocRef = doc(db, "users", currentUser.uid); // Assuming you have a pharmacies collection
+			try {
+				await updateDoc(userDocRef, {
+					userName,
+					emailAddress,
+					pharmaLicenseNumber: license, // Assuming you want to store it as licenseNumber
+					location: new GeoPoint(parseFloat(latitude), parseFloat(longitude)), // Storing location as a GeoPoint
+					isPharmacist: true
+				});
+				toast.info('Pharmacy data updated', {
+					position: "top-right",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "light",
+				});
+			} catch (error) {
+				console.error("Error updating pharmacy:", error);
+				// Optionally, show an error message
+			}
+		} else {
+			console.log("No user to update");
 		}
 	};
 
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, async (user) => {
+			if (user) {
+				setCurrentUser(user);
+				const userDocRef = doc(db, 'users', user.uid); // Use 'pharmacies' collection
+				const userDocSnap = await getDoc(userDocRef);
+				if (userDocSnap.exists()) {
+					const userData = userDocSnap.data();
+					setUserName(userData.displayName || '');
+					setEmailAddress(userData.email || '');
+					setLicense(userData.pharmaLicenseNumber || '');
+					if (userData.location) {
+						setLongitude(userData.location.longitude.toString());
+						setLatitude(userData.location.latitude.toString());
+					}
+				} else {
+					console.log('No such document!');
+				}
+			} else {
+				setCurrentUser(null);
+			}
+		});
+
+		return () => unsubscribe(); // Unsubscribe from the listener when the component unmounts
+	}, []);
+
+	console.log(currentUser, "in phaarma")
 	const handleLicenseChange = (event) => {
 		const value = event.target.value;
 		console.log("Input value:", value); // Check the input value
@@ -40,83 +95,6 @@ const DoctorOnBoard = () => {
 			console.log("Invalid license format."); // Check if it detects invalid format
 		}
 	};
-
-
-	const handleChange = (setter) => (event) => {
-		setter(event.target.value);
-	};
-
-	const handleSubmit = async (event) => {
-		event.preventDefault(); // Prevent default form submission
-
-		if (currentUser) {
-			const userDocRef = doc(db, "users", currentUser.uid); // Reference to the user's document
-
-			try {
-				await updateDoc(userDocRef, {
-					experience: experience,
-					domain: domain,
-					licenseNumber: license, // Assuming you want to store it as licenseNumber
-					isDoctor: true
-				});
-				console.log("User updated successfully");
-				toast.info(('User data updated'), {
-					position: "top-right",
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: "light",
-				});
-				// Optionally, redirect the user or show a success message
-			} catch (error) {
-				console.error("Error updating user:", error);
-				// Optionally, show an error message
-			}
-		} else {
-			console.log("No user to update");
-			// Handle case when there is no user logged in or selected
-		}
-		console.log('edit function called');
-	};
-
-
-	const [currentUser, setCurrentUser] = useState('')
-	useEffect(() => {
-		// Listen for authentication state changes
-		const unsubscribe = onAuthStateChanged(auth, async (user) => {
-			if (user) {
-				// If there's a user, we set it
-				setCurrentUser(user);
-
-				// Get the user's document from Firestore
-				const userDocRef = doc(db, 'users', user.uid);
-				const userDocSnap = await getDoc(userDocRef);
-
-				if (userDocSnap.exists()) {
-					// Extract user details from the document
-					const userDetails = userDocSnap.data();
-					setEmailAddress(userDetails.email)
-					setDomain(userDetails.domain)
-					setExperience(userDetails.experience)
-					setUserName(userDetails.displayName)
-					setLicense(userDetails.licenseNumber)
-
-				} else {
-					console.log('No such document!');
-				}
-			} else {
-				// User is signed out
-				setCurrentUser(null);
-			}
-		});
-
-		return () => unsubscribe(); // Unsubscribe from the listener when the component unmounts
-	}, []);
-
-	console.log(currentUser, 'current user')
 	return (
 		<div className="flex overflow-hidden">
 			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
@@ -125,25 +103,18 @@ const DoctorOnBoard = () => {
 					<FontAwesomeIcon icon={faBars} size="lg" />
 				</button>
 				<div className="container px-4 md:px-8 lg:px-16">
-					<h2 className="text-center font-bold text-2xl mb-6 text-[#294a26]">Doctors On Board</h2>
+					<h2 className="text-center font-bold text-2xl mb-6 text-[#294a26]">Pharmacy On Board</h2>
 					<form action="#" onSubmit={handleSubmit}>
 						<div className="form-row">
 							<div className="input-data">
 								<input type="text" value={userName} onChange={handleChange(setUserName)} disabled />
 								<div className="underline"></div>
-								<label>User Name</label>
+								<label>Username</label>
 							</div>
 							<div className="input-data">
 								<input type="email" value={emailAddress} onChange={handleChange(setEmailAddress)} disabled />
 								<div className="underline"></div>
 								<label>Email Address</label>
-							</div>
-						</div>
-						<div className="form-row">
-							<div className="input-data">
-								<input type="text" value={experience} onChange={handleExperienceChange} required />
-								<div className="underline"></div>
-								<label>Experience (Years)</label>
 							</div>
 						</div>
 						<div className="form-row">
@@ -155,9 +126,14 @@ const DoctorOnBoard = () => {
 						</div>
 						<div className="form-row">
 							<div className="input-data">
-								<input type="text" value={domain} onChange={handleChange(setDomain)} required />
+								<input type="text" value={latitude} onChange={handleChange(setLatitude)} required />
 								<div className="underline"></div>
-								<label>Domain</label>
+								<label>Latitude</label>
+							</div>
+							<div className="input-data">
+								<input type="text" value={longitude} onChange={handleChange(setLongitude)} required />
+								<div className="underline"></div>
+								<label>Longitude</label>
 							</div>
 						</div>
 						<center>
@@ -173,4 +149,4 @@ const DoctorOnBoard = () => {
 	);
 };
 
-export default DoctorOnBoard;
+export default PharmacyOnBoard;

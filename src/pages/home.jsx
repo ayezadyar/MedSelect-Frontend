@@ -11,6 +11,8 @@ import Login from './login';
 
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../Firebase';
 export default function Home() {
 	const [isNavOpen, setNavOpen] = useState(false);
 	const [medicines, setMedicines] = useState([]);
@@ -23,6 +25,8 @@ export default function Home() {
 	const [isLoading, setisLoading] = useState(true);
 	const [currentUser, setCurrentUser] = useState(null);
 	const [isLogOut, setIsLogOut] = useState(true);
+	const [isPharmacist, setIsPharamcist] = useState(false);
+	const [isMedRequest, setIsMedRequest] = useState(false);
 
 	const auth = getAuth();
 
@@ -61,7 +65,7 @@ export default function Home() {
 		// Load CSV data
 		const fetchData = async () => {
 			try {
-				const response = await fetch('data.csv');
+				const response = await fetch('data11.csv');
 				const data = await response.text();
 				const parsedData = Papa.parse(data, { header: true }).data;
 				setMedicines(parsedData);
@@ -120,7 +124,51 @@ export default function Home() {
 	const toggleNav = () => {
 		setNavOpen(!isNavOpen);
 	};
+	// const [currentUser, setCurrentUser] = useState('')
+	useEffect(() => {
+		// Listen for authentication state changes
+		const unsubscribe = onAuthStateChanged(auth, async (user) => {
+			if (user) {
+				// If there's a user, we set it
+				setCurrentUser(user);
 
+				// Get the user's document from Firestore
+				const userDocRef = doc(db, 'users', user.uid);
+				const userDocSnap = await getDoc(userDocRef);
+
+				if (userDocSnap.exists()) {
+					// Extract user details from the document
+					const userDetails = userDocSnap.data();
+					setIsMedRequest(userDetails.isMedRequest)
+					setIsPharamcist(userDetails.isPharmacist);
+					console.log(userDetails)
+				} else {
+					console.log('No such document!');
+				}
+			} else {
+				// User is signed out
+				setCurrentUser(null);
+			}
+		});
+
+		return () => unsubscribe(); // Unsubscribe from the listener when the component unmounts
+	}, []);
+	const determinePath = () => {
+		if (currentUser?.email) {
+			if (isPharmacist) {
+				return "/requestHandle";
+			} else if (isMedRequest) {
+				return "/map";
+			} else {
+				return "/requestGenerate";
+			}
+		}
+		return "/";
+	};
+
+	// Use the function to get the path
+	const path = determinePath();
+	console.log(isMedRequest, 'medRequest', isPharmacist, 'pharma')
 	return (
 		<div className="flex">
 			{/* Side Navigation */}
@@ -264,8 +312,8 @@ export default function Home() {
 								<HomeCard
 									imageSrc="/map.png"
 									altText="Fourth Card"
-									title="Request A Medicine"
-									to="/"
+									title="Medicine Request"
+									to={path}
 								/>
 							</button>
 						)
