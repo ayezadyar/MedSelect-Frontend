@@ -32,9 +32,9 @@ const QRCodeDisplay = () => {
     };
 
     return (
-        <div className="flex justify-center items-center h-screen " onClick={handleScreenClick}>
+        <div className="flex flex-col items-center justify-center h-screen ">
             {/* Prevent the click event from bubbling up when the QR code is clicked */}
-            <div onClick={(e) => e.stopPropagation()}>
+            <div onClick={handleScreenClick} style={{ marginBottom: '20px' }}>
                 <QRCode value={link} size={256} level={"H"} />
             </div>
             {/* Styling the Share button */}
@@ -42,6 +42,18 @@ const QRCodeDisplay = () => {
                 onClick={(e) => {
                     e.stopPropagation(); // Prevent triggering the screen click
                     handleShare(); // Call handleShare function to share QR code
+                }}
+                style={{
+                    backgroundColor: '#4CAF50',
+                    border: 'none',
+                    color: 'white',
+                    padding: '15px 32px',
+                    textAlign: 'center',
+                    textDecoration: 'none',
+                    display: 'inline-block',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    borderRadius: '5px',
                 }}
             >
                 Share
@@ -51,4 +63,3 @@ const QRCodeDisplay = () => {
 };
 
 export default QRCodeDisplay;
-
