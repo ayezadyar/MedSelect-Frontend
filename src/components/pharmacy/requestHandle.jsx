@@ -20,7 +20,7 @@ const RequestHandle = () => {
 			const updatedRequests = querySnapshot.docs.map(docSnapshot => ({
 				id: docSnapshot.id,
 				...docSnapshot.data(),
-				loading: true, 
+				loading: true,
 			}));
 
 			setRequests(updatedRequests);
@@ -30,20 +30,7 @@ const RequestHandle = () => {
 		return () => unsubscribe();
 	}, []);
 
-	// Example function to manually set a request as not active anymore
-	// const expireRequest = async (requestId) => {
-	// 	const requestRef = doc(db, 'medRequest', requestId);
-	// 	await updateDoc(requestRef, {
-	// 		isCurrentlyActive: false,
-	// 	}).then(() => {
-	// 		console.log(`Request ${requestId} has been set to inactive.`);
-	// 		// Optionally, refresh the data here or rely on onSnapshot to automatically update the UI
-	// 	}).catch(error => {
-	// 		console.error("Error updating request:", error);
-	// 	});
-	// };
-
-	// Example function within your component
+	console.log(requests?.loading, 'the loading')
 	const acceptRequest = async (requestId) => {
 		const currentUser = auth.currentUser;
 		if (!currentUser) {
@@ -109,7 +96,6 @@ const RequestHandle = () => {
 						>
 							<div className="flex justify-between items-center">
 								<h5 className="text-lg text-white">{request.medicineName}</h5>
-								{/* <p className="text-white cursor-pointer">{request.loading ? {} : "Expired"}</p> */}
 								<p onClick={(e) => {
 									e.stopPropagation();
 									acceptRequest(request.id);
