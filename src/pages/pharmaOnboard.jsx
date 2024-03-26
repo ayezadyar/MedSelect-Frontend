@@ -8,12 +8,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SideNav from "../components/sideNav";
 import "./contactStyle.css";
-
+import { useNavigate } from "react-router-dom";
 const PharmacyOnBoard = () => {
 	const auth = getAuth();
 	const [isNavOpen, setNavOpen] = useState(false);
 	const [currentUser, setCurrentUser] = useState('');
-
+	const navigate = useNavigate();
 	// Updated state with only necessary fields
 	const [userName, setUserName] = useState('');
 	const [emailAddress, setEmailAddress] = useState('');
@@ -49,6 +49,7 @@ const PharmacyOnBoard = () => {
 					progress: undefined,
 					theme: "light",
 				});
+				setTimeout(() => navigate("/"), 5000);
 			} catch (error) {
 				console.error("Error updating pharmacy:", error);
 				// Optionally, show an error message
@@ -97,6 +98,19 @@ const PharmacyOnBoard = () => {
 	};
 	return (
 		<div className="flex overflow-hidden">
+			<style>
+				{`
+                    input[type='number']::-webkit-inner-spin-button,
+                    input[type='number']::-webkit-outer-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                    }
+
+                    input[type='number'] {
+                        -moz-appearance: textfield; /* Firefox */
+                    }
+                `}
+			</style>
 			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
 			<div className={`flex flex-col justify-center items-center min-h-screen transition-margin duration-300 w-full ${isNavOpen ? "ml-64" : "ml-0"}`}>
 				<button className={`absolute top-4 left-4 z-20 cursor-pointer font-bold ${isNavOpen ? "text-white" : "text-black"}`} onClick={toggleNav}>
@@ -126,14 +140,15 @@ const PharmacyOnBoard = () => {
 						</div>
 						<div className="form-row">
 							<div className="input-data">
-								<input type="text" value={latitude} onChange={handleChange(setLatitude)} required />
+								<input type="number" value={latitude} onChange={handleChange(setLatitude)} required step="any" />
 								<div className="underline"></div>
 								<label>Latitude</label>
 							</div>
 							<div className="input-data">
-								<input type="text" value={longitude} onChange={handleChange(setLongitude)} required />
+								<input type="number" value={longitude} onChange={handleChange(setLongitude)} required step="any" />
 								<div className="underline"></div>
 								<label>Longitude</label>
+
 							</div>
 						</div>
 						<center>

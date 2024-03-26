@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, query, where, getDocs, doc, updateDoc, getDoc, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, updateDoc, getDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { auth, db } from '../../Firebase';
 import SideNav from '../sideNav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,7 +11,23 @@ const RequestHandle = () => {
 	const [requests, setRequests] = useState([]);
 	const [expandedUserId, setExpandedUserId] = useState(null);
 	const [isNavOpen, setNavOpen] = useState(false);
+	const [requestTimers, setRequestTimers] = useState({}); // New state to track timers
 
+	useEffect(() => {
+		// Assuming requests are fetched and set elsewhere in your component
+		requests.forEach(request => {
+			// For each request, set a timer if not already set
+			if (!requestTimers[request.id]) {
+				const timer = setTimeout(() => deleteRequest(request.id), 20000); // 20 seconds timer
+				setRequestTimers(prev => ({ ...prev, [request.id]: timer }));
+			}
+		});
+
+		// Cleanup timers on component unmount
+		return () => {
+			Object.values(requestTimers).forEach(timer => clearTimeout(timer));
+		};
+	}, [requests]);
 	useEffect(() => {
 		const q = query(collection(db, 'medRequest'), where('isCurrentlyActive', '==', true));
 
@@ -20,7 +36,7 @@ const RequestHandle = () => {
 			const updatedRequests = querySnapshot.docs.map(docSnapshot => ({
 				id: docSnapshot.id,
 				...docSnapshot.data(),
-				loading: true, 
+				loading: true,
 			}));
 
 			setRequests(updatedRequests);
@@ -29,21 +45,22 @@ const RequestHandle = () => {
 		// Cleanup function to unsubscribe from the listener when the component unmounts
 		return () => unsubscribe();
 	}, []);
+	const deleteRequest = async (requestId) => {
+		// Delete the request from the database
+		const requestRef = doc(db, 'medRequest', requestId);
+		await deleteDoc(requestRef);
+		console.log(`Request ${requestId} deleted due to inactivity.`);
 
-	// Example function to manually set a request as not active anymore
-	// const expireRequest = async (requestId) => {
-	// 	const requestRef = doc(db, 'medRequest', requestId);
-	// 	await updateDoc(requestRef, {
-	// 		isCurrentlyActive: false,
-	// 	}).then(() => {
-	// 		console.log(`Request ${requestId} has been set to inactive.`);
-	// 		// Optionally, refresh the data here or rely on onSnapshot to automatically update the UI
-	// 	}).catch(error => {
-	// 		console.error("Error updating request:", error);
-	// 	});
-	// };
+		// Optionally, update local state to remove the deleted request
+		setRequests(requests.filter(request => request.id !== requestId));
 
-	// Example function within your component
+		// Clear the timer from state
+		const newTimers = { ...requestTimers };
+		delete newTimers[requestId];
+		setRequestTimers(newTimers);
+	};
+
+	// console.log(requests?.loading, 'the loading')
 	const acceptRequest = async (requestId) => {
 		const currentUser = auth.currentUser;
 		if (!currentUser) {
@@ -73,7 +90,14 @@ const RequestHandle = () => {
 
 		// Update local state if necessary, e.g., to remove the accepted request from the list
 		setRequests(requests.filter(request => request.id !== requestId));
-		toast.info(('Medicine request generated'), {
+		// Clear the timer when a request is accepted to prevent deletion
+		if (requestTimers[requestId]) {
+			clearTimeout(requestTimers[requestId]);
+			const newTimers = { ...requestTimers };
+			delete newTimers[requestId];
+			setRequestTimers(newTimers);
+		}
+		toast.info(('Medicine request responded'), {
 			position: "top-right",
 			autoClose: 5000,
 			hideProgressBar: false,
@@ -109,7 +133,6 @@ const RequestHandle = () => {
 						>
 							<div className="flex justify-between items-center">
 								<h5 className="text-lg text-white">{request.medicineName}</h5>
-								{/* <p className="text-white cursor-pointer">{request.loading ? {} : "Expired"}</p> */}
 								<p onClick={(e) => {
 									e.stopPropagation();
 									acceptRequest(request.id);
