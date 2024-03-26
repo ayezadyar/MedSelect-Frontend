@@ -56,7 +56,7 @@ const RequestGenerate = () => {
             progress: undefined,
             theme: "light",
          });
-         navigate("/");
+         setTimeout(() => navigate("/"), 5000);
       } catch (error) {
          console.error("Error adding medicine request: ", error);
       }
