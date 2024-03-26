@@ -151,17 +151,18 @@ const MapExample = () => {
 				>
 					<FontAwesomeIcon icon={faBars} size="sm" />
 				</button>
-				<div
-					className="map-container"
-					style={{
-						height: "500px",
-						width: "800px",
-						margin: "0 auto",
-						border: "2px solid #000",
-						boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-					}}
-				>
-					{position1 && (
+
+				{position1 ? (
+					<div
+						className="map-container"
+						style={{
+							height: "500px",
+							width: "800px",
+							margin: "0 auto",
+							border: "2px solid #000",
+							boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+						}}
+					>
 						<MapContainer
 							center={position1}
 							zoom={13}
@@ -183,14 +184,15 @@ const MapExample = () => {
 								</>
 							)}
 						</MapContainer>
-					)}
-				</div>
+					</div>
+				) : <div className="text-center mt-0 text-[#294a26] font-semibold text-lg">Request is not responded</div>}
+
 				<button
 					onClick={markAsReached}
-					className="bg-[#517028] hover:bg-[#294a26] text-white font-bold mt-12 py-2 px-4 rounded"
-					style={{ display: "block", margin: "14px auto" }}
+					className="bg-[#517028] hover:bg-[#294a26] text-white font-bold mt-14 py-2 px-4 rounded"
+					style={{ display: "block", margin: "30px auto" }}
 				>
-					Reached
+					Return To Home
 				</button>
 			</div>
 			<ToastContainer />
