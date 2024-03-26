@@ -39,7 +39,7 @@ const MessageDoc = ({ message }) => {
 							</div>
 						</div>
 					) : message.imageUrl.includes('.mp4') || message.imageUrl.includes('.webm') || message.imageUrl.includes('.mkv') ? (
-						<video src={message.imageUrl} alt="Uploaded File" className="rounded-lg shadow-md" autoPlay />
+						<video src={message.imageUrl} alt="Uploaded File" className="rounded-lg shadow-md" style={{ width: '600px', height: 'auto' }} autoPlay />
 					) : (
 						<img src={message.imageUrl} alt="Uploaded File" className="rounded-lg shadow-md" style={{ width: '200px', height: 'auto' }} />
 					)}

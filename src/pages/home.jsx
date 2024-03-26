@@ -181,7 +181,7 @@ export default function Home() {
 					{currentUser ? (
 						// If there is a logged-in user, display their email and a logout button
 						<>
-							<p>{currentUser?.email}</p>
+							<p className='text-lg font-semibold text-[#294a26]'>{currentUser?.email}</p>
 
 						</>
 					) : (
