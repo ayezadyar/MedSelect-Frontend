@@ -8,11 +8,11 @@ import SideNav from "../components/sideNav";
 import { collection, query, onSnapshot, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 const DoctorOnBoard = () => {
 
-
+	const navigate = useNavigate();
 	const auth = getAuth();
 	const [isNavOpen, setNavOpen] = useState(false);
 
@@ -71,6 +71,7 @@ const DoctorOnBoard = () => {
 					theme: "light",
 				});
 				// Optionally, redirect the user or show a success message
+				setTimeout(() => navigate("/"), 5000);
 			} catch (error) {
 				console.error("Error updating user:", error);
 				// Optionally, show an error message
