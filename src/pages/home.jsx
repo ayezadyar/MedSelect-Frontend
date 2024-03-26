@@ -65,7 +65,7 @@ export default function Home() {
 		// Load CSV data
 		const fetchData = async () => {
 			try {
-				const response = await fetch('data11.csv');
+				const response = await fetch('data.csv');
 				const data = await response.text();
 				const parsedData = Papa.parse(data, { header: true }).data;
 				setMedicines(parsedData);
