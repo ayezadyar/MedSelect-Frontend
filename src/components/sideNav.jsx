@@ -60,15 +60,15 @@ const SideNav = ({ isNavOpen, toggleNav, isLogout }) => {
 								className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
 								onClick={toggleNav}
 							>
-								SWITCH TO DOCTOR
+								DOCTOR PORTAL
 							</Link>
-						<Link
-							to="/pharmacyOnboard"
-							className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
-							onClick={toggleNav}
-						>
-							SWITCH TO PHARMCY
-						</Link>
+							<Link
+								to="/pharmacyOnboard"
+								className="block py-2 font-semibold hover:bg-[#294a26] hover:rounded hover:px-4 transition-all duration-300"
+								onClick={toggleNav}
+							>
+								PHARMACY PORTAL
+							</Link>
 						</>
 
 					}
