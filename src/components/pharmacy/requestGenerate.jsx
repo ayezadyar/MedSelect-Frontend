@@ -64,6 +64,19 @@ const RequestGenerate = () => {
 
    return (
       <div className="flex overflow-hidden">
+         <style>
+            {`
+                    input[type='number']::-webkit-inner-spin-button,
+                    input[type='number']::-webkit-outer-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                    }
+
+                    input[type='number'] {
+                        -moz-appearance: textfield; /* Firefox */
+                    }
+                `}
+         </style>
          <SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
          <div
             className={`flex flex-col justify-center items-center min-h-screen transition-margin duration-300 w-full ${isNavOpen ? "ml-64" : "ml-0"
@@ -106,7 +119,8 @@ const RequestGenerate = () => {
                         Latitude:
                      </label>
                      <input
-                        type="text"
+                        type="number"
+                        step="any" // Allows any decimal numbers to be entered
                         value={latitude}
                         onChange={(e) => setLatitude(e.target.value)}
                         required
@@ -123,7 +137,8 @@ const RequestGenerate = () => {
                         Longitude:
                      </label>
                      <input
-                        type="text"
+                        type="number"
+                        step="any" // Allows any decimal numbers to be entered
                         value={longitude}
                         onChange={(e) => setLongitude(e.target.value)}
                         required
