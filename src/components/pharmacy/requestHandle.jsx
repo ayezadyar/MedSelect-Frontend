@@ -97,7 +97,7 @@ const RequestHandle = () => {
 			delete newTimers[requestId];
 			setRequestTimers(newTimers);
 		}
-		toast.info(('Medicine request generated'), {
+		toast.info(('Medicine request responded'), {
 			position: "top-right",
 			autoClose: 5000,
 			hideProgressBar: false,
