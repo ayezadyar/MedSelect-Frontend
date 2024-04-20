@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { db, auth } from "../../Firebase"; // Adjust import paths as necessary
@@ -13,6 +13,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+
 const RequestGenerate = () => {
    const [isNavOpen, setNavOpen] = useState(false);
    const [medicineName, setMedicineName] = useState("");
@@ -20,6 +21,28 @@ const RequestGenerate = () => {
    const [latitude, setLatitude] = useState("");
 
    const navigate = useNavigate();
+
+   useEffect(() => {
+      navigator.geolocation.getCurrentPosition(
+         position => {
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude);
+         },
+         () => {
+            toast.error("Location access denied", {
+               position: "top-right",
+               autoClose: 5000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+               theme: "colored",
+            });
+         }
+      );
+   }, []);
+
    const toggleNav = () => setNavOpen(!isNavOpen);
 
    const handleSubmit = async (event) => {
@@ -77,6 +100,7 @@ const RequestGenerate = () => {
                     }
                 `}
          </style>
+
          <SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
          <div
             className={`flex flex-col justify-center items-center min-h-screen transition-margin duration-300 w-full ${isNavOpen ? "ml-64" : "ml-0"
@@ -120,10 +144,9 @@ const RequestGenerate = () => {
                      </label>
                      <input
                         type="number"
-                        step="any" // Allows any decimal numbers to be entered
+                        step="any"
                         value={latitude}
-                        onChange={(e) => setLatitude(e.target.value)}
-                        required
+                        readOnly // Users should not manually change the coordinate
                         className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none focus:ring-0 focus:border-[#294a26]"
                         id="latitude"
                         style={{ transition: "border-color 0.3s" }}
@@ -138,10 +161,9 @@ const RequestGenerate = () => {
                      </label>
                      <input
                         type="number"
-                        step="any" // Allows any decimal numbers to be entered
+                        step="any"
                         value={longitude}
-                        onChange={(e) => setLongitude(e.target.value)}
-                        required
+                        readOnly // Users should not manually change the coordinate
                         className="appearance-none border-b border-gray-300 w-full py-2 leading-tight focus:outline-none focus:ring-0 focus:border-[#294a26]"
                         id="longitude"
                         style={{ transition: "border-color 0.3s" }}
