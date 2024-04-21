@@ -20,7 +20,7 @@ const PharmacyOnBoard = () => {
 	const [license, setLicense] = useState('');
 	const [longitude, setLongitude] = useState('');
 	const [latitude, setLatitude] = useState('');
-
+	const [pharmacyName,setPharmacyName] = useState('');
 	const toggleNav = () => setNavOpen(!isNavOpen);
 
 	const handleChange = setter => event => {
@@ -37,7 +37,8 @@ const PharmacyOnBoard = () => {
 					emailAddress,
 					pharmaLicenseNumber: license, // Assuming you want to store it as licenseNumber
 					location: new GeoPoint(parseFloat(latitude), parseFloat(longitude)), // Storing location as a GeoPoint
-					isPharmacist: true
+					isPharmacist: true,
+					pharmacyName,
 				});
 				toast.info('Pharmacy data updated', {
 					position: "top-right",
@@ -70,6 +71,7 @@ const PharmacyOnBoard = () => {
 					setUserName(userData.displayName || '');
 					setEmailAddress(userData.email || '');
 					setLicense(userData.pharmaLicenseNumber || '');
+					setPharmacyName(userData.pharmacyName || '');
 					if (userData.location) {
 						setLongitude(userData.location.longitude.toString());
 						setLatitude(userData.location.latitude.toString());
@@ -129,6 +131,13 @@ const PharmacyOnBoard = () => {
 								<input type="email" value={emailAddress} onChange={handleChange(setEmailAddress)} disabled />
 								<div className="underline"></div>
 								<label>Email Address</label>
+							</div>
+						</div>
+						<div className="form-row">
+							<div className="input-data">
+								<input type="text" value={pharmacyName} onChange={handleChange(setPharmacyName)} required />
+								<div className="underline"></div>
+								<label>Pharmacy Name</label>
 							</div>
 						</div>
 						<div className="form-row">
