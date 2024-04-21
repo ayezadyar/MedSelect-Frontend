@@ -85,6 +85,7 @@ const RequestHandle = () => {
 			acceptUserID: currentUser.uid,
 			acceptUserLat: userData.location._lat, // Assuming these fields exist
 			acceptUserLong: userData.location._long,
+			pharmacyName:userData.pharmacyName,
 			isCurrentlyActive: false
 		});
 
