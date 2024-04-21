@@ -20,6 +20,7 @@ function Signup({ setSignupOpen }) {
 
   const handleLoginToggle = () => {
     setLoginOpen(!isLoginOpen);
+    // setSignupOpen(true)
   };
 
   const handleSignupToggle = () => {
@@ -49,8 +50,10 @@ function Signup({ setSignupOpen }) {
           // Add any other user data you want to store
         });
         setSubmitButtonDisabled(false);
-        navigate("/");
         setSignupOpen(false)
+        setLoginOpen(false)
+        navigate("/");
+       
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);
@@ -118,7 +121,7 @@ function Signup({ setSignupOpen }) {
         {/* Login Popup */}
         {isLoginOpen && (
           <div className="fixed top-0 left-0 w-full h-full z-30 flex justify-center items-center">
-            <Login handleClose={setLoginOpen} />
+            <Login setLoginOpen={setLoginOpen} />
           </div>
         )}
       </div>

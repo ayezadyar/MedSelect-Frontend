@@ -20,6 +20,8 @@ function Login({ setLoginOpen }) {
 
   const handleSignupToggle = () => {
     setSignupOpen(!isSignupOpen);
+    // setLoginOpen(true)
+
   };
 
   const handleSubmission = () => {
@@ -34,8 +36,9 @@ function Login({ setLoginOpen }) {
       .then(async (res) => {
         console.log('i am login')
         setSubmitButtonDisabled(false);
-        navigate("/")
         setLoginOpen(false);
+        setSignupOpen(false);
+        navigate("/")
         // handleLoginToggle(); // Hide login popup
       })
       .catch((err) => {
@@ -96,7 +99,7 @@ function Login({ setLoginOpen }) {
       </div>
       {isSignupOpen && (
         <div className="fixed top-0 left-0 w-full h-full z-30 flex justify-center items-center">
-          <Signup handleClose={handleSignupToggle} />
+          <Signup setSignupOpen={setSignupOpen} />
         </div>
       )}
     </div>
