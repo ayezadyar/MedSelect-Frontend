@@ -20,7 +20,7 @@ const PharmacyOnBoard = () => {
 	const [license, setLicense] = useState('');
 	const [longitude, setLongitude] = useState('');
 	const [latitude, setLatitude] = useState('');
-	const [pharmacyName,setPharmacyName] = useState('');
+	const [pharmacyName, setPharmacyName] = useState('');
 	const toggleNav = () => setNavOpen(!isNavOpen);
 
 	const handleChange = setter => event => {
@@ -99,7 +99,7 @@ const PharmacyOnBoard = () => {
 		}
 	};
 	return (
-		<div className="flex overflow-hidden">
+		<div className="flex">
 			<style>
 				{`
                     input[type='number']::-webkit-inner-spin-button,
@@ -114,11 +114,20 @@ const PharmacyOnBoard = () => {
                 `}
 			</style>
 			<SideNav isNavOpen={isNavOpen} toggleNav={toggleNav} />
-			<div className={`flex flex-col justify-center items-center min-h-screen transition-margin duration-300 w-full ${isNavOpen ? "ml-64" : "ml-0"}`}>
-				<button className={`absolute top-4 left-4 z-20 cursor-pointer font-bold ${isNavOpen ? "text-white" : "text-black"}`} onClick={toggleNav}>
+			<div
+				className={`flex flex-col justify-center items-center min-h-screen transition-margin duration-300 ${isNavOpen ? "ml-64" : ""}`}
+			>
+				{/* Burger Icon */}
+				<button
+					className={`absolute top-4 left-4 cursor-pointer font-bold ${isNavOpen ? "text-white" : "text-black"}`}
+					onClick={toggleNav}
+				>
 					<FontAwesomeIcon icon={faBars} size="lg" />
 				</button>
-				<div className="container px-4 md:px-8 lg:px-16">
+
+			</div>
+			<>
+				<div className="container">
 					<h2 className="text-center font-bold text-2xl mb-6 text-[#294a26]">Pharmacy On Board</h2>
 					<form action="#" onSubmit={handleSubmit}>
 						<div className="form-row">
@@ -167,7 +176,7 @@ const PharmacyOnBoard = () => {
 						</center>
 					</form>
 				</div>
-			</div>
+			</>
 			<ToastContainer />
 		</div>
 	);
