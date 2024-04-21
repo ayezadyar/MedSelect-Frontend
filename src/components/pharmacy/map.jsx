@@ -34,6 +34,7 @@ const MapExample = () => {
 	const [requestLocations, setRequestLocations] = useState([]);
 	const [position1, setPosition1] = useState(null);
 	const [position2, setPosition2] = useState(null);
+	const [destinationName, setDestinationName] = useState('')
 	const polylinePoints = [position1, position2];
 	const user = auth.currentUser;
 	const navigate = useNavigate();
@@ -55,9 +56,12 @@ const MapExample = () => {
 				id: doc.id,
 				acceptUserLat: doc.data().acceptUserLat,
 				acceptUserLong: doc.data().acceptUserLong,
+				pharmacyName: doc.data().pharmacyName,
 				locationLat: doc.data().location._lat,
 				locationLong: doc.data().location._long,
 			}));
+			setDestinationName(locations[locations.length - 1].pharmacyName)
+			console.log(locations, 'locations')
 			setRequestLocations(locations);
 		} catch (error) {
 			console.error("Error fetching request locations:", error);
@@ -175,10 +179,10 @@ const MapExample = () => {
 							{polylinePoints[0] && polylinePoints[1] && (
 								<>
 									<Marker position={position1}>
-										<Popup> Your Location</Popup>
+										<Popup>  {destinationName}</Popup>
 									</Marker>
 									<Marker position={position2}>
-										<Popup> Your destination {distance.toFixed(2)} meters</Popup>
+										<Popup> Your Location {distance.toFixed(2)} meters</Popup>
 									</Marker>
 									<Polyline positions={polylinePoints} color="red" />
 								</>
