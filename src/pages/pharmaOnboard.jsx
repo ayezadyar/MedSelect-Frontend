@@ -127,7 +127,7 @@ const PharmacyOnBoard = () => {
 
 			</div>
 			<>
-				<div className="container">
+				<div className="container m-auto">
 					<h2 className="text-center font-bold text-2xl mb-6 text-[#294a26]">Pharmacy On Board</h2>
 					<form action="#" onSubmit={handleSubmit}>
 						<div className="form-row">
