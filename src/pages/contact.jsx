@@ -30,7 +30,7 @@ const contact = () => {
 
 			</div>
 
-			<div className="container">
+			<div className="container m-auto">
 				<div className="text-center font-bold text-2xl mb-6 text-[#294a26]">Contact us</div>
 				<form action="#">
 					<div className="form-row">
@@ -65,10 +65,10 @@ const contact = () => {
 							<label htmlFor="">Write your message</label>
 						</div>
 					</div>
-					<center><div className="form-row bg-[#517028] hover:bg-[#294a26] text-white  overflow: hidden w-44 rounded-md cursor-pointer">
+					<center><div className="submit-button-row cursor-pointer">
 						<div className="input-data">
 							<div className="inner"></div>
-							<input type="submit" value="submit" />
+							<input type="submit" value="Submit" />
 						</div>
 					</div></center>
 				</form>
