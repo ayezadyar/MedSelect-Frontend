@@ -19,6 +19,7 @@ import PharmacyOnBoard from './pages/pharmaOnboard';
 import RequestHandle from './components/pharmacy/requestHandle';
 import RequestGenerate from './components/pharmacy/requestGenerate';
 import Maps from './components/pharmacy/map';
+import StripeComponent from './components/stripe/stripee';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/requestHandle" element={<RequestHandle />} />
           <Route path="/requestGenerate" element={<RequestGenerate />} />
           <Route path="/map" element={<Maps />} />
+          <Route path="/pay" element={<StripeComponent />} />
         </Routes>
       </AlarmProvider>
     </Router>
