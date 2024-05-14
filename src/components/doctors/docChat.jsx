@@ -101,8 +101,10 @@ const DocChat = () => {
 				{isModalOpen && (
 					<div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
 						<div className="bg-white px-16 py-10 rounded-lg">
-							<StripeComponent />
-							<button onClick={() => setIsModalOpen(false)}>Close</button>
+							<StripeComponent
+								setIsModalOpen={setIsModalOpen}
+							/>
+							{/* <button onClick={() => setIsModalOpen(false)}>Close</button> */}
 						</div>
 					</div>
 				)}

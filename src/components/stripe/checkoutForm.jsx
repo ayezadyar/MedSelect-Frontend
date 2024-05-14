@@ -1,7 +1,9 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
 import "../../pages/contactStyle.css";
-function CheckoutForm() {
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+function CheckoutForm({ setIsModalOpen }) {
 	const stripe = useStripe();
 	const elements = useElements();
 	const [amount, setAmount] = useState(''); // State to store the amount
@@ -11,7 +13,7 @@ function CheckoutForm() {
 
 		if (!stripe || !elements || !amount) {
 			console.log('Stripe, elements, or amount not loaded or entered');
-			return; // Check if stripe, elements, and amount are loaded/entered
+			return;
 		}
 
 		const cardElement = elements.getElement(CardElement);
@@ -24,20 +26,29 @@ function CheckoutForm() {
 			console.log('[error]', error);
 		} else {
 			const { id } = paymentMethod;
-			// Call your backend to create the payment intent
 			fetch('http://localhost:3000/create-payment-intent', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ paymentMethodId: id, amount: amount * 100 }), // Convert amount to cents
+				body: JSON.stringify({ paymentMethodId: id, amount: amount * 100 }),
 			})
-				.then(response => response.json())
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Payment failed');
+					}
+					return response.json();
+				})
 				.then(data => {
 					console.log(data);
+					// Show success toast
+					toast.success('Payment successful!');
+					setIsModalOpen(false)
 				})
 				.catch(error => {
 					console.error('Error:', error);
+					// Show error toast
+					toast.error('Payment failed');
 				});
 		}
 	};
@@ -94,6 +105,7 @@ function CheckoutForm() {
 			>
 				Pay
 			</button>
+			<ToastContainer />
 		</form>
 	);
 };
