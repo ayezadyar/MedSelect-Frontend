@@ -1,6 +1,6 @@
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-
+import "../../pages/contactStyle.css";
 function CheckoutForm() {
 	const stripe = useStripe();
 	const elements = useElements();
@@ -43,24 +43,59 @@ function CheckoutForm() {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<div>
-				<label htmlFor="amount">Amount:</label>
-				<input
-					type="number"
-					id="amount"
-					name="amount"
-					value={amount}
-					onChange={e => setAmount(e.target.value)}
-					placeholder="Enter payment amount"
+		<form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+			<style>
+				{`
+                    input[type='number']::-webkit-inner-spin-button,
+                    input[type='number']::-webkit-outer-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                    }
+
+                    input[type='number'] {
+                        -moz-appearance: textfield; /* Firefox */
+                    }
+                `}
+			</style>
+			<div className="form-row">
+				<div className="input-data">
+					<input
+						type="number"
+						id="amount"
+						name="amount"
+						value={amount}
+						onChange={(e) => setAmount(e.target.value)}
+						 required step="any" />
+					<div className="underline"></div>
+					<label>Amount</label>
+				</div>
+			</div>
+			<div className="ml-6 mt-4 mb-6">
+				<label className="block text-sm font-medium text-[#294a26]">Card details:</label>
+				<CardElement
+					options={{
+						style: {
+							base: {
+								fontSize: '16px',
+								color: '#333',
+								'::placeholder': {
+									color: '#ccc',
+								},
+							},
+						},
+					}}
+					className="mt-1 p-2 border border-[#294a26] rounded-md w-full"
 				/>
 			</div>
-			<CardElement />
-			<button type="submit" disabled={!stripe || amount <= 0}>
+			<button
+				type="submit"
+				disabled={!stripe || amount <= 0}
+				className="ml-20  bg-[#294a26] text-white px-10 py-2 rounded-md hover:bg-opacity-80"
+			>
 				Pay
 			</button>
 		</form>
 	);
-}
+};
 
 export default CheckoutForm;

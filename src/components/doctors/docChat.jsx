@@ -5,9 +5,11 @@ import { auth } from "../../Firebase"; // Adjust the import path as necessary
 import MessageDoc from "../doctors/messageDoc"; // Adjust the import path as necessary
 import SendDocMessage from "../doctors/sendDocMessage"; // Adjust the import path as necessary
 import SideNav from "../sideNav";
+import StripeComponent from "../stripe/stripee";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { format, isToday } from 'date-fns';
+
 const DocChat = () => {
 
 
@@ -79,12 +81,29 @@ const DocChat = () => {
 
 	const [isNavOpen, setIsNavOpen] = useState(false);
 	const toggleNav = () => setIsNavOpen(!isNavOpen);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const handleEmailClick = () => {
+		setIsModalOpen(true);
+	};
 	return (
 		<>
 			<div className={`flex h-screen ${isNavOpen ? 'pl-3' : 'pl-5'}`}> {/* Adjust the left padding based on SideNav state */}
 				{otherUserInfo && (
-					<div className="fixed font-semibold text-xl text-[#294a26] text-center py-2 w-full z-40 transition-all duration-500" style={{ left: isNavOpen ? '0px' : '0px', right: 0 }}> {/* Make banner responsive */}
-						{otherUserInfo[0]?.email}
+					<div className="fixed font-semibold text-xl text-[#294a26] text-center py-2 w-full z-40 transition-all duration-500" style={{ left: isNavOpen ? '0px' : '0px', right: 0 }}>
+						{/* Make banner responsive */}
+						<button onClick={handleEmailClick}>
+							{otherUserInfo[0]?.email}
+						</button>
+					</div>
+				)}
+
+				{isModalOpen && (
+					<div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+						<div className="bg-white px-16 py-10 rounded-lg">
+							<StripeComponent />
+							<button onClick={() => setIsModalOpen(false)}>Close</button>
+						</div>
 					</div>
 				)}
 
