@@ -98,6 +98,27 @@ const PharmacyOnBoard = () => {
 			console.log("Invalid license format."); // Check if it detects invalid format
 		}
 	};
+
+	useEffect(() => {
+		navigator.geolocation.getCurrentPosition(
+			position => {
+				setLatitude(position.coords.latitude);
+				setLongitude(position.coords.longitude);
+			},
+			() => {
+				toast.error("Location access denied", {
+					position: "top-right",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "colored",
+				});
+			}
+		);
+	}, []);
 	return (
 		<div className="flex">
 			<style>
