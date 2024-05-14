@@ -77,14 +77,14 @@ const DocChat = () => {
 		return () => unsubscribe(); // Cleanup function to unsubscribe from Firebase
 	}, [otherUserID]);
 
-	console.log('the users', otherUserInfo[0]?.email);
+	console.log('the usersds', otherUserInfo[0]);
 
 	const [isNavOpen, setIsNavOpen] = useState(false);
 	const toggleNav = () => setIsNavOpen(!isNavOpen);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const handleEmailClick = () => {
-		setIsModalOpen(true);
+		otherUserInfo[0]?.isDoctor === true ? setIsModalOpen(true) : setIsModalOpen(false);
 	};
 	return (
 		<>
