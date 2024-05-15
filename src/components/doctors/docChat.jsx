@@ -86,15 +86,18 @@ const DocChat = () => {
 	const handleEmailClick = () => {
 		otherUserInfo[0]?.isDoctor === true ? setIsModalOpen(true) : setIsModalOpen(false);
 	};
+	useEffect(() => { handleEmailClick() }, [otherUserInfo[0]?.isDoctor])
+
+
 	return (
 		<>
 			<div className={`flex h-screen ${isNavOpen ? 'pl-3' : 'pl-5'}`}> {/* Adjust the left padding based on SideNav state */}
 				{otherUserInfo && (
 					<div className="fixed font-semibold text-xl text-[#294a26] text-center py-2 w-full z-40 transition-all duration-500" style={{ left: isNavOpen ? '0px' : '0px', right: 0 }}>
 						{/* Make banner responsive */}
-						<button onClick={handleEmailClick}>
+						{/* <button onClick={handleEmailClick}> */}
 							{otherUserInfo[0]?.email}
-						</button>
+						{/* </button> */}
 					</div>
 				)}
 
