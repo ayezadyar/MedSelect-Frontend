@@ -25,10 +25,11 @@ const DoctorOnBoard = () => {
 	const toggleNav = () => setNavOpen(!isNavOpen);
 	const handleExperienceChange = (event) => {
 		const value = event.target.value;
-		if (/^\d*$/.test(value) && (value === "" || parseInt(value, 10) < 50)) {
+		if (/^\d*$/.test(value) && (value === "" || (parseInt(value, 10) > 0 && parseInt(value, 10) < 50))) {
 			setExperience(value);
 		}
 	};
+
 
 	const handleLicenseChange = (event) => {
 		const value = event.target.value;
