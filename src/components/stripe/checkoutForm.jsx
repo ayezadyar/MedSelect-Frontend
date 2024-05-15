@@ -1,12 +1,14 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import "../../pages/contactStyle.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareFromSquare } from "@fortawesome/free-regular-svg-icons";
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 function CheckoutForm({ setIsModalOpen }) {
+	const navigate = useNavigate();
 	const stripe = useStripe();
 	const elements = useElements();
 	const [amount, setAmount] = useState(''); // State to store the amount
@@ -58,7 +60,8 @@ function CheckoutForm({ setIsModalOpen }) {
 	useEffect(() => { setAmount(500) }, [])
 
 	function handleModalClose() {
-		setIsModalOpen(false)
+		// setIsModalOpen(false)
+		navigate("/doctors")
 	}
 	return (
 		<div className="modal">
